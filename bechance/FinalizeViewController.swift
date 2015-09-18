@@ -13,6 +13,9 @@ class FinalizeViewController: UIViewController {
     // MARK: - Outlets
     
     @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var descriptionTextView: UITextView!
     
     // MARK: - Outlets
     
@@ -23,7 +26,6 @@ class FinalizeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
     }
     
@@ -32,6 +34,13 @@ class FinalizeViewController: UIViewController {
         if self.photo != nil {
             self.photoImageView.image = photo
         }
+        print("tmpLocation \(tmpLocation)")
+        
+        if tmpLocation != nil {
+            self.locationLabel.text = tmpLocation!["name"] as? String
+        }
+        
+        //tmpLocation!["city"] as! String
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,16 +50,21 @@ class FinalizeViewController: UIViewController {
     
     // MARK: - IBAction
     
-    @IBAction func searchTapped(sender: AnyObject) {
+    @IBAction func AddLocationTapped(sender: AnyObject) {
+        print("AddLoc pushed")
         self.performSegueWithIdentifier("SearchSegue", sender: nil)
     }
     
+    @IBAction func postTapped(sender: UIButton) {
+        
+        //TODO: save to parse
+        
+        //TODO: save to coredata
+    }
     
-
-
     // MARK: - Navigation
     
-    @IBAction func prepareFOrUnwind(segue: UIStoryboardSegue) {
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
         
     }
     

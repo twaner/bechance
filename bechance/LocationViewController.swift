@@ -24,7 +24,7 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     var lat: CLLocationDegrees?
     var long: CLLocationDegrees?
     var venue = [[String:AnyObject]]()
-    var tmpLocation: [String: AnyObject]?
+    var tmpLocation: [String: AnyObject] = [String: AnyObject]()
     var searchTask: NSURLSessionDataTask?
     
     override func viewDidLoad() {
@@ -75,20 +75,17 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
         print("didSelectRowAtIndex \(i)")
         
         if let city = (i["location"] as? NSDictionary)!.valueForKey("city") as? String {
-            tmpLocation!["city"] = city as String
+            tmpLocation["city"] = city as String
         }
         if let state = (i["location"] as? NSDictionary)!.valueForKey("state") as? String {
-            tmpLocation!["state"] = state
+            tmpLocation["state"] = state
         }
         if let lat = (i["location"] as? NSDictionary)!.valueForKey("lat") as? NSNumber {
-            tmpLocation!["lat"] = lat
+            tmpLocation["lat"] = lat
         }
         if let lng = (i["location"] as? NSDictionary)!.valueForKey("lng") as? NSNumber {
-            tmpLocation!["lng"] = lng
+            tmpLocation["lng"] = lng
         }
-        // Tmp Location -> call seuge
-        
-        
     }
     
      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -127,10 +124,9 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
         searchTask = bechanceClient.sharedInstance().foursquareGetHelper(bechanceClient.Constants.VenueSearch, parameters: tmp)
             { (result, error) -> Void in
             if let error = error {
-                print("ERROR calling foursquare")
+                print("ERROR calling foursquare \(error)")
             } else {
-                print(result)
-                
+//                print(result)
                 if let venueDictionary = result as? NSDictionary {
                     if let venueResponse = venueDictionary.valueForKey(bechanceClient.JSONResponseKeys.Response) as? NSDictionary {
                         if let venueArray = venueResponse.valueForKey(bechanceClient.JSONResponseKeys.Venues) as? [[String: AnyObject]] {
@@ -166,8 +162,7 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
             } else {
                 print(result)
                 if let venuesDictionary = result as? [[String: AnyObject]] {
-                        print("venue dictionary \(venuesDictionary)")
-                    var tmp = []
+//                        print("venue dictionary \(venuesDictionary)")
                     var venues = venuesDictionary.map({self.venue.append($0) })
                     print("venue after map -> \(self.venue)")
                     self.searchTableView.reloadData()
@@ -179,15 +174,40 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: - Navigation
     
-    @IBAction func prepareFOrUnwind(segue: UIStoryboardSegue) {
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
         
     }
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "Return" {
-            
+        let nextVC = segue.destinationViewController as! FinalizeViewController
+        
+        let selectedPath: NSIndexPath = self.searchTableView.indexPathForCell(sender as! UITableViewCell)!
+        
+        var i = self.venue[selectedPath.row]
+        print("didSelectRowAtIndex \(i)")
+        
+        if let city = (i["location"] as? NSDictionary)!.valueForKey("city") as? String {
+            tmpLocation["city"] = city
+        } else if let city = i["name"]! as? String {
+            if let range = city.rangeOfString("of ", options: .BackwardsSearch, range: nil, locale: nil)?.endIndex {
+                tmpLocation["city"] = city.substringFromIndex(range)
+            } else {
+            tmpLocation["city"] = city
+            }
         }
+        if let state = (i["location"] as? NSDictionary)!.valueForKey("state") as? String {
+            tmpLocation["state"] = state
+        }
+        if let lat = (i["location"] as? NSDictionary)!.valueForKey("lat") as? NSNumber {
+            tmpLocation["lat"] = lat
+        }
+        if let lng = (i["location"] as? NSDictionary)!.valueForKey("lng") as? NSNumber {
+            tmpLocation["lng"] = lng
+        if let name = i["name"]! as? String {
+            tmpLocation["name"] = name
+        }
+        
+        nextVC.tmpLocation = self.tmpLocation
     }
-
+}
 }

@@ -15,12 +15,12 @@ import FBSDKCoreKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-//        Parse.enableLocalDatastore()
-        // init parse
+        let sharedApplication = UIApplication.sharedApplication();
+        let isFacebookAuthorized = sharedApplication.canOpenURL(NSURL(fileURLWithPath: "fbauth://authorize"))
+
         Parse.setApplicationId(bechanceClient.Parse.ParseAppID, clientKey: bechanceClient.Parse.ParseClientID)
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
         

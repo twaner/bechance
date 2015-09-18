@@ -1,0 +1,729 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1957ADAB1B587AAC00434802 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957ADAA1B587AAC00434802 /* AppDelegate.swift */; };
+		1957ADAE1B587AAC00434802 /* bechance.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1957ADAC1B587AAC00434802 /* bechance.xcdatamodeld */; };
+		1957ADB01B587AAC00434802 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957ADAF1B587AAC00434802 /* ViewController.swift */; };
+		1957ADB31B587AAC00434802 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1957ADB11B587AAC00434802 /* Main.storyboard */; };
+		1957ADB51B587AAC00434802 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1957ADB41B587AAC00434802 /* Images.xcassets */; };
+		1957ADB81B587AAC00434802 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1957ADB61B587AAC00434802 /* LaunchScreen.xib */; };
+		1957ADC41B587AAC00434802 /* bechanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957ADC31B587AAC00434802 /* bechanceTests.swift */; };
+		1957ADD21B587B2B00434802 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957ADD11B587B2B00434802 /* Keys.swift */; };
+		1957ADD41B587B4F00434802 /* bechanceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957ADD31B587B4F00434802 /* bechanceClient.swift */; };
+		1957ADD61B587B7500434802 /* TextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957ADD51B587B7500434802 /* TextExtension.swift */; };
+		1957ADD91B587CCB00434802 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1957ADD81B587CCB00434802 /* AudioToolbox.framework */; };
+		1957ADDB1B587CD200434802 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1957ADDA1B587CD200434802 /* CFNetwork.framework */; };
+		1957ADDD1B587CDA00434802 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1957ADDC1B587CDA00434802 /* CoreGraphics.framework */; };
+		1957ADDF1B587CE100434802 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1957ADDE1B587CE100434802 /* CoreLocation.framework */; };
+		1957ADE11B587CEB00434802 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1957ADE01B587CEB00434802 /* MobileCoreServices.framework */; };
+		1957ADE31B587CF400434802 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1957ADE21B587CF400434802 /* QuartzCore.framework */; };
+		1957ADE51B587CF900434802 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1957ADE41B587CF900434802 /* Security.framework */; };
+		1957ADE71B587D0200434802 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1957ADE61B587D0200434802 /* StoreKit.framework */; };
+		1957ADE91B587D0D00434802 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1957ADE81B587D0D00434802 /* SystemConfiguration.framework */; };
+		1957ADEB1B587D1300434802 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1957ADEA1B587D1300434802 /* libz.dylib */; };
+		1957ADED1B587D1E00434802 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1957ADEC1B587D1E00434802 /* libsqlite3.dylib */; };
+		1957ADF21B587EC900434802 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1957ADEE1B587EC900434802 /* Bolts.framework */; };
+		1957ADF31B587EC900434802 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1957ADEF1B587EC900434802 /* ParseUI.framework */; };
+		1957ADF51B587EC900434802 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1957ADF11B587EC900434802 /* Parse.framework */; };
+		1957ADFF1B5882A800434802 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1957ADFD1B5882A800434802 /* background.jpg */; };
+		1957AE001B5882A800434802 /* fbbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1957ADFE1B5882A800434802 /* fbbutton.png */; };
+		1957AE031B58853C00434802 /* bechance-bridging-header.m in Sources */ = {isa = PBXBuildFile; fileRef = 1957AE021B58853C00434802 /* bechance-bridging-header.m */; };
+		1957AE051B58859600434802 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1957AE041B58859600434802 /* ParseFacebookUtilsV4.framework */; };
+		1957AE071B588DAD00434802 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957AE061B588DAD00434802 /* LoginViewController.swift */; };
+		1957AE091B589B1E00434802 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957AE081B589B1E00434802 /* SignupViewController.swift */; };
+		1957AE0B1B5ADD0000434802 /* person-placeholder-300x300.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1957AE0A1B5ADD0000434802 /* person-placeholder-300x300.jpg */; };
+		198CD3CC1B6E703C008891A9 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CD3CB1B6E703C008891A9 /* CoreDataStackManager.swift */; };
+		198CD3CE1B6E7160008891A9 /* ImageDocumentDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CD3CD1B6E7160008891A9 /* ImageDocumentDirectory.swift */; };
+		198CD3D01B6E71A9008891A9 /* bechanceConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CD3CF1B6E71A9008891A9 /* bechanceConstants.swift */; };
+		198CD3D21B6E71B4008891A9 /* bechanceConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CD3D11B6E71B4008891A9 /* bechanceConvenience.swift */; };
+		198CD3D41B6E7626008891A9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CD3D31B6E7626008891A9 /* User.swift */; };
+		198CD3D61B6E8458008891A9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CD3D51B6E8458008891A9 /* MainViewController.swift */; };
+		198CD3DB1B6EA957008891A9 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CD3DA1B6EA957008891A9 /* MainTableViewCell.swift */; };
+		198CD3DD1B6EECEA008891A9 /* TaskCancellingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CD3DC1B6EECEA008891A9 /* TaskCancellingTableViewCell.swift */; };
+		19DBB4CA1B856859000C8472 /* bechanceNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DBB4C91B856859000C8472 /* bechanceNetworkClient.swift */; };
+		19E301311B6B086B00CA31E1 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E3012E1B6B086B00CA31E1 /* Tag.swift */; };
+		19E301321B6B086B00CA31E1 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E3012F1B6B086B00CA31E1 /* Location.swift */; };
+		19E301331B6B086B00CA31E1 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E301301B6B086B00CA31E1 /* Photo.swift */; };
+		7E04E2781B77F0DC00433BFC /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E04E2771B77F0DC00433BFC /* UserViewController.swift */; };
+		7E1B532E1B8FED2D00E1868B /* Photos-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B532C1B8FED2D00E1868B /* Photos-50.png */; };
+		7E1B532F1B8FED2D00E1868B /* Photos-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B532D1B8FED2D00E1868B /* Photos-32.png */; };
+		7E1B53311B8FF6BD00E1868B /* gear-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B53301B8FF6BD00E1868B /* gear-7.png */; };
+		7E1B53331B8FF6CF00E1868B /* dot-more-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B53321B8FF6CF00E1868B /* dot-more-7.png */; };
+		7E21F9EA1B8D5007008C21EB /* AddPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E21F9E91B8D5007008C21EB /* AddPhotoViewController.swift */; };
+		7E21F9EC1B8D5021008C21EB /* FinalizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E21F9EB1B8D5021008C21EB /* FinalizeViewController.swift */; };
+		7E46A3631B73E5F3002CA719 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E46A3601B73E5F3002CA719 /* FBSDKCoreKit.framework */; };
+		7E46A3641B73E5F3002CA719 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E46A3611B73E5F3002CA719 /* FBSDKLoginKit.framework */; };
+		7E46A3651B73E5F3002CA719 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E46A3621B73E5F3002CA719 /* FBSDKShareKit.framework */; };
+		7E7A14E01B935E160009D59D /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7A14DF1B935E160009D59D /* LocationViewController.swift */; };
+		7EE27CC61B8EA644000DFEC7 /* Camera-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE27CC51B8EA644000DFEC7 /* Camera-50.png */; };
+		7EE27CC81B8EA683000DFEC7 /* Camera-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE27CC71B8EA683000DFEC7 /* Camera-32.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1957ADBE1B587AAC00434802 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1957AD9D1B587AAC00434802 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1957ADA41B587AAC00434802;
+			remoteInfo = bechance;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1957ADA51B587AAC00434802 /* bechance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bechance.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1957ADA91B587AAC00434802 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1957ADAA1B587AAC00434802 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		1957ADAD1B587AAC00434802 /* bechance.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = bechance.xcdatamodel; sourceTree = "<group>"; };
+		1957ADAF1B587AAC00434802 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1957ADB21B587AAC00434802 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1957ADB41B587AAC00434802 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		1957ADB71B587AAC00434802 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		1957ADBD1B587AAC00434802 /* bechanceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = bechanceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1957ADC21B587AAC00434802 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1957ADC31B587AAC00434802 /* bechanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bechanceTests.swift; sourceTree = "<group>"; };
+		1957ADD11B587B2B00434802 /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
+		1957ADD31B587B4F00434802 /* bechanceClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = bechanceClient.swift; sourceTree = "<group>"; };
+		1957ADD51B587B7500434802 /* TextExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextExtension.swift; sourceTree = "<group>"; };
+		1957ADD81B587CCB00434802 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		1957ADDA1B587CD200434802 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		1957ADDC1B587CDA00434802 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		1957ADDE1B587CE100434802 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		1957ADE01B587CEB00434802 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		1957ADE21B587CF400434802 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		1957ADE41B587CF900434802 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		1957ADE61B587D0200434802 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		1957ADE81B587D0D00434802 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		1957ADEA1B587D1300434802 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		1957ADEC1B587D1E00434802 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		1957ADEE1B587EC900434802 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		1957ADEF1B587EC900434802 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
+		1957ADF11B587EC900434802 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		1957ADFD1B5882A800434802 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
+		1957ADFE1B5882A800434802 /* fbbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fbbutton.png; sourceTree = "<group>"; };
+		1957AE011B58853B00434802 /* bechance-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "bechance-Bridging-Header.h"; sourceTree = "<group>"; };
+		1957AE021B58853C00434802 /* bechance-bridging-header.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "bechance-bridging-header.m"; sourceTree = "<group>"; };
+		1957AE041B58859600434802 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
+		1957AE061B588DAD00434802 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		1957AE081B589B1E00434802 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		1957AE0A1B5ADD0000434802 /* person-placeholder-300x300.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "person-placeholder-300x300.jpg"; sourceTree = "<group>"; };
+		198CD3CB1B6E703C008891A9 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
+		198CD3CD1B6E7160008891A9 /* ImageDocumentDirectory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDocumentDirectory.swift; sourceTree = "<group>"; };
+		198CD3CF1B6E71A9008891A9 /* bechanceConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = bechanceConstants.swift; sourceTree = "<group>"; };
+		198CD3D11B6E71B4008891A9 /* bechanceConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = bechanceConvenience.swift; sourceTree = "<group>"; };
+		198CD3D31B6E7626008891A9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		198CD3D51B6E8458008891A9 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		198CD3DA1B6EA957008891A9 /* MainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
+		198CD3DC1B6EECEA008891A9 /* TaskCancellingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCancellingTableViewCell.swift; sourceTree = "<group>"; };
+		19DBB4C91B856859000C8472 /* bechanceNetworkClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = bechanceNetworkClient.swift; sourceTree = "<group>"; };
+		19E3012E1B6B086B00CA31E1 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		19E3012F1B6B086B00CA31E1 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		19E301301B6B086B00CA31E1 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		7E04E2771B77F0DC00433BFC /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		7E1B532C1B8FED2D00E1868B /* Photos-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Photos-50.png"; sourceTree = "<group>"; };
+		7E1B532D1B8FED2D00E1868B /* Photos-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Photos-32.png"; sourceTree = "<group>"; };
+		7E1B53301B8FF6BD00E1868B /* gear-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gear-7.png"; sourceTree = "<group>"; };
+		7E1B53321B8FF6CF00E1868B /* dot-more-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dot-more-7.png"; sourceTree = "<group>"; };
+		7E21F9E91B8D5007008C21EB /* AddPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPhotoViewController.swift; sourceTree = "<group>"; };
+		7E21F9EB1B8D5021008C21EB /* FinalizeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinalizeViewController.swift; sourceTree = "<group>"; };
+		7E46A3601B73E5F3002CA719 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		7E46A3611B73E5F3002CA719 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		7E46A3621B73E5F3002CA719 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
+		7E7A14DF1B935E160009D59D /* LocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
+		7EE27CC51B8EA644000DFEC7 /* Camera-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Camera-50.png"; sourceTree = "<group>"; };
+		7EE27CC71B8EA683000DFEC7 /* Camera-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Camera-32.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1957ADA21B587AAC00434802 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1957AE051B58859600434802 /* ParseFacebookUtilsV4.framework in Frameworks */,
+				7E46A3641B73E5F3002CA719 /* FBSDKLoginKit.framework in Frameworks */,
+				1957ADED1B587D1E00434802 /* libsqlite3.dylib in Frameworks */,
+				1957ADEB1B587D1300434802 /* libz.dylib in Frameworks */,
+				1957ADE91B587D0D00434802 /* SystemConfiguration.framework in Frameworks */,
+				1957ADF51B587EC900434802 /* Parse.framework in Frameworks */,
+				1957ADF21B587EC900434802 /* Bolts.framework in Frameworks */,
+				1957ADE71B587D0200434802 /* StoreKit.framework in Frameworks */,
+				7E46A3631B73E5F3002CA719 /* FBSDKCoreKit.framework in Frameworks */,
+				1957ADE51B587CF900434802 /* Security.framework in Frameworks */,
+				1957ADE31B587CF400434802 /* QuartzCore.framework in Frameworks */,
+				1957ADE11B587CEB00434802 /* MobileCoreServices.framework in Frameworks */,
+				1957ADDF1B587CE100434802 /* CoreLocation.framework in Frameworks */,
+				1957ADDD1B587CDA00434802 /* CoreGraphics.framework in Frameworks */,
+				1957ADDB1B587CD200434802 /* CFNetwork.framework in Frameworks */,
+				7E46A3651B73E5F3002CA719 /* FBSDKShareKit.framework in Frameworks */,
+				1957ADD91B587CCB00434802 /* AudioToolbox.framework in Frameworks */,
+				1957ADF31B587EC900434802 /* ParseUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1957ADBA1B587AAC00434802 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1957AD9C1B587AAC00434802 = {
+			isa = PBXGroup;
+			children = (
+				1957ADA71B587AAC00434802 /* bechance */,
+				1957ADC01B587AAC00434802 /* bechanceTests */,
+				1957ADA61B587AAC00434802 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1957ADA61B587AAC00434802 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1957ADA51B587AAC00434802 /* bechance.app */,
+				1957ADBD1B587AAC00434802 /* bechanceTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1957ADA71B587AAC00434802 /* bechance */ = {
+			isa = PBXGroup;
+			children = (
+				198CD3D91B6EA875008891A9 /* UIComponents */,
+				19E3012D1B6AFFFE00CA31E1 /* Models */,
+				1957ADD71B587C5000434802 /* Frameworks */,
+				1957ADD01B587B0000434802 /* bechanceClient */,
+				1957ADCF1B587AF100434802 /* Extensions */,
+				1957ADCE1B587AE600434802 /* AdditionalFiles */,
+				1957ADCD1B587ACC00434802 /* ViewControllers */,
+				1957ADAA1B587AAC00434802 /* AppDelegate.swift */,
+				1957ADB11B587AAC00434802 /* Main.storyboard */,
+				1957ADB41B587AAC00434802 /* Images.xcassets */,
+				1957ADB61B587AAC00434802 /* LaunchScreen.xib */,
+				1957ADAC1B587AAC00434802 /* bechance.xcdatamodeld */,
+				1957ADA81B587AAC00434802 /* Supporting Files */,
+				1957AE021B58853C00434802 /* bechance-bridging-header.m */,
+				1957AE011B58853B00434802 /* bechance-Bridging-Header.h */,
+			);
+			path = bechance;
+			sourceTree = "<group>";
+		};
+		1957ADA81B587AAC00434802 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1957ADFC1B58825900434802 /* Photos */,
+				1957ADA91B587AAC00434802 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1957ADC01B587AAC00434802 /* bechanceTests */ = {
+			isa = PBXGroup;
+			children = (
+				1957ADC31B587AAC00434802 /* bechanceTests.swift */,
+				1957ADC11B587AAC00434802 /* Supporting Files */,
+			);
+			path = bechanceTests;
+			sourceTree = "<group>";
+		};
+		1957ADC11B587AAC00434802 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1957ADC21B587AAC00434802 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1957ADCD1B587ACC00434802 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				1957ADAF1B587AAC00434802 /* ViewController.swift */,
+				1957AE061B588DAD00434802 /* LoginViewController.swift */,
+				1957AE081B589B1E00434802 /* SignupViewController.swift */,
+				198CD3D51B6E8458008891A9 /* MainViewController.swift */,
+				7E04E2771B77F0DC00433BFC /* UserViewController.swift */,
+				7E21F9E91B8D5007008C21EB /* AddPhotoViewController.swift */,
+				7E21F9EB1B8D5021008C21EB /* FinalizeViewController.swift */,
+				7E7A14DF1B935E160009D59D /* LocationViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		1957ADCE1B587AE600434802 /* AdditionalFiles */ = {
+			isa = PBXGroup;
+			children = (
+				1957ADD11B587B2B00434802 /* Keys.swift */,
+			);
+			name = AdditionalFiles;
+			sourceTree = "<group>";
+		};
+		1957ADCF1B587AF100434802 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1957ADD51B587B7500434802 /* TextExtension.swift */,
+				19DBB4C91B856859000C8472 /* bechanceNetworkClient.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		1957ADD01B587B0000434802 /* bechanceClient */ = {
+			isa = PBXGroup;
+			children = (
+				1957ADD31B587B4F00434802 /* bechanceClient.swift */,
+				198CD3CB1B6E703C008891A9 /* CoreDataStackManager.swift */,
+				198CD3CD1B6E7160008891A9 /* ImageDocumentDirectory.swift */,
+				198CD3CF1B6E71A9008891A9 /* bechanceConstants.swift */,
+				198CD3D11B6E71B4008891A9 /* bechanceConvenience.swift */,
+			);
+			name = bechanceClient;
+			sourceTree = "<group>";
+		};
+		1957ADD71B587C5000434802 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1957AE041B58859600434802 /* ParseFacebookUtilsV4.framework */,
+				7E46A3601B73E5F3002CA719 /* FBSDKCoreKit.framework */,
+				7E46A3611B73E5F3002CA719 /* FBSDKLoginKit.framework */,
+				7E46A3621B73E5F3002CA719 /* FBSDKShareKit.framework */,
+				1957ADEE1B587EC900434802 /* Bolts.framework */,
+				1957ADEF1B587EC900434802 /* ParseUI.framework */,
+				1957ADF11B587EC900434802 /* Parse.framework */,
+				1957ADD81B587CCB00434802 /* AudioToolbox.framework */,
+				1957ADDA1B587CD200434802 /* CFNetwork.framework */,
+				1957ADDC1B587CDA00434802 /* CoreGraphics.framework */,
+				1957ADDE1B587CE100434802 /* CoreLocation.framework */,
+				1957ADEC1B587D1E00434802 /* libsqlite3.dylib */,
+				1957ADEA1B587D1300434802 /* libz.dylib */,
+				1957ADE01B587CEB00434802 /* MobileCoreServices.framework */,
+				1957ADE21B587CF400434802 /* QuartzCore.framework */,
+				1957ADE41B587CF900434802 /* Security.framework */,
+				1957ADE61B587D0200434802 /* StoreKit.framework */,
+				1957ADE81B587D0D00434802 /* SystemConfiguration.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1957ADFC1B58825900434802 /* Photos */ = {
+			isa = PBXGroup;
+			children = (
+				7E1B53321B8FF6CF00E1868B /* dot-more-7.png */,
+				7E1B53301B8FF6BD00E1868B /* gear-7.png */,
+				7E1B532C1B8FED2D00E1868B /* Photos-50.png */,
+				7E1B532D1B8FED2D00E1868B /* Photos-32.png */,
+				7EE27CC71B8EA683000DFEC7 /* Camera-32.png */,
+				7EE27CC51B8EA644000DFEC7 /* Camera-50.png */,
+				1957AE0A1B5ADD0000434802 /* person-placeholder-300x300.jpg */,
+				1957ADFD1B5882A800434802 /* background.jpg */,
+				1957ADFE1B5882A800434802 /* fbbutton.png */,
+			);
+			name = Photos;
+			sourceTree = "<group>";
+		};
+		198CD3D91B6EA875008891A9 /* UIComponents */ = {
+			isa = PBXGroup;
+			children = (
+				198CD3DA1B6EA957008891A9 /* MainTableViewCell.swift */,
+				198CD3DC1B6EECEA008891A9 /* TaskCancellingTableViewCell.swift */,
+			);
+			name = UIComponents;
+			sourceTree = "<group>";
+		};
+		19E3012D1B6AFFFE00CA31E1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				19E3012E1B6B086B00CA31E1 /* Tag.swift */,
+				19E3012F1B6B086B00CA31E1 /* Location.swift */,
+				19E301301B6B086B00CA31E1 /* Photo.swift */,
+				198CD3D31B6E7626008891A9 /* User.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1957ADA41B587AAC00434802 /* bechance */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1957ADC71B587AAC00434802 /* Build configuration list for PBXNativeTarget "bechance" */;
+			buildPhases = (
+				1957ADA11B587AAC00434802 /* Sources */,
+				1957ADA21B587AAC00434802 /* Frameworks */,
+				1957ADA31B587AAC00434802 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = bechance;
+			productName = bechance;
+			productReference = 1957ADA51B587AAC00434802 /* bechance.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1957ADBC1B587AAC00434802 /* bechanceTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1957ADCA1B587AAC00434802 /* Build configuration list for PBXNativeTarget "bechanceTests" */;
+			buildPhases = (
+				1957ADB91B587AAC00434802 /* Sources */,
+				1957ADBA1B587AAC00434802 /* Frameworks */,
+				1957ADBB1B587AAC00434802 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1957ADBF1B587AAC00434802 /* PBXTargetDependency */,
+			);
+			name = bechanceTests;
+			productName = bechanceTests;
+			productReference = 1957ADBD1B587AAC00434802 /* bechanceTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1957AD9D1B587AAC00434802 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "Taiowa Waner";
+				TargetAttributes = {
+					1957ADA41B587AAC00434802 = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+					1957ADBC1B587AAC00434802 = {
+						CreatedOnToolsVersion = 6.3.2;
+						TestTargetID = 1957ADA41B587AAC00434802;
+					};
+				};
+			};
+			buildConfigurationList = 1957ADA01B587AAC00434802 /* Build configuration list for PBXProject "bechance" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1957AD9C1B587AAC00434802;
+			productRefGroup = 1957ADA61B587AAC00434802 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1957ADA41B587AAC00434802 /* bechance */,
+				1957ADBC1B587AAC00434802 /* bechanceTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1957ADA31B587AAC00434802 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E1B53311B8FF6BD00E1868B /* gear-7.png in Resources */,
+				1957ADB31B587AAC00434802 /* Main.storyboard in Resources */,
+				1957ADFF1B5882A800434802 /* background.jpg in Resources */,
+				7EE27CC61B8EA644000DFEC7 /* Camera-50.png in Resources */,
+				7E1B532E1B8FED2D00E1868B /* Photos-50.png in Resources */,
+				7EE27CC81B8EA683000DFEC7 /* Camera-32.png in Resources */,
+				7E1B532F1B8FED2D00E1868B /* Photos-32.png in Resources */,
+				1957ADB81B587AAC00434802 /* LaunchScreen.xib in Resources */,
+				7E1B53331B8FF6CF00E1868B /* dot-more-7.png in Resources */,
+				1957AE001B5882A800434802 /* fbbutton.png in Resources */,
+				1957ADB51B587AAC00434802 /* Images.xcassets in Resources */,
+				1957AE0B1B5ADD0000434802 /* person-placeholder-300x300.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1957ADBB1B587AAC00434802 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1957ADA11B587AAC00434802 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				19E301331B6B086B00CA31E1 /* Photo.swift in Sources */,
+				1957AE091B589B1E00434802 /* SignupViewController.swift in Sources */,
+				198CD3CC1B6E703C008891A9 /* CoreDataStackManager.swift in Sources */,
+				198CD3DB1B6EA957008891A9 /* MainTableViewCell.swift in Sources */,
+				19E301321B6B086B00CA31E1 /* Location.swift in Sources */,
+				198CD3D21B6E71B4008891A9 /* bechanceConvenience.swift in Sources */,
+				1957ADD41B587B4F00434802 /* bechanceClient.swift in Sources */,
+				7E04E2781B77F0DC00433BFC /* UserViewController.swift in Sources */,
+				7E21F9EA1B8D5007008C21EB /* AddPhotoViewController.swift in Sources */,
+				198CD3D41B6E7626008891A9 /* User.swift in Sources */,
+				7E7A14E01B935E160009D59D /* LocationViewController.swift in Sources */,
+				198CD3CE1B6E7160008891A9 /* ImageDocumentDirectory.swift in Sources */,
+				19E301311B6B086B00CA31E1 /* Tag.swift in Sources */,
+				198CD3DD1B6EECEA008891A9 /* TaskCancellingTableViewCell.swift in Sources */,
+				19DBB4CA1B856859000C8472 /* bechanceNetworkClient.swift in Sources */,
+				198CD3D01B6E71A9008891A9 /* bechanceConstants.swift in Sources */,
+				1957ADB01B587AAC00434802 /* ViewController.swift in Sources */,
+				7E21F9EC1B8D5021008C21EB /* FinalizeViewController.swift in Sources */,
+				1957ADD21B587B2B00434802 /* Keys.swift in Sources */,
+				1957ADAE1B587AAC00434802 /* bechance.xcdatamodeld in Sources */,
+				1957AE071B588DAD00434802 /* LoginViewController.swift in Sources */,
+				1957AE031B58853C00434802 /* bechance-bridging-header.m in Sources */,
+				198CD3D61B6E8458008891A9 /* MainViewController.swift in Sources */,
+				1957ADD61B587B7500434802 /* TextExtension.swift in Sources */,
+				1957ADAB1B587AAC00434802 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1957ADB91B587AAC00434802 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1957ADC41B587AAC00434802 /* bechanceTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1957ADBF1B587AAC00434802 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1957ADA41B587AAC00434802 /* bechance */;
+			targetProxy = 1957ADBE1B587AAC00434802 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		1957ADB11B587AAC00434802 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1957ADB21B587AAC00434802 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		1957ADB61B587AAC00434802 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1957ADB71B587AAC00434802 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1957ADC51B587AAC00434802 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		1957ADC61B587AAC00434802 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1957ADC81B587AAC00434802 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/bechance",
+					/Users/taiowawaner/Documents/FacebookSDK,
+					/Users/DayNine/Documents/FacebookSDK,
+				);
+				INFOPLIST_FILE = bechance/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Taiowa-Waner.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "bechance/bechance-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		1957ADC91B587AAC00434802 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/bechance",
+					/Users/taiowawaner/Documents/FacebookSDK,
+					/Users/DayNine/Documents/FacebookSDK,
+				);
+				INFOPLIST_FILE = bechance/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Taiowa-Waner.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "bechance/bechance-Bridging-Header.h";
+			};
+			name = Release;
+		};
+		1957ADCB1B587AAC00434802 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = bechanceTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Taiowa-Waner.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/bechance.app/bechance";
+			};
+			name = Debug;
+		};
+		1957ADCC1B587AAC00434802 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = bechanceTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Taiowa-Waner.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/bechance.app/bechance";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1957ADA01B587AAC00434802 /* Build configuration list for PBXProject "bechance" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1957ADC51B587AAC00434802 /* Debug */,
+				1957ADC61B587AAC00434802 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1957ADC71B587AAC00434802 /* Build configuration list for PBXNativeTarget "bechance" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1957ADC81B587AAC00434802 /* Debug */,
+				1957ADC91B587AAC00434802 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1957ADCA1B587AAC00434802 /* Build configuration list for PBXNativeTarget "bechanceTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1957ADCB1B587AAC00434802 /* Debug */,
+				1957ADCC1B587AAC00434802 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1957ADAC1B587AAC00434802 /* bechance.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1957ADAD1B587AAC00434802 /* bechance.xcdatamodel */,
+			);
+			currentVersion = 1957ADAD1B587AAC00434802 /* bechance.xcdatamodel */;
+			path = bechance.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 1957AD9D1B587AAC00434802 /* Project object */;
+}

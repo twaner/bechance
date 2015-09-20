@@ -125,6 +125,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     ///
     @IBAction func fbLoginTapped(sender: UIButton) {
         
+        print("FB Tapped")
+        
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.displayActivityViewIndicator(true, activityIndicator: self.activityIndicator)
         })

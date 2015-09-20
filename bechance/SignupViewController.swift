@@ -50,8 +50,8 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
 
         graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
             
-            if let error = error {
-                print("ERROR in request")
+            if let _ = error {
+                print("ERROR in request \(error)")
             } else {
                 var tmp_user: [String: String] = [:]
                 if let email = result.valueForKey("email") as? String {
@@ -82,17 +82,20 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                 let location: [String] = ((result.valueForKey("location") as! [String: AnyObject])["name"] as! String).componentsSeparatedByString(", ") as [String]
                 self.user["city"] = location[0]
                 self.user["state"] = location[1]
+                
                 // Save in parse - no parse below!
                 self.user.saveInBackground()
-                self.core_user = User(username: tmp_user["user_name"]!, user_id: uuid, firstname: tmp_user["first_name"]!, lastname: tmp_user["last_name"]!, city: location[0], state: location[1], gender: tmp_user["gender"]!, email: tmp_user["email"]!, context: self.sharedContext)
+                let userId = PFUser.currentUser()!.valueForKey("objectId") as! String
+                self.core_user = User(username: tmp_user["user_name"]!, user_id: userId, firstname: tmp_user["first_name"]!, lastname: tmp_user["last_name"]!, city: location[0], state: location[1], gender: tmp_user["gender"]!, email: tmp_user["email"]!, context: self.sharedContext)
                 self.saveContext()
                 
                 let id = result.valueForKey("id") as! String
                 let photoUrl = "https://graph.facebook.com/\(id)/picture?type=large&return_ssl_resources=1"
                 let urlRequest = NSURLRequest(URL: NSURL(string: photoUrl)!)
+                
                 NSURLConnection.sendAsynchronousRequest(urlRequest, queue: NSOperationQueue.mainQueue(), completionHandler: { (response, data, error) -> Void in
-                    if let error = error {
-                        print("Error getting profile picture")
+                    if let _ = error {
+                        print("Error getting profile picture \(error)")
                     } else {
                         let image = UIImage(data: data!)
                         
@@ -103,6 +106,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                         self.user.saveInBackground()
                         self.core_user?.userImage = photoUrl
                         self.saveContext()
+                        bechanceClient.sharedInstance().sharedUser = self.core_user
                     }
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)

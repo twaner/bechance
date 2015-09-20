@@ -16,7 +16,6 @@ class Photo: NSManagedObject {
     @NSManaged var title: String
     @NSManaged var date: NSDate
     @NSManaged var photo_description: String
-    @NSManaged var tag: [Tag]
     @NSManaged var location: Location
     @NSManaged var id: String
 
@@ -32,10 +31,8 @@ class Photo: NSManagedObject {
         self.title = title
         self.date = date
         self.photo_description = photo_description
-        self.tag = tag as! [Tag]!
         self.location = location!
-        //TODO imagepath
-//        self.imagePath =  
+        self.imagePath =  "\(self.title)_\(self.id)"
     }
     
     override func prepareForDeletion() {

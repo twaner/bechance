@@ -47,7 +47,6 @@
 		198CD3DB1B6EA957008891A9 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CD3DA1B6EA957008891A9 /* MainTableViewCell.swift */; };
 		198CD3DD1B6EECEA008891A9 /* TaskCancellingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CD3DC1B6EECEA008891A9 /* TaskCancellingTableViewCell.swift */; };
 		19DBB4CA1B856859000C8472 /* bechanceNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DBB4C91B856859000C8472 /* bechanceNetworkClient.swift */; };
-		19E301311B6B086B00CA31E1 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E3012E1B6B086B00CA31E1 /* Tag.swift */; };
 		19E301321B6B086B00CA31E1 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E3012F1B6B086B00CA31E1 /* Location.swift */; };
 		19E301331B6B086B00CA31E1 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E301301B6B086B00CA31E1 /* Photo.swift */; };
 		7E04E2781B77F0DC00433BFC /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E04E2771B77F0DC00433BFC /* UserViewController.swift */; };
@@ -121,7 +120,6 @@
 		198CD3DA1B6EA957008891A9 /* MainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		198CD3DC1B6EECEA008891A9 /* TaskCancellingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCancellingTableViewCell.swift; sourceTree = "<group>"; };
 		19DBB4C91B856859000C8472 /* bechanceNetworkClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = bechanceNetworkClient.swift; sourceTree = "<group>"; };
-		19E3012E1B6B086B00CA31E1 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		19E3012F1B6B086B00CA31E1 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		19E301301B6B086B00CA31E1 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		7E04E2771B77F0DC00433BFC /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
@@ -338,7 +336,6 @@
 		19E3012D1B6AFFFE00CA31E1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				19E3012E1B6B086B00CA31E1 /* Tag.swift */,
 				19E3012F1B6B086B00CA31E1 /* Location.swift */,
 				19E301301B6B086B00CA31E1 /* Photo.swift */,
 				198CD3D31B6E7626008891A9 /* User.swift */,
@@ -469,7 +466,6 @@
 				198CD3D41B6E7626008891A9 /* User.swift in Sources */,
 				7E7A14E01B935E160009D59D /* LocationViewController.swift in Sources */,
 				198CD3CE1B6E7160008891A9 /* ImageDocumentDirectory.swift in Sources */,
-				19E301311B6B086B00CA31E1 /* Tag.swift in Sources */,
 				198CD3DD1B6EECEA008891A9 /* TaskCancellingTableViewCell.swift in Sources */,
 				19DBB4CA1B856859000C8472 /* bechanceNetworkClient.swift in Sources */,
 				198CD3D01B6E71A9008891A9 /* bechanceConstants.swift in Sources */,

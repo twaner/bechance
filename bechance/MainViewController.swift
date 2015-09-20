@@ -23,15 +23,31 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        #if arch(i386) || arch(x86_64)
+            let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! NSString
+            NSLog("Document Path: %@", documentsPath)
+        #endif
+        
         var user = PFUser.currentUser()
         
         self.populate()
         // Get photos
         
-//        fetchedResultController.performFetch(nil)
-        let fetchRequest = NSFetchRequest(entityName: "User")
-        fetchRequest.sortDescriptors = []
-        var tmp = try? self.sharedContext.executeFetchRequest(fetchRequest)
+        if bechanceClient.sharedInstance().sharedUser == nil {
+            let fetchRequest = NSFetchRequest(entityName: "User")
+            fetchRequest.sortDescriptors = []
+//            try? self.sharedContext.executeFetchRequest(fetchRequest).first as! User
+//            bechanceClient.sharedInstance().sharedUser
+//            guard self.sharedContext.executeFetchRequest(fetchRequest).first != nil
+            
+            do {
+                let tmp: User = try self.sharedContext.executeFetchRequest(fetchRequest).first as! User
+                bechanceClient.sharedInstance().sharedUser = tmp
+            } catch {
+                print("NO User Found")
+            }
+            
+        }
         
         // Delegates
         self.fetchedResultController.delegate = self

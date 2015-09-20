@@ -29,8 +29,6 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        venue = [["rrr": "RRRRR"], ["2222": "3333"]]
-//        self.searchBar.delegate = self
         self.searchTableView.delegate = self
         self.searchTableView.dataSource = self
         self.locationManager.delegate = self
@@ -61,8 +59,6 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - TableView Delegate and DataSource
     
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print("IN VENUE.COUNT cellForRowAtIndexPath \(self.venue.count)")
-//        let cell = tableView!.dequeueReusableCellWithIdentifier("Cell") as! UITableViewCell
         let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell")!
         
         let item = self.venue[indexPath.row]
@@ -72,7 +68,6 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     
      func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var i = self.venue[indexPath.row]
-        print("didSelectRowAtIndex \(i)")
         
         if let city = (i["location"] as? NSDictionary)!.valueForKey("city") as? String {
             tmpLocation["city"] = city as String
@@ -85,6 +80,9 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
         }
         if let lng = (i["location"] as? NSDictionary)!.valueForKey("lng") as? NSNumber {
             tmpLocation["lng"] = lng
+        }
+        if let task = searchTask {
+            task.cancel()
         }
     }
     
@@ -163,7 +161,7 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
                 print(result)
                 if let venuesDictionary = result as? [[String: AnyObject]] {
 //                        print("venue dictionary \(venuesDictionary)")
-                    var venues = venuesDictionary.map({self.venue.append($0) })
+                    _ = venuesDictionary.map({self.venue.append($0) })
                     print("venue after map -> \(self.venue)")
                     self.searchTableView.reloadData()
                     }
@@ -206,8 +204,7 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
         if let name = i["name"]! as? String {
             tmpLocation["name"] = name
         }
-        
         nextVC.tmpLocation = self.tmpLocation
+        }
     }
-}
 }

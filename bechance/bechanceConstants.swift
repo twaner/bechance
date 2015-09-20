@@ -54,4 +54,27 @@ extension bechanceClient {
         static let ClientSecret = "client_secret"
         static let Version = "v"
     }
+    
+    // MARK: - Errors
+    
+    enum GenericErrors: ErrorType {
+        case FailedToSaveToCoreData
+        case FailedToSaveToParse
+        case MissingData
+    }
+    
+    enum PhotoSaveError: ErrorType {
+        case EmptyPhoto
+        case FailedToUpload
+        case MissingData
+        case FailedToSaveToCoreData
+        case FailedToSaveToParse
+    }
+    
+    enum LocationSaveError: ErrorType {
+        case SaveError
+        case FailedToSaveToCoreData
+        case FailedToSaveToParse
+        case MissingData
+    }
 }

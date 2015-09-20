@@ -60,6 +60,8 @@
 		7E46A3641B73E5F3002CA719 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E46A3611B73E5F3002CA719 /* FBSDKLoginKit.framework */; };
 		7E46A3651B73E5F3002CA719 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E46A3621B73E5F3002CA719 /* FBSDKShareKit.framework */; };
 		7E7A14E01B935E160009D59D /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7A14DF1B935E160009D59D /* LocationViewController.swift */; };
+		7EAB9B3C1BAF4E9F00FB6289 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAB9B3B1BAF4E9F00FB6289 /* PhotoCollectionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		7EAB9B3E1BAF4ECD00FB6289 /* TaskCancellingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAB9B3D1BAF4ECD00FB6289 /* TaskCancellingCollectionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 		7EE27CC61B8EA644000DFEC7 /* Camera-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE27CC51B8EA644000DFEC7 /* Camera-50.png */; };
 		7EE27CC81B8EA683000DFEC7 /* Camera-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE27CC71B8EA683000DFEC7 /* Camera-32.png */; };
 /* End PBXBuildFile section */
@@ -133,6 +135,8 @@
 		7E46A3611B73E5F3002CA719 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		7E46A3621B73E5F3002CA719 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		7E7A14DF1B935E160009D59D /* LocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
+		7EAB9B3B1BAF4E9F00FB6289 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		7EAB9B3D1BAF4ECD00FB6289 /* TaskCancellingCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCancellingCollectionViewCell.swift; sourceTree = "<group>"; };
 		7EE27CC51B8EA644000DFEC7 /* Camera-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Camera-50.png"; sourceTree = "<group>"; };
 		7EE27CC71B8EA683000DFEC7 /* Camera-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Camera-32.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -329,6 +333,8 @@
 			children = (
 				198CD3DA1B6EA957008891A9 /* MainTableViewCell.swift */,
 				198CD3DC1B6EECEA008891A9 /* TaskCancellingTableViewCell.swift */,
+				7EAB9B3B1BAF4E9F00FB6289 /* PhotoCollectionViewCell.swift */,
+				7EAB9B3D1BAF4ECD00FB6289 /* TaskCancellingCollectionViewCell.swift */,
 			);
 			name = UIComponents;
 			sourceTree = "<group>";
@@ -460,12 +466,14 @@
 				198CD3DB1B6EA957008891A9 /* MainTableViewCell.swift in Sources */,
 				19E301321B6B086B00CA31E1 /* Location.swift in Sources */,
 				198CD3D21B6E71B4008891A9 /* bechanceConvenience.swift in Sources */,
+				7EAB9B3C1BAF4E9F00FB6289 /* PhotoCollectionViewCell.swift in Sources */,
 				1957ADD41B587B4F00434802 /* bechanceClient.swift in Sources */,
 				7E04E2781B77F0DC00433BFC /* UserViewController.swift in Sources */,
 				7E21F9EA1B8D5007008C21EB /* AddPhotoViewController.swift in Sources */,
 				198CD3D41B6E7626008891A9 /* User.swift in Sources */,
 				7E7A14E01B935E160009D59D /* LocationViewController.swift in Sources */,
 				198CD3CE1B6E7160008891A9 /* ImageDocumentDirectory.swift in Sources */,
+				7EAB9B3E1BAF4ECD00FB6289 /* TaskCancellingCollectionViewCell.swift in Sources */,
 				198CD3DD1B6EECEA008891A9 /* TaskCancellingTableViewCell.swift in Sources */,
 				19DBB4CA1B856859000C8472 /* bechanceNetworkClient.swift in Sources */,
 				198CD3D01B6E71A9008891A9 /* bechanceConstants.swift in Sources */,

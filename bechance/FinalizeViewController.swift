@@ -91,8 +91,9 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
         return coreLocation
     }
     
-    func saveCorePhoto(location: Location) -> Photo {
-        let corePhoto = Photo(id: (parsePhoto?.objectId)!, title: self.titleTextField.text!, date: parsePhoto!["date"] as! NSDate, photo_description: self.descriptionTextView.text, tag: nil, location: location, context: self.sharedContext)
+    func saveCorePhoto(location: Location, photo: PFObject) -> Photo {
+        let corePhoto = Photo(id: (photo.objectId)!, title: self.titleTextField.text!, date: photo["date"] as! NSDate, photo_description: self.descriptionTextView.text, user: bechanceClient.sharedInstance().sharedUser!, location: location, context: self.sharedContext)
+        
         self.saveContext()
         return corePhoto
     }
@@ -122,14 +123,6 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
     func saveParsePhoto(location: PFObject) {
         let data: NSData = UIImageJPEGRepresentation(self.photoImageView.image!, 0.8)!
         let photoFile = PFFile(data: data)
-        //        photo.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-        //            if success {
-        //
-        //            } else {
-        //                print("Error saving PFFile to parse \(error)")
-        //            }
-        //        }
-        // Blocks main thread
         photoFile.save()
         
         let photo = PFObject(className: "Photo")
@@ -144,7 +137,7 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
             if success {
                 print("Saved photo to Parse...calling saveCoreLocation()")
                 let location = self.saveCoreLocation()
-                let _ = self.saveCorePhoto(location)
+                let _ = self.saveCorePhoto(location, photo: photo)
             } else {
                 print("Error saving photo to Parse \(error)")
             }

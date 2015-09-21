@@ -13,9 +13,11 @@ extension bechanceClient {
     
     
     func taskForCreatingImage(filePath: String, completionHandler: (imageData: NSData?, error: NSError?) ->  Void) -> NSURLSessionTask {
-        _ = NSURL(string: filePath)
+        let url = NSURL(string: filePath)
         
-        let request = NSURLRequest(URL: NSURL(string: filePath)!)
+        print("imageUrl: \(filePath)")
+        
+        let request = NSURLRequest(URL: url!)
         let task = session.dataTaskWithRequest(request) {
             (data, response, downloadError) in
             if let error = downloadError {

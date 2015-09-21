@@ -10,10 +10,11 @@ import UIKit
 import CoreData
 import Parse
 
-class UserViewController: UIViewController, NSFetchedResultsControllerDelegate {
+class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
 
     // MARK: - Outlets
     
+    @IBOutlet weak var photoCollectionView: UICollectionView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var firstnameLabel: UILabel!
     @IBOutlet weak var lastnameLabel: UILabel!
@@ -27,36 +28,51 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate {
     
     var user: PFUser?
     var coreUser: User?
+    var photos: [Photo]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.photoCollectionView.dataSource = self
+        self.photoCollectionView.delegate = self
 
-        // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
+        do {
+            try self.fetchedResultController.performFetch()
+        } catch let error as NSError {
+            print("Error: \(error.localizedDescription)")
+            abort()
+        }
+        
         user = PFUser.currentUser()
-        let fetchRequest = NSFetchRequest(entityName: "User")
+        let fetchRequest = NSFetchRequest(entityName: "Photo")
         fetchRequest.sortDescriptors = []
-        let tmp = (try? self.sharedContext.executeFetchRequest(fetchRequest))?.first as! User
+        self.photos = (try? self.sharedContext.executeFetchRequest(fetchRequest)) as? [Photo]
+        if self.photos?.count > 0 {
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.photoCollectionView.reloadData()
+            })
+        }
         
         // Delegates
         self.fetchedResultController.delegate = self
-        self.coreUser = tmp
+        self.coreUser = bechanceClient.sharedInstance().sharedUser
         
         // Update appearance
-        self.usernameLabel.text = coreUser?.username
-        self.firstnameLabel.text = coreUser?.firstname
-        self.lastnameLabel.text = coreUser?.lastname
-        self.locationLabel.text = "\(coreUser!.city), \(coreUser!.state)"
+        self.usernameLabel.text = bechanceClient.sharedInstance().sharedUser?.username
+        self.firstnameLabel.text = bechanceClient.sharedInstance().sharedUser?.firstname
+        self.lastnameLabel.text = bechanceClient.sharedInstance().sharedUser?.lastname
+        self.locationLabel.text = "\(bechanceClient.sharedInstance().sharedUser!.city), \(bechanceClient.sharedInstance().sharedUser!.state)"
         let dateFormat = NSDateFormatter()
+        self.photosLabel.text = "\(self.photos!.count)"
         dateFormat.dateStyle = .ShortStyle
-        let dateString = dateFormat.stringFromDate((coreUser!.date as? NSDate)!)
-        self.userDateLabel.text = dateString
-        let imagePath = coreUser?.userImage as String?
-        let task = bechanceClient.sharedInstance().taskForCreatingImage(imagePath!, completionHandler: { (imageData, error) -> Void in
+        self.userDateLabel.text = dateFormat.stringFromDate(bechanceClient.sharedInstance().sharedUser!.date)
+        let imagePath = bechanceClient.sharedInstance().sharedUser?.userImage as String?
+        
+        _ = bechanceClient.sharedInstance().taskForCreatingImage(imagePath!, completionHandler: { (imageData, error) -> Void in
             if let error = error {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.displayUIAlertController("Error getting photo", message: "Photo download error: \(error.localizedDescription)", action: "Ok")
@@ -70,7 +86,6 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate {
                 }
             }
         })
-//        self.userImageView.image = coreUser.
     }
 
     override func didReceiveMemoryWarning() {
@@ -85,14 +100,58 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "showItemSegue") {
             let navController = segue.destinationViewController as! UINavigationController
-            let detailController = navController.topViewController as! AddPhotoViewController
+            _ = navController.topViewController as! AddPhotoViewController
         }
+    }
+    
+    // MARK: - CollectionView Delegate and Helpers
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! PhotoCollectionViewCell
+        cell.activityIndicator.startAnimating()
+        let photo = fetchedResultController.objectAtIndexPath(indexPath) as! Photo
+        configureCell(cell, photo: photo)
+        return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.fetchedResultController.sections?.count ?? 0
+    }
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return self.fetchedResultController.sections?.count ?? 0
+    }
+    
+    func configureCell(cell: PhotoCollectionViewCell, photo: Photo) {
+        var photoImage = UIImage(named: "Blank52")
+        cell.cellImage.image = nil
+        if photo.imagePath == "" || photo.imagePath.isEmpty {
+            photoImage = UIImage(named: "Blank52")
+        } else {
+            let task = bechanceClient.sharedInstance().taskForCreatingImage(photo.imagePath) { (imageData, error) -> Void in
+                if let error = error {
+                    print("Local photo get error : \(error.localizedDescription)")
+                } else {
+                    if let data = imageData {
+                        let image = UIImage(data: data)
+                        photo.photoImage = image
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            cell.activityIndicator.hidesWhenStopped = true
+                            cell.activityIndicator.stopAnimating()
+                            cell.cellImage.image = image
+                        })
+                    }
+                }
+            }
+            cell.taskToCancelIfCellIsReused = task
+        } // else
+        cell.cellImage.image = photoImage
     }
     
     // MARK: - CoreData Helpers
     
     lazy var fetchedResultController: NSFetchedResultsController = {
-        let fetchRequest = NSFetchRequest(entityName: "User")
+        let fetchRequest = NSFetchRequest(entityName: "Photo")
         fetchRequest.sortDescriptors = []
         let fetchedResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
         return fetchedResultController

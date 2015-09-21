@@ -28,8 +28,6 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
             NSLog("Document Path: %@", documentsPath)
         #endif
         
-        var user = PFUser.currentUser()
-        
         self.populate()
         // Get photos
         

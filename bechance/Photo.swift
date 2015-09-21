@@ -18,12 +18,13 @@ class Photo: NSManagedObject {
     @NSManaged var photo_description: String
     @NSManaged var location: Location
     @NSManaged var id: String
+    @NSManaged var user: User
 
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
     
-    init(id: String, title: String, date: NSDate, photo_description: String, tag: [AnyObject]?, location: Location?, context: NSManagedObjectContext) {
+    init(id: String, title: String, date: NSDate, photo_description: String, user: User, location: Location?, context: NSManagedObjectContext) {
         let entity = NSEntityDescription.entityForName("Photo", inManagedObjectContext: context)!
         super.init(entity: entity, insertIntoManagedObjectContext: context)
         
@@ -32,7 +33,8 @@ class Photo: NSManagedObject {
         self.date = date
         self.photo_description = photo_description
         self.location = location!
-        self.imagePath =  "\(self.title)_\(self.id)"
+        self.user = user
+        self.imagePath =  "\(self.title)_\(self.id)".stringByReplacingOccurrencesOfString(" ", withString: "_")
     }
     
     override func prepareForDeletion() {

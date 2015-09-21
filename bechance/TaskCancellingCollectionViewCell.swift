@@ -10,7 +10,7 @@ import UIKit
 
 import UIKit
 
-class TaskCancellingTableViewCell: UICollectionViewCell {
+class TaskCancellingCollectionViewCell: UICollectionViewCell {
     var imageName: String = ""
     
     var taskToCancelIfCellIsReused: NSURLSessionTask? {

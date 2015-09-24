@@ -40,16 +40,7 @@ class bechanceClient {
         // Add in the API Key
         mutableParameters["api_key"] = ""//Constants.ApiKey
         
-        // Substitute the id parameter into the resource
-//        if resource.rangeOfString(":id") != nil {
-//            assert(parameters[Keys.ID] != nil)
-//            
-//            mutableResource = mutableResource.stringByReplacingOccurrencesOfString(":id", withString: "\(parameters[Keys.ID]!)")
-//            mutableParameters.removeValueForKey(Keys.ID)
-//        }
-        
         let urlString = ""
-//        Constants.BaseUrl + mutableResource + TheMovieDB.escapedParameters(mutableParameters)
         let url = NSURL(string: urlString)!
         let request = NSURLRequest(URL: url)
         

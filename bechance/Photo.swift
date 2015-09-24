@@ -34,7 +34,7 @@ class Photo: NSManagedObject {
         self.photo_description = photo_description
         self.location = location!
         self.user = user
-        self.imagePath =  "\(self.title)_\(self.id)".stringByReplacingOccurrencesOfString(" ", withString: "_")
+        self.imagePath =  "\(self.title)_\(self.id)".stringByReplacingOccurrencesOfString(" ", withString: "_") + ".jpg"
     }
     
     override func prepareForDeletion() {

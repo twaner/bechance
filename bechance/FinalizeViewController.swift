@@ -57,11 +57,11 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
     func parseLocationQuery(name: String) {
         let query = PFQuery(className: "Location")
         query.whereKey("name", equalTo: name)
-        query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
+        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
             if let _ = error {
                 print("Error getting location from Parse Error: \(error)")
             } else {
-                self.parseLocation = objects?.first as? PFObject
+                self.parseLocation = objects?.first
             }
         }
     }
@@ -123,7 +123,12 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
     func saveParsePhoto(location: PFObject) {
         let data: NSData = UIImageJPEGRepresentation(self.photoImageView.image!, 0.8)!
         let photoFile = PFFile(data: data)
-        photoFile.save()
+        do {
+            try photoFile.save()
+        } catch {
+            print("Error saving PhotoFile \(error)")
+        }
+
         
         let photo = PFObject(className: "Photo")
         photo["title"] = self.titleTextField.text

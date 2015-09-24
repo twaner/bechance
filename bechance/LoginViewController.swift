@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import FBSDKCoreKit
+import ParseFacebookUtilsV4
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
@@ -130,7 +131,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.displayActivityViewIndicator(true, activityIndicator: self.activityIndicator)
         })
-        
         PFFacebookUtils.logInInBackgroundWithReadPermissions(permissions, block: { (user: PFUser?, error: NSError?) -> Void in
             if let error = error {
                 print(error)

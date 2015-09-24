@@ -24,20 +24,15 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         super.viewDidLoad()
         
         #if arch(i386) || arch(x86_64)
-            let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! NSString
+            let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
             NSLog("Document Path: %@", documentsPath)
         #endif
         
         self.populate()
-        // Get photos
         
         if bechanceClient.sharedInstance().sharedUser == nil {
             let fetchRequest = NSFetchRequest(entityName: "User")
             fetchRequest.sortDescriptors = []
-//            try? self.sharedContext.executeFetchRequest(fetchRequest).first as! User
-//            bechanceClient.sharedInstance().sharedUser
-//            guard self.sharedContext.executeFetchRequest(fetchRequest).first != nil
-            
             do {
                 let tmp: User = try self.sharedContext.executeFetchRequest(fetchRequest).first as! User
                 bechanceClient.sharedInstance().sharedUser = tmp
@@ -56,6 +51,8 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
+        self.tableView.reloadData()
         
         self.photoButton
  = UIButton(type: UIButtonType.Custom) 
@@ -78,35 +75,45 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     // MARK: - Parse helper functions
     
     func populate() {
-        var photoCount = 0
-        var tmpArray:[PFObject]?
+
         let query = PFQuery(className: "Photo")
-        query.findObjectsInBackgroundWithBlock { (photos: [AnyObject]?, error: NSError?) -> Void in
-            if let error = error {
-                print("Error with photo query")
-            } else {
-                if let photos = photos as? [PFObject] {
-                    for photo in photos {
-                        print("Photo array count before \(bechanceClient.sharedInstance().photoArray.count)")
-                        bechanceClient.sharedInstance().photoArray.append(photo)
-                        print("Photo array count \(bechanceClient.sharedInstance().photoArray.count)")
-                        let desciption = photo["description"] as? String ?? ""
-                        let title = photo["title"] as? String ?? ""
-                        let dateFormat = NSDateFormatter()
-                        dateFormat.dateStyle = .ShortStyle
-                        dateFormat.timeStyle = .LongStyle
-                        let dateString = dateFormat.stringFromDate((photo["date"] as? NSDate)!)
-//                        let core_photo = Photo()
-                        dispatch_async(dispatch_get_main_queue()) {
-//                            println("Photo array count before \(bechanceClient.sharedInstance().photoArray.count)")
-//                            bechanceClient.sharedInstance().photoArray.append(photo)
-//                            println("Photo array count \(bechanceClient.sharedInstance().photoArray.count)")
-                            self.tableView.reloadData()
-                        }
+        
+        query.findObjectsInBackgroundWithBlock { (photos: [PFObject]?, error: NSError?) -> Void in
+            if error == nil {
+                for photo in photos! {
+                    bechanceClient.sharedInstance().photoArray.append(photo)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.tableView.reloadData()
                     }
                 }
+            } else {
+                print("Error with photo query: \(error)")
             }
         }
+        
+
+//        query.findObjectsInBackgroundWithBlock { (photos: [AnyObject]?, error: NSError?) -> Void in
+//            if let error = error {
+//                print("Error with photo query: \(error)")
+//            } else {
+//                if let photos = photos as? [PFObject] {
+//                    for photo in photos {
+//                        bechanceClient.sharedInstance().photoArray.append(photo)
+//                        let desciption = photo["description"] as? String //?? ""
+//                        let title = photo["title"] as? String //?? ""
+//                        let dateFormat = NSDateFormatter()
+//                        dateFormat.dateStyle = .ShortStyle
+//                        dateFormat.timeStyle = .LongStyle
+//                        let dateFromParse = photo["date"] as? NSDate
+//                        let dateString = dateFormat.stringFromDate(dateFromParse)
+//                        
+//                        dispatch_async(dispatch_get_main_queue()) {
+//                            self.tableView.reloadData()
+//                        }
+//                    }
+//                }
+//            }
+//        }
         
         /**
         date = "2015-08-03 23:38:00 +0000";
@@ -138,7 +145,12 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         let userQuery = PFQuery(className: "User")
         
         let locationObj = photo["location"] as! PFObject
-        locationObj.fetchIfNeeded()
+        do {
+            try locationObj.fetchIfNeeded()
+        } catch {
+            print("Error fetching location Object \(error)")
+        }
+        
         cell.locationLabel?.text = (locationObj["name"] as! String)
         //User
         cell.userImage?.layer.cornerRadius = cell.userImage.frame.size.width / 2

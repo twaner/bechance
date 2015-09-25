@@ -53,6 +53,7 @@ extension bechanceClient {
         static let ClientID = "client_id"
         static let ClientSecret = "client_secret"
         static let Version = "v"
+        static let Query = "query"
     }
     
     // MARK: - Errors

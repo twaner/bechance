@@ -57,7 +57,7 @@ extension bechanceClient {
     
     // MARK: - Foursquare Get
     
-    func foursquareGetVenueCreator(lat: String?, long: String?, location: String?, providerID: String?) -> [String: AnyObject] {
+    func foursquareGetVenueCreator(lat: String?, long: String?, location: String?, providerID: String?, query: String?) -> [String: AnyObject] {
         var ll = ""
         var loc = ""
         var provID = ""
@@ -79,7 +79,8 @@ extension bechanceClient {
             ParameterKeys.LL: ll,
             ParameterKeys.Intent: "browse",
             ParameterKeys.Location: loc,
-            ParameterKeys.ProviderId: provID,
+//            ParameterKeys.ProviderId: provID,
+            ParameterKeys.Query: query!,
             ParameterKeys.ClientSecret: FourSquare.ClientSecret,
             ParameterKeys.ClientID: FourSquare.ClientID,
             ParameterKeys.Version: dateString

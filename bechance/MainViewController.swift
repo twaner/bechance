@@ -23,6 +23,7 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // TODO: REMOVE
         #if arch(i386) || arch(x86_64)
             let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
             NSLog("Document Path: %@", documentsPath)
@@ -53,8 +54,7 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         
         self.tableView.reloadData()
         
-        self.photoButton
- = UIButton(type: UIButtonType.Custom) 
+        self.photoButton = UIButton(type: UIButtonType.Custom)
         self.photoButton!.frame = CGRectMake(self.view.frame.width - self.view.frame.width / 6.0 , self.view.frame.height - self.view.frame.height / 7, 60.0, 60.0)
         self.photoButton?.backgroundColor = UIColor.redColor()
         self.photoButton?.setTitle("Photo", forState: UIControlState.Normal)
@@ -76,6 +76,7 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     func populate() {
 
         let query = PFQuery(className: "Photo")
+        query.orderByDescending("date")
         
         query.findObjectsInBackgroundWithBlock { (photos: [PFObject]?, error: NSError?) -> Void in
             if error == nil {
@@ -118,9 +119,6 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
             }
         }
         // Location
-        let locationQuery = PFQuery(className: "Location")
-        let userQuery = PFQuery(className: "User")
-        
         let locationObj = photo["location"] as! PFObject
         do {
             try locationObj.fetchIfNeeded()

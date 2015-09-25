@@ -128,6 +128,11 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     ///:param: cell PhotoCollectionViewCell
     ///:param: photo Photo object
     func configureCell(cell: PhotoCollectionViewCell, photo: Photo) {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            cell.activityIndicator.hidesWhenStopped = true
+            cell.activityIndicator.startAnimating()
+        })
+
         var photoImage = UIImage(named: "Blank52")
         cell.cellImage.image = nil
         if photo.imagePath == "" || photo.imagePath.isEmpty {

@@ -19,13 +19,13 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: - Props
     
-//    var venues: [String: AnyObject]?
     let locationManager = CLLocationManager()
     var lat: CLLocationDegrees?
     var long: CLLocationDegrees?
     var venue = [[String:AnyObject]]()
     var tmpLocation: [String: AnyObject] = [String: AnyObject]()
     var searchTask: NSURLSessionDataTask?
+    var location: CLLocationCoordinate2D?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +53,6 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: - TableView Delegate and DataSource
@@ -117,14 +116,20 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
             return
         }
         
-        let tmp: [String: AnyObject] = bechanceClient.sharedInstance().foursquareGetVenueCreator("37.785834", long: "-122.406417", location: "", providerID: "apple")
+        let latString = self.location!.latitude.description
+        let longString = self.location!.longitude.description
+        
+        let tmp: [String: AnyObject] = bechanceClient.sharedInstance().foursquareGetVenueCreator(latString, long: longString, location:"", providerID: "", query: searchText)
         
         searchTask = bechanceClient.sharedInstance().foursquareGetHelper(bechanceClient.Constants.VenueSearch, parameters: tmp)
             { (result, error) -> Void in
             if let error = error {
                 print("ERROR calling foursquare \(error)")
+                dispatch_async(dispatch_get_main_queue()){
+                    self.displayUIAlertController("Error", message: "Error getting locations from Foursquare: \(error)", action: "Ok")
+                }
             } else {
-//                print(result)
+
                 if let venueDictionary = result as? NSDictionary {
                     if let venueResponse = venueDictionary.valueForKey(bechanceClient.JSONResponseKeys.Response) as? NSDictionary {
                         if let venueArray = venueResponse.valueForKey(bechanceClient.JSONResponseKeys.Venues) as? [[String: AnyObject]] {
@@ -144,31 +149,8 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locationValue: CLLocationCoordinate2D = manager.location!.coordinate
         
-        print("locations = \(locationValue.latitude)    \(locationValue.longitude)")
-        
-        let location = CLLocationCoordinate2DMake(locationValue.latitude, locationValue.longitude)
-        // lat & long will be used in foursquare API
-        
+        self.location = CLLocationCoordinate2DMake(locationValue.latitude, locationValue.longitude)
     }
-    
-    // MARK: - Get venues
-    
-    func getVenues(searchText: String) {
-        bechanceClient.sharedInstance().foursquareGetVenues("37.785834", long: "-122.406417", location: "", providerID: "apple") { (success, result, error) -> Void in
-            if let error = error {
-                print("ERROR calling foursquare \(error)")
-            } else {
-                print(result)
-                if let venuesDictionary = result as? [[String: AnyObject]] {
-//                        print("venue dictionary \(venuesDictionary)")
-                    _ = venuesDictionary.map({self.venue.append($0) })
-                    print("venue after map -> \(self.venue)")
-                    self.searchTableView.reloadData()
-                    }
-                }
-            }
-        }
-    
     
     // MARK: - Navigation
     

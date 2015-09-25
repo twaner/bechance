@@ -43,10 +43,9 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         
         userImage.clipsToBounds = true
         
-        var accessToken = user.sessionToken
-        var parameters = ["fields": "id, name, first_name, last_name, email, location, gender"] // last_name, picture.type(large), email,picture{url}"]
+        let parameters = ["fields": "id, name, first_name, last_name, email, location, gender"] // last_name, picture.type(large), email,picture{url}"]
         
-        var graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: parameters)//["fields": "id, name, first_name, last_name, picture.type(large), email, gender"])
+        let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: parameters)
 
         graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
             
@@ -118,14 +117,12 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.username.delegate = self
 //        self.subscribeToKeyboardNotification()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -134,8 +131,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldDidEndEditing(textField: UITextField) {
         if self.username.text!.isEmpty {
-            //TODO: alert view
-            print("Username cannot be empty")
+            self.displayUIAlertController("Username error", message: "Username cannot be empty. Please add a username", action: "Ok")
         }
     }
     
@@ -143,9 +139,10 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
         if !textField.text!.isEmpty {
             self.user["user_name"] = textField.text
-            self.user.saveInBackground()
-            self.core_user?.username = textField.text!
-            self.saveContext()
+            self.user.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+                self.core_user?.username = textField.text!
+                self.saveContext()
+            })
         }
         return true
     }
@@ -160,10 +157,9 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                 self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
             })
         } else {
-            print("Username cannot be empty")
-            //TODO: alert view
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
+                self.displayUIAlertController("Username error", message: "Username cannot be empty. Please add a username", action: "Ok")
             })
         }
     }

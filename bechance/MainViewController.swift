@@ -37,12 +37,11 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
                 let tmp: User = try self.sharedContext.executeFetchRequest(fetchRequest).first as! User
                 bechanceClient.sharedInstance().sharedUser = tmp
             } catch {
-                print("NO User Found")
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.displayUIAlertController("No user found.", message: "Please close app and try again.", action: "Ok")
+                })
             }
-            
         }
-        
-        // Delegates
         self.fetchedResultController.delegate = self
         self.tableView.dataSource = self
         self.tableView.delegate = self
@@ -87,34 +86,12 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
                     }
                 }
             } else {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.displayUIAlertController("Error", message: "Could not retrieve photos due to \(error)", action: "Ok")
+                })
                 print("Error with photo query: \(error)")
             }
         }
-        
-
-//        query.findObjectsInBackgroundWithBlock { (photos: [AnyObject]?, error: NSError?) -> Void in
-//            if let error = error {
-//                print("Error with photo query: \(error)")
-//            } else {
-//                if let photos = photos as? [PFObject] {
-//                    for photo in photos {
-//                        bechanceClient.sharedInstance().photoArray.append(photo)
-//                        let desciption = photo["description"] as? String //?? ""
-//                        let title = photo["title"] as? String //?? ""
-//                        let dateFormat = NSDateFormatter()
-//                        dateFormat.dateStyle = .ShortStyle
-//                        dateFormat.timeStyle = .LongStyle
-//                        let dateFromParse = photo["date"] as? NSDate
-//                        let dateString = dateFormat.stringFromDate(dateFromParse)
-//                        
-//                        dispatch_async(dispatch_get_main_queue()) {
-//                            self.tableView.reloadData()
-//                        }
-//                    }
-//                }
-//            }
-//        }
-        
         /**
         date = "2015-08-03 23:38:00 +0000";
         description = "Pier 2";
@@ -152,7 +129,6 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         }
         
         cell.locationLabel?.text = (locationObj["name"] as! String)
-        //User
         cell.userImage?.layer.cornerRadius = cell.userImage.frame.size.width / 2
         cell.userImage?.layer.masksToBounds = true
         let userObj = photo["user"] as! PFUser
@@ -165,26 +141,23 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
                     if let image = userObj["image"] as? NSData {
                         cell.userImage?.image = UIImage(data: image)    
                     }
-                    //cell.userImage?.image = UIImage(data: (userObj["image"] as? NSData)!)
                 })
             }
         }
         
         let dateFormat = NSDateFormatter()
         dateFormat.dateStyle = .ShortStyle
-//        dateFormat.timeStyle = .ShortStyle
         let dateString = dateFormat.stringFromDate((photo["date"] as? NSDate)!)
         let desc = photo["description"] as! String
         cell.dateLabel?.text = dateString
         cell.descriptionLabel?.text = desc
         cell.titleLabel?.text = photo["title"] as? String
-        // UI Updates
     }
     
     // MARK: - TableView Delegate Methods
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //TODO
+        //TODO: Save photo if not from current user
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -209,8 +182,6 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             sender.layer.addAnimation(rotateAnimation, forKey: nil)
         })
-        
-        print("Button tapped")
         self.performSegueWithIdentifier("PhotoSegue", sender: self)
 //        var controller = self.storyboard?.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
 //        let nextVC = controller.topViewController as! AddPhotoViewController

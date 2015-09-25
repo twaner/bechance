@@ -12,12 +12,15 @@ class ImageDocumentDirectory {
     
     private var fileManager = NSFileManager.defaultManager()
     
+    var documentDirectory: NSURL {
+        return fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
+    }
+    
     func imageWithIdentifier(identifier: String?) -> UIImage? {
         if identifier == nil || identifier != "" {
             return nil
         }
         let path = pathForIdentifier(identifier!)
-//        var data: NSData?
         if let data = NSData(contentsOfFile: path) {
             return UIImage(data: data)
         }
@@ -70,6 +73,6 @@ class ImageDocumentDirectory {
         let url = docDirectoryURL.URLByAppendingPathComponent((identifier as NSString).lastPathComponent)
         print("pathForIdentifier REMOVE :\(url.path!)")
         return url.path!
-
     }
+    
 }

@@ -134,7 +134,7 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
         photo["title"] = self.titleTextField.text
         photo["description"] = self.descriptionTextView.text
         photo["user"] = PFUser.currentUser()
-        photo["date"] = NSDate()//NSDateFormatter.localizedStringFromDate(NSDate(), dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: .ShortStyle)
+        photo["date"] = NSDate()
         photo["location"] = self.parseLocation
         photo["image"] = photoFile
         

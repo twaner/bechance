@@ -122,13 +122,18 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         return self.fetchedResultController.sections?.count ?? 0
     }
     
+    ///
+    /// Configures the appearance of a collection view cell.
+    ///
+    ///:param: cell PhotoCollectionViewCell
+    ///:param: photo Photo object
     func configureCell(cell: PhotoCollectionViewCell, photo: Photo) {
         var photoImage = UIImage(named: "Blank52")
         cell.cellImage.image = nil
         if photo.imagePath == "" || photo.imagePath.isEmpty {
             photoImage = UIImage(named: "Blank52")
         } else {
-            let task = bechanceClient.sharedInstance().taskForCreatingImage(photo.imagePath) { (imageData, error) -> Void in
+            let task = bechanceClient.sharedInstance().taskForGettingImageFromDocuments(photo.imagePath) { (imageData, error) -> Void in
                 if let error = error {
                     print("Local photo get error : \(error.localizedDescription)")
                 } else {
@@ -144,7 +149,7 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
                 }
             }
             cell.taskToCancelIfCellIsReused = task
-        } // else
+        }
         cell.cellImage.image = photoImage
     }
     

@@ -11,9 +11,36 @@ import UIKit
 
 extension bechanceClient {
     
+    /**
+    Gets an image from the documents directory using an NSURLSessionTask
     
+    - parameter filePath: file path for image
+    - parameter completionHandler: The completion handler to call when the load request is complete. This handler is executed on the delegate queue.
+    */
+    func taskForGettingImageFromDocuments(filePath: String, completionHandler: (imageData: NSData?, error: NSError?) -> Void) -> NSURLSessionTask {
+        let docDirectoryURL: NSURL = bechanceClient.DocumentAccessor.imageAccessor.documentDirectory
+        let url = docDirectoryURL.URLByAppendingPathComponent((filePath as NSString).lastPathComponent)
+        let request = NSURLRequest(URL: url)
+        let task = session.dataTaskWithRequest(request) {
+            (data, response, downloadError) in
+            if let error = downloadError {
+                _ = bechanceClient.errorForData(data, response: response, error: error)
+            } else {
+                completionHandler(imageData: data!, error: nil)
+            }
+        }
+        task.resume()
+        return task
+    }
+    
+    /**
+    Gets an image from a hyperlink using an NSURLSessionTask
+    
+    - parameter filePath: file path for image
+    - parameter completionHandler: The completion handler to call when the load request is complete. This handler is executed on the delegate queue.
+    */
     func taskForCreatingImage(filePath: String, completionHandler: (imageData: NSData?, error: NSError?) ->  Void) -> NSURLSessionTask {
-        print("imageUrl: \(filePath)")
+
         let url = NSURL(string: filePath)
         let request = NSURLRequest(URL: url!)
         let task = session.dataTaskWithRequest(request) {
@@ -27,14 +54,6 @@ extension bechanceClient {
         task.resume()
         return task
     }
-    
-//    func taskForCall(resource: String, parameters: [String: AnyObject], completionHander: CompletionHander) -> NSURLSessionDataTask {
-//        var params = parameters
-//        var resc = resource
-//        
-////        let urlString = 
-//        
-//    }
     
     // MARK: - Foursquare Get
     

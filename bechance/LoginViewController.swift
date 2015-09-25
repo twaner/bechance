@@ -33,7 +33,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.activityIndicator.clipsToBounds = true
         self.displayActivityViewIndicator(false, activityIndicator: activityIndicator)
         
-        // Blur Effect
+//        // Blur Effect
 //        var blurEffect = UIBlurEffect(style: UIBlurEffectStyle.ExtraLight)
 //        var blurEffectView = UIVisualEffectView(effect: blurEffect)
 //        blurEffectView.frame = view.bounds
@@ -64,10 +64,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-//        PFUser.logOut()
-        
         if let _ = PFUser.currentUser()?.username {
-            performSegueWithIdentifier("MainSegue", sender: self) //LoggedInSegue LoginSegue MainSegue
+            performSegueWithIdentifier("MainSegue", sender: self)
         }
     }
     

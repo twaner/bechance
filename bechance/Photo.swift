@@ -41,6 +41,11 @@ class Photo: NSManagedObject {
         bechanceClient.DocumentAccessor.imageAccessor.deleteImage(self.imagePath)
     }
     
+    func saveImage(image: UIImage, imagePath: String) {
+        let imageData = UIImagePNGRepresentation(image)
+        let result = imageData?.writeToFile(bechanceClient.DocumentAccessor.imageAccessor.pathForIdentifier(imagePath), atomically: true)
+    }
+    
     var photoImage: UIImage? {
         get {
             return bechanceClient.DocumentAccessor.imageAccessor.imageWithIdentifier(imagePath)

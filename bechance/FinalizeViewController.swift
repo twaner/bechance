@@ -93,7 +93,7 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
     
     func saveCorePhoto(location: Location, photo: PFObject) -> Photo {
         let corePhoto = Photo(id: (photo.objectId)!, title: self.titleTextField.text!, date: photo["date"] as! NSDate, photo_description: self.descriptionTextView.text, user: bechanceClient.sharedInstance().sharedUser!, location: location, context: self.sharedContext)
-        
+        corePhoto.saveImage(self.photoImageView.image!, imagePath: corePhoto.imagePath)
         self.saveContext()
         return corePhoto
     }

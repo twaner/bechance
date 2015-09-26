@@ -90,17 +90,37 @@ class bechanceClient {
     /** Helper: Given a response with error, see if a status_message is returned, otherwise return the previous error */
     class func errorForData(data: NSData?, response: NSURLResponse?, error: NSError) -> NSError {
         
-        if let parsedResult = (try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as? [String : AnyObject] {
-            
-            if let errorMessage = parsedResult[bechanceClient.JSONResponseKeys.Meta] as? String {
+//        if let parsedResult = (try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as? [String : AnyObject] {
+//            
+//            if let errorMessage = parsedResult[bechanceClient.JSONResponseKeys.Meta] as? String {
+//                
+//                let userInfo = [NSLocalizedDescriptionKey : errorMessage]
+//                
+//                return NSError(domain: "bechance Error", code: 1, userInfo: userInfo)
+//            }
+//        }
+//        
+//        return error
+        var data1: NSData?
+        if let data2 = data {
+            data1 = data2
+        } else {
+            data1 = NSData()
+        }
+        var error: NSError?
+        do {
+            let parsedResult = try NSJSONSerialization.JSONObjectWithData(data1!, options: .AllowFragments) as? [String: AnyObject]
+            if let errorMessage = parsedResult![bechanceClient.JSONResponseKeys.Meta] as? String {
                 
                 let userInfo = [NSLocalizedDescriptionKey : errorMessage]
                 
-                return NSError(domain: "bechance Error", code: 1, userInfo: userInfo)
+                error =  NSError(domain: "TMDB Error", code: 1, userInfo: userInfo)
             }
+        } catch let error as NSError {
+            return error
         }
-        
-        return error
+        return error!
+
     }
     
     /**

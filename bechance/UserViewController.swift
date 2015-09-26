@@ -115,7 +115,7 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.fetchedResultController.sections?.count ?? 0
+        return self.photos?.count ?? 0//self.fetchedResultController.sections?.count ?? 0
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {

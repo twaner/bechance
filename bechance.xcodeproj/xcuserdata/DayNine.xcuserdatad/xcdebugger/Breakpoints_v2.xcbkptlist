@@ -390,11 +390,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "bechance/FinalizeViewController.swift"
-            timestampString = "464916486.666062"
+            timestampString = "464984496.502229"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
             landmarkName = "saveParsePhoto(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -690,7 +690,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "bechance/MainViewController.swift"
@@ -706,27 +706,27 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "bechance/FinalizeViewController.swift"
-            timestampString = "464916965.673389"
+            timestampString = "464984496.502229"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
             landmarkName = "saveParsePhoto(_:)"
             landmarkType = "5">
             <Locations>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "bechance.FinalizeViewController.(saveParsePhoto (bechance.FinalizeViewController) -&gt; (ObjectiveC.PFObject) -&gt; ()).(closure #1)"
                   moduleName = "bechance"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/DayNine/Desktop/programming/bechance%202-2/bechance/FinalizeViewController.swift"
-                  timestampString = "464918497.771753"
+                  timestampString = "464983954.698149"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "154"
@@ -734,14 +734,14 @@
                   offsetFromSymbolStart = "234">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "bechance.FinalizeViewController.(saveParsePhoto (bechance.FinalizeViewController) -&gt; (ObjectiveC.PFObject) -&gt; ()).(closure #1).(closure #1)"
                   moduleName = "bechance"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/DayNine/Desktop/programming/bechance%202-2/bechance/FinalizeViewController.swift"
-                  timestampString = "464918497.77203"
+                  timestampString = "464983954.698443"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "155"
@@ -754,27 +754,27 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "bechance/FinalizeViewController.swift"
-            timestampString = "464916967.160933"
+            timestampString = "464984496.502229"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "160"
-            endingLineNumber = "160"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
             landmarkName = "saveParsePhoto(_:)"
             landmarkType = "5">
             <Locations>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "bechance.FinalizeViewController.(saveParsePhoto (bechance.FinalizeViewController) -&gt; (ObjectiveC.PFObject) -&gt; ()).(closure #1)"
                   moduleName = "bechance"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/DayNine/Desktop/programming/bechance%202-2/bechance/FinalizeViewController.swift"
-                  timestampString = "464918497.774085"
+                  timestampString = "464983954.71954"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "160"
@@ -782,14 +782,14 @@
                   offsetFromSymbolStart = "614">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "bechance.FinalizeViewController.(saveParsePhoto (bechance.FinalizeViewController) -&gt; (ObjectiveC.PFObject) -&gt; ()).(closure #1).(closure #2)"
                   moduleName = "bechance"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/DayNine/Desktop/programming/bechance%202-2/bechance/FinalizeViewController.swift"
-                  timestampString = "464918497.774362"
+                  timestampString = "464983954.71983"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "161"
@@ -806,11 +806,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "bechance/FinalizeViewController.swift"
-            timestampString = "464917157.994197"
+            timestampString = "464984496.502229"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
             landmarkName = "saveParsePhoto(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -818,15 +818,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "bechance/FinalizeViewController.swift"
-            timestampString = "464917257.399294"
+            timestampString = "464984496.502229"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
+            startingLineNumber = "133"
+            endingLineNumber = "133"
             landmarkName = "saveParsePhoto(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -834,15 +834,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "bechance/FinalizeViewController.swift"
-            timestampString = "464917377.505412"
+            timestampString = "464984496.502229"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
             landmarkName = "saveParseLocation(_:savePhoto:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -850,15 +850,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "bechance/FinalizeViewController.swift"
-            timestampString = "464917389.888712"
+            timestampString = "464984496.502229"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "141"
-            endingLineNumber = "141"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
             landmarkName = "saveParsePhoto(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -866,27 +866,27 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "bechance/FinalizeViewController.swift"
-            timestampString = "464917638.612442"
+            timestampString = "464984496.502229"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
             landmarkName = "saveParsePhoto(_:)"
             landmarkType = "5">
             <Locations>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "bechance.FinalizeViewController.saveParsePhoto (bechance.FinalizeViewController)(ObjectiveC.PFObject) -&gt; ()"
                   moduleName = "bechance"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/DayNine/Desktop/programming/bechance%202-2/bechance/FinalizeViewController.swift"
-                  timestampString = "464918497.805253"
+                  timestampString = "464983954.825558"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "149"
@@ -894,14 +894,14 @@
                   offsetFromSymbolStart = "2781">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "bechance.FinalizeViewController.(saveParsePhoto (bechance.FinalizeViewController) -&gt; (ObjectiveC.PFObject) -&gt; ()).(closure #1)"
                   moduleName = "bechance"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/DayNine/Desktop/programming/bechance%202-2/bechance/FinalizeViewController.swift"
-                  timestampString = "464918497.805539"
+                  timestampString = "464983954.825809"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "150"
@@ -914,7 +914,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "bechance/MainViewController.swift"

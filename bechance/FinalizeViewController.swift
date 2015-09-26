@@ -79,9 +79,11 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
     }
     
     @IBAction func postTapped(sender: UIButton) {
+        // Hide Post button; spinner; disable user interaction
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             self.postButton.hidden = true
             self.displayActivityViewIndicator(true, activityIndicator: self.activityIndicator)
+            self.view.userInteractionEnabled = false
         }
         
         if let location = self.parseLocation {
@@ -154,6 +156,7 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
                     self.postButton.hidden = false
+                    self.view.userInteractionEnabled = true
                     self.performSegueWithIdentifier("unwindToMainViewSegue", sender: nil)
                 })
             } else {
@@ -165,7 +168,7 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
         }
     }
     
-    // MARK: - Navigation
+    // MARK: - Navigation Unwind Segues
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
     }

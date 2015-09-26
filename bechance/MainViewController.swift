@@ -28,9 +28,7 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
             let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
             NSLog("Document Path: %@", documentsPath)
         #endif
-        
-        self.populate()
-        
+    
         if bechanceClient.sharedInstance().sharedUser == nil {
             let fetchRequest = NSFetchRequest(entityName: "User")
             fetchRequest.sortDescriptors = []
@@ -52,7 +50,7 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.tableView.reloadData()
+        self.populate()
         
         self.photoButton = UIButton(type: UIButtonType.Custom)
         self.photoButton!.frame = CGRectMake(self.view.frame.width - self.view.frame.width / 6.0 , self.view.frame.height - self.view.frame.height / 7, 60.0, 60.0)
@@ -74,7 +72,7 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     // MARK: - Parse helper functions
     
     func populate() {
-
+        bechanceClient.sharedInstance().photoArray = []
         let query = PFQuery(className: "Photo")
         query.orderByDescending("date")
         
@@ -176,17 +174,17 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
         rotateAnimation.fromValue = 0.0
         rotateAnimation.toValue = CGFloat(M_PI * 2.0)
-//        rotateAnimation.duration = duration
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             sender.layer.addAnimation(rotateAnimation, forKey: nil)
         })
         self.performSegueWithIdentifier("PhotoSegue", sender: self)
-//        var controller = self.storyboard?.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
-//        let nextVC = controller.topViewController as! AddPhotoViewController
-//        self.presentViewController(controller, animated: true, completion: nil)
     }
     
     // MARK: - Navigation
+    
+    @IBAction func unwindToMainView(segue: UIStoryboardSegue) {
+        
+    }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

@@ -18,14 +18,6 @@ class bechanceClient {
     
     typealias CompletionHander = (result: AnyObject!, error: NSError?) -> Void
     
-//    var config = Config.unarchivedInstance() ?? Config()
-    
-//    override init() {
-//        session = NSURLSession.sharedSession()
-//        super.init()
-//    }
-
-    
     init() {
         self.session = NSURLSession.sharedSession()
     }
@@ -104,7 +96,7 @@ class bechanceClient {
                 
                 let userInfo = [NSLocalizedDescriptionKey : errorMessage]
                 
-                return NSError(domain: "OTM Error", code: 1, userInfo: userInfo)
+                return NSError(domain: "bechance Error", code: 1, userInfo: userInfo)
             }
         }
         

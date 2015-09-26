@@ -18,6 +18,8 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var postButton: UIButton!
     
     // MARK: - Var
     
@@ -45,6 +47,10 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
             self.locationLabel.text = tmpLocation!["name"] as? String
             self.parseLocationQuery((tmpLocation!["name"] as? String)!)
         }
+        
+        self.activityIndicator.layer.cornerRadius = self.activityIndicator.frame.size.width / 10.0
+        self.activityIndicator.clipsToBounds = true
+        self.displayActivityViewIndicator(false, activityIndicator: activityIndicator)
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,8 +79,10 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
     }
     
     @IBAction func postTapped(sender: UIButton) {
-        
-        //TODO: save to parse
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            self.postButton.hidden = true
+            self.displayActivityViewIndicator(true, activityIndicator: self.activityIndicator)
+        }
         
         if let location = self.parseLocation {
             self.saveParsePhoto(location)
@@ -140,11 +148,19 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
         
         photo.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
             if success {
-                print("Saved photo to Parse...calling saveCoreLocation()")
                 let location = self.saveCoreLocation()
                 let _ = self.saveCorePhoto(location, photo: photo)
+                //unwind !!
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
+                    self.postButton.hidden = false
+                    self.performSegueWithIdentifier("unwindToMainViewSegue", sender: nil)
+                })
             } else {
-                print("Error saving photo to Parse \(error)")
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.displayUIAlertController("Error saving photo", message: "There was an error saving your photo \(error)", action: "Ok")
+                    self.postButton.hidden = false
+                })
             }
         }
     }
@@ -152,6 +168,10 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
     // MARK: - Navigation
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+    }
+    
+    @IBAction func unwindToMainView(segue: UIStoryboardSegue) {
+        
     }
     
     // MARK: - TextField

@@ -49,6 +49,8 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
+        // prepopulate table
     }
 
     override func didReceiveMemoryWarning() {
@@ -144,6 +146,12 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    // MARK: - Populate table data source helper
+    
+    func populate() {
+        
+    }
+    
     // MARK: - CLLocationManagerDelegate
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -157,7 +165,7 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
         
     }
-    
+        
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let nextVC = segue.destinationViewController as! FinalizeViewController
         

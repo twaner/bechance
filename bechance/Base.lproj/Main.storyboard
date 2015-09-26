@@ -264,7 +264,7 @@
             </objects>
             <point key="canvasLocation" x="970" y="813"/>
         </scene>
-        <!--Item 2-->
+        <!--User-->
         <scene sceneID="ncQ-cG-Vt2">
             <objects>
                 <viewController id="PnE-5j-op9" customClass="UserViewController" customModule="bechance" customModuleProvider="target" sceneMemberID="viewController">
@@ -364,7 +364,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bPq-a2-Rye">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bPq-a2-Rye">
                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="100" id="8YK-cA-HKT"/>
@@ -424,7 +424,7 @@
                             <constraint firstItem="Qft-vy-Qu0" firstAttribute="top" secondItem="mxR-w6-hHE" secondAttribute="bottom" id="zNk-UC-ijF"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="AQz-kD-zcQ"/>
+                    <tabBarItem key="tabBarItem" title="User" id="AQz-kD-zcQ"/>
                     <connections>
                         <outlet property="firstnameLabel" destination="zrO-Ha-1rg" id="xuB-Id-ka7"/>
                         <outlet property="lastnameLabel" destination="zVU-tH-iag" id="qRH-1a-PaR"/>
@@ -440,7 +440,7 @@
             </objects>
             <point key="canvasLocation" x="2374" y="1042"/>
         </scene>
-        <!--Item 1-->
+        <!--Photos-->
         <scene sceneID="OiP-t5-d6Y">
             <objects>
                 <viewController id="ax9-Ob-g5q" customClass="MainViewController" customModule="bechance" customModuleProvider="target" sceneMemberID="viewController">
@@ -571,7 +571,7 @@
                             <constraint firstItem="sfL-Fa-OPS" firstAttribute="top" secondItem="4BZ-Om-gmF" secondAttribute="bottom" id="wNX-X7-iLs"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="C6s-VP-5rj"/>
+                    <tabBarItem key="tabBarItem" title="Photos" id="C6s-VP-5rj"/>
                     <connections>
                         <outlet property="tableView" destination="4BZ-Om-gmF" id="Sir-K2-3Cf"/>
                         <segue destination="DZj-V6-spR" kind="presentation" identifier="PhotoSegue" id="ceF-IV-6Ow"/>
@@ -689,8 +689,8 @@
                                     <constraint firstAttribute="width" constant="150" id="eow-Ng-Lte"/>
                                 </constraints>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Htk-LE-jl8">
-                                <rect key="frame" x="172" y="100" width="402" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Htk-LE-jl8">
+                                <rect key="frame" x="178" y="100" width="396" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -734,6 +734,10 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="VmO-Y7-wkW">
+                                <rect key="frame" x="282" y="281" width="37" height="37"/>
+                                <color key="color" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.90000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Cp-mB-WZK">
                                 <rect key="frame" x="178" y="172" width="59" height="18"/>
                                 <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
@@ -744,12 +748,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="VmO-Y7-wkW" firstAttribute="centerX" secondItem="QDT-fZ-Q8c" secondAttribute="centerX" id="18K-Hb-Dn4"/>
                             <constraint firstItem="pPn-u0-b1h" firstAttribute="top" secondItem="1CY-6f-rRP" secondAttribute="bottom" constant="8" id="1Fe-PI-qeP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Htk-LE-jl8" secondAttribute="trailing" constant="6" id="20o-x5-dq8"/>
                             <constraint firstItem="0Cp-mB-WZK" firstAttribute="leading" secondItem="1CY-6f-rRP" secondAttribute="trailing" constant="8" id="6cG-uV-kgL"/>
                             <constraint firstAttribute="trailing" secondItem="kjV-MD-REH" secondAttribute="trailing" constant="20" id="At5-06-avL"/>
                             <constraint firstItem="Htk-LE-jl8" firstAttribute="top" secondItem="5Jd-eT-YiK" secondAttribute="bottom" constant="8" id="F1b-pQ-Zwh"/>
                             <constraint firstItem="4Wt-up-C00" firstAttribute="top" secondItem="kjV-MD-REH" secondAttribute="bottom" constant="17" id="GQO-bZ-5hk"/>
+                            <constraint firstItem="VmO-Y7-wkW" firstAttribute="centerY" secondItem="QDT-fZ-Q8c" secondAttribute="centerY" id="Gw7-vd-BmC"/>
                             <constraint firstItem="5Jd-eT-YiK" firstAttribute="leading" secondItem="1CY-6f-rRP" secondAttribute="trailing" constant="11" id="Kwx-yR-xDN"/>
                             <constraint firstItem="1CY-6f-rRP" firstAttribute="top" secondItem="0Y2-cN-Y3c" secondAttribute="bottom" constant="8" symbolic="YES" id="LEv-EY-ccg"/>
                             <constraint firstItem="rAM-LU-bj3" firstAttribute="top" secondItem="1CY-6f-rRP" secondAttribute="bottom" constant="378" id="NuE-gg-k2Z"/>
@@ -766,14 +772,18 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="VmO-Y7-wkW" id="FWO-Ta-IIp"/>
                         <outlet property="descriptionTextView" destination="kjV-MD-REH" id="dqx-oh-kTE"/>
                         <outlet property="locationLabel" destination="0Cp-mB-WZK" id="vh4-ZH-P1G"/>
                         <outlet property="photoImageView" destination="1CY-6f-rRP" id="BlS-Wf-uIc"/>
+                        <outlet property="postButton" destination="4Wt-up-C00" id="tOI-rn-mpC"/>
                         <outlet property="titleTextField" destination="Htk-LE-jl8" id="cVN-n4-BY0"/>
                         <segue destination="Urs-o5-ynF" kind="show" identifier="SearchSegue" id="oqm-EK-eGx"/>
+                        <segue destination="FKu-V2-aQ3" kind="unwind" identifier="unwindToMainViewSegue" unwindAction="unwindToMainView:" id="0zU-aA-3Rn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mAo-ah-bPI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="FKu-V2-aQ3" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4509" y="254"/>
         </scene>

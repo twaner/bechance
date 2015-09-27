@@ -22,7 +22,6 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Properties
     
     var user: PFUser = PFUser.currentUser()!
-    var photo: Photo? = nil
     var core_user: User?
     
     // MARK: - Lifecycle
@@ -76,16 +75,16 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                 
                 self.user["id"] = result.valueForKey("id") as! String
                 self.username.text = self.user["user_name"] as? String
-                let uuid = NSUUID().UUIDString
-                self.user["user_id"] = uuid
+
                 let location: [String] = ((result.valueForKey("location") as! [String: AnyObject])["name"] as! String).componentsSeparatedByString(", ") as [String]
                 self.user["city"] = location[0]
                 self.user["state"] = location[1]
                 
                 // Save in parse - no parse below!
                 self.user.saveInBackground()
-                let userId = PFUser.currentUser()!.valueForKey("objectId") as! String
-                self.core_user = User(username: tmp_user["user_name"]!, user_id: userId, firstname: tmp_user["first_name"]!, lastname: tmp_user["last_name"]!, city: location[0], state: location[1], gender: tmp_user["gender"]!, email: tmp_user["email"]!, context: self.sharedContext)
+                let userId = PFUser.currentUser()!.objectId
+                
+                self.core_user = User(username: tmp_user["user_name"]!, user_id: userId!, firstname: tmp_user["first_name"]!, lastname: tmp_user["last_name"]!, city: location[0], state: location[1], gender: tmp_user["gender"]!, email: tmp_user["email"]!, context: self.sharedContext)
                 self.saveContext()
                 
                 let id = result.valueForKey("id") as! String

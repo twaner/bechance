@@ -32,38 +32,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.activityIndicator.layer.cornerRadius = self.activityIndicator.frame.size.width / 10.0
         self.activityIndicator.clipsToBounds = true
         self.displayActivityViewIndicator(false, activityIndicator: activityIndicator)
-        
-//        // Blur Effect
-//        var blurEffect = UIBlurEffect(style: UIBlurEffectStyle.ExtraLight)
-//        var blurEffectView = UIVisualEffectView(effect: blurEffect)
-//        blurEffectView.frame = view.bounds
-//        view.addSubview(blurEffectView)
-//
-//        // Vibrancy Effect
-//        var vibrancyEffect = UIVibrancyEffect(forBlurEffect: blurEffect)
-//        var vibrancyEffectView = UIVisualEffectView(effect: vibrancyEffect)
-//        vibrancyEffectView.frame = view.bounds
-//
-//        // Label for vibrant text
-//        var vibrantLabel = UILabel()
-//        vibrantLabel.text = "Vibrant"
-//        vibrantLabel.font = UIFont.systemFontOfSize(72.0)
-//        vibrantLabel.sizeToFit()
-//        vibrantLabel.center = view.center
-//
-//        // Add label to the vibrancy view
-//        vibrancyEffectView.contentView.addSubview(vibrantLabel)
-//
-//        // Add the vibrancy view to the blur view
-//        blurEffectView.contentView.addSubview(vibrancyEffectView)
-//        blurEffectView.sendSubviewToBack(self.view)
-        
-        
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
         if let _ = PFUser.currentUser()?.username {
             performSegueWithIdentifier("MainSegue", sender: self)
         }
@@ -124,17 +96,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     ///
     @IBAction func fbLoginTapped(sender: UIButton) {
         
-        print("FB Tapped")
-        
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.displayActivityViewIndicator(true, activityIndicator: self.activityIndicator)
         })
+        
         PFFacebookUtils.logInInBackgroundWithReadPermissions(permissions, block: { (user: PFUser?, error: NSError?) -> Void in
+            
             if let error = error {
-                print(error)
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.displayUIAlertController("Error", message: "Error logging in with Facebook. Please Try again. \(error)", action: "Ok")
+                })
             } else {
-                if let user = user {
-                    print("FB USER Before segue: \(user)")
+                if let _ = user {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
                     })
@@ -164,7 +137,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldDidBeginEditing(textField: UITextField) {
         if !self.password1TextField.text!.isEmpty || !self.passwordTextField.text!.isEmpty {
-            print("textFields are not empty")
         }
     }
     

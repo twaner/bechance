@@ -20,27 +20,28 @@ class AddPhotoViewController: UIViewController, UIImagePickerControllerDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         self.cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: - IBActions
     
     
     @IBAction func cogTapped(sender: AnyObject) {
-        self.performSegueWithIdentifier("FinalSegue", sender: self)
+        if self.imageView != nil {
+            self.performSegueWithIdentifier("FinalSegue", sender: self)
+        }
     }
     
     @IBAction func unwindToMain(sender: AnyObject) {
     }
     
     @IBAction func remove(sender: AnyObject) {
-        self.performSegueWithIdentifier("FinalSegue", sender: self) 
+        if self.imageView != nil {
+            self.performSegueWithIdentifier("FinalSegue", sender: self)
+        }
     }
     
     @IBAction func cameraButtonTapped(sender: AnyObject) {
@@ -70,8 +71,6 @@ class AddPhotoViewController: UIViewController, UIImagePickerControllerDelegate,
             self.imageView.image = image
         }
         self.dismissViewControllerAnimated(true, completion: { () -> Void in
-            //Enable Next Button
-//            self.shareButton.enabled = true
         })
     }
 

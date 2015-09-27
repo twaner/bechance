@@ -43,7 +43,9 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         do {
             try self.fetchedResultController.performFetch()
         } catch let error as NSError {
-            print("Error: \(error.localizedDescription)")
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.displayUIAlertController("Error", message: "There was an error getting user data: \(error.localizedDescription)", action: "Ok")
+            })
             abort()
         }
         
@@ -72,7 +74,7 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         self.userDateLabel.text = dateFormat.stringFromDate(bechanceClient.sharedInstance().sharedUser!.date)
         let imagePath = bechanceClient.sharedInstance().sharedUser?.userImage as String?
         
-        _ = bechanceClient.sharedInstance().taskForCreatingImage(imagePath!, completionHandler: { (imageData, error) -> Void in
+        bechanceClient.sharedInstance().taskForCreatingImage(imagePath!, completionHandler: { (imageData, error) -> Void in
             if let error = error {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.displayUIAlertController("Error getting photo", message: "Photo download error: \(error.localizedDescription)", action: "Ok")
@@ -90,7 +92,6 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
 
@@ -115,18 +116,18 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.photos?.count ?? 0//self.fetchedResultController.sections?.count ?? 0
+        return self.photos?.count ?? 0
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return self.fetchedResultController.sections?.count ?? 0
     }
     
-    ///
-    /// Configures the appearance of a collection view cell.
-    ///
-    ///:param: cell PhotoCollectionViewCell
-    ///:param: photo Photo object
+    /*
+    Configures the appearance of a collection view cell.
+    parameter - cell PhotoCollectionViewCell
+    parameter - photo Photo object
+    */
     func configureCell(cell: PhotoCollectionViewCell, photo: Photo) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             cell.activityIndicator.hidesWhenStopped = true

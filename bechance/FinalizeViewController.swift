@@ -55,21 +55,6 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    // MARK: - Parse
-    
-    func parseLocationQuery(name: String) {
-        let query = PFQuery(className: "Location")
-        query.whereKey("name", equalTo: name)
-        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
-            if let _ = error {
-                print("Error getting location from Parse Error: \(error)")
-            } else {
-                self.parseLocation = objects?.first
-            }
-        }
     }
     
     // MARK: - IBAction
@@ -79,7 +64,6 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
     }
     
     @IBAction func postTapped(sender: UIButton) {
-        // Hide Post button; spinner; disable user interaction
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             self.postButton.hidden = true
             self.displayActivityViewIndicator(true, activityIndicator: self.activityIndicator)
@@ -91,9 +75,10 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
         } else {
             self.saveParseLocation(tmpLocation!, savePhoto: true)
         }
-        
         print("Photo and Location saved to Coredata")
     }
+    
+    // MARK: - CoreData helpers for saving
     
     func saveCoreLocation() -> Location {
         let coreLocation = Location(lat: parseLocation!["latitude"] as! NSNumber, long: parseLocation!["longitude"] as! NSNumber, subtitle: parseLocation!["state"] as! String, title: parseLocation!["city"] as! String, name: parseLocation!["name"] as! String, context: self.sharedContext)
@@ -108,63 +93,106 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
         return corePhoto
     }
     
+    // MARK: - Parse helpers
+    
+    /**
+    Performs a query of Parse to get  a Location PFObject
+    
+    - parameter name name of the location
+    */
+    func parseLocationQuery(name: String) {
+        let query = PFQuery(className: "Location")
+        query.whereKey("name", equalTo: name)
+        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+            if let _ = error {
+                print("Error getting location from Parse Error: \(error)")
+            } else {
+                self.parseLocation = objects?.first
+            }
+        }
+    }
+    
+    /**
+    Saves a Location PFObject to Parse and the global parseLocation var.
+    
+    - parameter location dictionary containing location info.
+    - parameter savePhoto Bool that determines if a photo will be saved in the completion block.
+    */
     func saveParseLocation(location: [String:AnyObject], savePhoto: Bool) {
-        let locationParse = PFObject(className: "Location")
-        locationParse["latitude"] = location["lat"] as! NSNumber
-        locationParse["longitude"] = location["lng"] as! NSNumber
-        locationParse["name"] = location["name"] as! String
-        locationParse["city"] = location["city"] as! String
-        locationParse["state"] = location["state"] as! String
-        locationParse["geopoints"] = PFGeoPoint(latitude:Double(location["lat"] as! NSNumber), longitude:Double(location["lng"] as! NSNumber))
         
-        locationParse.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+//        let locationParse = PFObject(className: "Location")
+//        locationParse["latitude"] = location["lat"] as! NSNumber
+//        locationParse["longitude"] = location["lng"] as! NSNumber
+//        locationParse["name"] = location["name"] as! String
+//        locationParse["city"] = location["city"] as! String
+//        locationParse["state"] = location["state"] as! String
+//        locationParse["geopoints"] = PFGeoPoint(latitude:Double(location["lat"] as! NSNumber), longitude:Double(location["lng"] as! NSNumber))
+//        locationParse.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+        self.parseLocation = PFObject(className: "Location")
+        self.parseLocation!["latitude"] = location["lat"] as! NSNumber
+        self.parseLocation!["longitude"] = location["lng"] as! NSNumber
+        self.parseLocation!["name"] = location["name"] as! String
+        self.parseLocation!["city"] = location["city"] as! String
+        self.parseLocation!["state"] = location["state"] as! String
+        self.parseLocation!["geopoints"] = PFGeoPoint(latitude:Double(location["lat"] as! NSNumber), longitude:Double(location["lng"] as! NSNumber))
+        self.parseLocation!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
             if success && savePhoto {
-                print("Location saved in Parse calling saveParsePhoto")
-                self.saveParsePhoto(locationParse)
+                self.saveParsePhoto(self.parseLocation!)
             } else if success && !savePhoto {
                 print("Location saved in Parse")
             } else {
                 print("Error saving location in Parse \(error)")
+                
             }
         }
-        
     }
     
+    /**
+    Saves a Photo PFObject
+    
+    - parameter location Location PFObject
+    
+    */
     func saveParsePhoto(location: PFObject) {
         let data: NSData = UIImageJPEGRepresentation(self.photoImageView.image!, 0.8)!
         let photoFile = PFFile(data: data)
         do {
-            try photoFile.save()
-        } catch {
-            print("Error saving PhotoFile \(error)")
-        }
-
-        
-        let photo = PFObject(className: "Photo")
-        photo["title"] = self.titleTextField.text
-        photo["description"] = self.descriptionTextView.text
-        photo["user"] = PFUser.currentUser()
-        photo["date"] = NSDate()
-        photo["location"] = self.parseLocation
-        photo["image"] = photoFile
-        
-        photo.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-            if success {
-                let location = self.saveCoreLocation()
-                let _ = self.saveCorePhoto(location, photo: photo)
-                //unwind !!
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
-                    self.postButton.hidden = false
-                    self.view.userInteractionEnabled = true
-                    self.performSegueWithIdentifier("unwindToMainViewSegue", sender: nil)
-                })
-            } else {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.displayUIAlertController("Error saving photo", message: "There was an error saving your photo \(error)", action: "Ok")
-                    self.postButton.hidden = false
-                })
-            }
+            photoFile.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+                if success {
+                    let photo = PFObject(className: "Photo")
+                    photo["title"] = self.titleTextField.text
+                    photo["description"] = self.descriptionTextView.text
+                    photo["user"] = PFUser.currentUser()
+                    photo["date"] = NSDate()
+                    photo["location"] = location
+                    photo["image"] = photoFile
+                    
+                    photo.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+                        if success {
+                            let location = self.saveCoreLocation()
+                            let _ = self.saveCorePhoto(location, photo: photo)
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
+                                self.postButton.hidden = false
+                                self.view.userInteractionEnabled = true
+                                self.performSegueWithIdentifier("unwindToMainViewSegue", sender: nil)
+                            })
+                        } else {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                self.displayUIAlertController("Error saving photo", message: "There was an error saving your photo \(error)", action: "Ok")
+                                self.postButton.hidden = false
+                                self.view.userInteractionEnabled = true
+                            })
+                        }
+                    }
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.displayUIAlertController("Error saving photo", message: "There was an error saving your photo \(error?.localizedDescription)", action: "Ok")
+                        self.postButton.hidden = false
+                        self.view.userInteractionEnabled = true
+                    })
+                }
+            })
         }
     }
     
@@ -199,21 +227,10 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
     }
     
     func textViewDidBeginEditing(textView: UITextView) {
-        print("DidBeginEdititng")
     }
     
     func textViewDidChange(textView: UITextView) {
-        print("textViewDidChange")
     }
-    
-    /*
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     // MARK: - CoreData Helpers
     
@@ -226,7 +243,7 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
     
     lazy var sharedContext: NSManagedObjectContext =  {
         return CoreDataStackManager.sharedInstance().managedObjectContext!
-        }()
+    }()
     
     ///
     /// Calls the saveContext() method on the sharedInstance

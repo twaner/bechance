@@ -15,6 +15,7 @@ class bechanceClient {
     var session: NSURLSession
     var photoArray: [PFObject] = []
     var sharedUser: User?
+    let dateFormatter = NSDateFormatter()
     
     typealias CompletionHander = (result: AnyObject!, error: NSError?) -> Void
     
@@ -87,29 +88,18 @@ class bechanceClient {
         }
     }
     
-    /** Helper: Given a response with error, see if a status_message is returned, otherwise return the previous error */
+    /** Helper: Given a response with error, see if a status_message is returned, otherwise return the previous error 
+    
+    */
     class func errorForData(data: NSData?, response: NSURLResponse?, error: NSError) -> NSError {
         
-//        if let parsedResult = (try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as? [String : AnyObject] {
-//            
-//            if let errorMessage = parsedResult[bechanceClient.JSONResponseKeys.Meta] as? String {
-//                
-//                let userInfo = [NSLocalizedDescriptionKey : errorMessage]
-//                
-//                return NSError(domain: "bechance Error", code: 1, userInfo: userInfo)
-//            }
-//        }
-//        
-//        return error
-        var data1: NSData?
-        if let data2 = data {
-            data1 = data2
-        } else {
-            data1 = NSData()
+        guard let dataClean = data where data != nil else {
+            return error as NSError
         }
+        
         var error: NSError?
         do {
-            let parsedResult = try NSJSONSerialization.JSONObjectWithData(data1!, options: .AllowFragments) as? [String: AnyObject]
+            let parsedResult = try NSJSONSerialization.JSONObjectWithData(dataClean, options: .AllowFragments) as? [String: AnyObject]
             if let errorMessage = parsedResult![bechanceClient.JSONResponseKeys.Meta] as? String {
                 
                 let userInfo = [NSLocalizedDescriptionKey : errorMessage]
@@ -145,7 +135,9 @@ class bechanceClient {
         }
     }
     
-    /** Helper function: Given a dictionary of parameters, convert to a string for a url */
+    /** Helper function: Given a dictionary of parameters, convert to a string for a url 
+    - parameter escapedParameters parameters in dictionary format.
+    */
     class func escapedParameters(parameters: [String : AnyObject]) -> String {
         
         var urlVars = [String]()

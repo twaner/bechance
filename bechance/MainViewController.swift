@@ -61,8 +61,7 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         self.photoButton?.layer.borderWidth = 3.0;
         self.photoButton?.layer.borderColor = UIColor.blackColor().CGColor
         self.photoButton?.addTarget(self, action: "photoButtonTapped:", forControlEvents: .TouchUpInside)
-//        self.view.addSubview(self.photoButton!) // This is above table view
-        self.view.window?.addSubview(self.photoButton!) //above tab bar
+        self.view.window?.addSubview(self.photoButton!)
     }
 
     override func didReceiveMemoryWarning() {
@@ -91,25 +90,19 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
                 print("Error with photo query: \(error)")
             }
         }
-        /**
-        date = "2015-08-03 23:38:00 +0000";
-        description = "Pier 2";
-        image = "<PFFile: 0x7f9ac3ddfa40>";
-        location = "<Location: 0x7f9ac3dc6f50, objectId: 6odJAoZGGg, localId: (null)> {\n}";
-        title = "Pier 2";
-        user = "<PFUser: 0x7f9ac3deae70, objectId: UfxQQs4MQo, localId: (null)> {\n}";
-        */
-        
     }
     /**
-        Configures a MainTableViewCell to display photos.
+    Configures a MainTableViewCell to display photos.
+    - parameter cell MainTableViewCell
+    - parameter photo PFObject to be used for the cell photo
     */
     func configureCell(cell: MainTableViewCell, photo: AnyObject) {
         let photo = photo as! PFObject
 
         (photo["image"] as! PFFile).getDataInBackgroundWithBlock { (data, error) -> Void in
             if let error = error {
-                print("Error getting photo data to save to cell \(error)")
+
+                self.displayUIAlertController("Error", message: "There as an issue getting the photo data: \(error)", action: "Ok")
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     cell.cellImage?.image = UIImage(data: data!)
@@ -168,7 +161,8 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     
     /**
     Performs segue to add a photo and rotates the button.
-    -param sender UIButton
+    
+    - parameter sender UIButton
     */
     func photoButtonTapped(sender: UIButton!) {
         let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
@@ -181,7 +175,11 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     }
     
     // MARK: - Navigation
+    /**
+    Unwind segue from the FinalizeVC
     
+    - parameter segue UIStoryboardSegue
+    */
     @IBAction func unwindToMainView(segue: UIStoryboardSegue) {
         
     }
@@ -189,8 +187,7 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "PhotoSegue") {
-            let navController = segue.destinationViewController as! UINavigationController
-//            let detailController = navController.topViewController as! AddPhotoViewController
+            _ = segue.destinationViewController as! UINavigationController
         }
     }
     

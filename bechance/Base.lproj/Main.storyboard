@@ -792,7 +792,7 @@
                                         <rect key="frame" x="0.0" y="86" width="600" height="12"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fut-MW-8c2" id="91w-IY-Zsv">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="12"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="11.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>

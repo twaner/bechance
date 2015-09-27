@@ -22,12 +22,6 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // TODO: REMOVE
-        #if arch(i386) || arch(x86_64)
-            let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
-            NSLog("Document Path: %@", documentsPath)
-        #endif
     
         if bechanceClient.sharedInstance().sharedUser == nil {
             let fetchRequest = NSFetchRequest(entityName: "User")

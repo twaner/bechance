@@ -73,13 +73,11 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
             self.displayActivityViewIndicator(true, activityIndicator: self.activityIndicator)
             self.view.userInteractionEnabled = false
         }
-        
         if let location = self.parseLocation {
             self.saveParsePhoto(location)
         } else {
             self.saveParseLocation(tmpLocation!, savePhoto: true)
         }
-        print("Photo and Location saved to Coredata")
     }
     
     // MARK: - CoreData helpers for saving

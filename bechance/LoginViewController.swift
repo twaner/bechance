@@ -67,11 +67,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func signupUser(){
-        print("SIGNUP FUNC")
     }
     
     func loginUser() {
-        print("LOGIN FUNC")
     }
     
     // MARK: - IBActions
@@ -81,11 +79,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         case 0:
             signupLayout(true)
             self.clearTextFields()
-            print("SIGNUP")
         case 1:
             signupLayout(false)
             self.clearTextFields()
-            print("LOGIN")
         default:
             break
         }

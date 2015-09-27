@@ -69,9 +69,7 @@ class ImageDocumentDirectory {
     */
     func pathForIdentifier(identifier: String) -> String {
         let docDirectoryURL: NSURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-        print("pathForIdentifier REMOVE :\(docDirectoryURL)")
         let url = docDirectoryURL.URLByAppendingPathComponent((identifier as NSString).lastPathComponent)
-        print("pathForIdentifier REMOVE :\(url.path!)")
         return url.path!
     }
     

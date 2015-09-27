@@ -599,7 +599,7 @@
                                     <constraint firstAttribute="height" constant="54" id="rHM-Jw-n3A"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
-                                <state key="normal" image="Camera-50.png"/>
+                                <state key="normal" image="CompactCamera"/>
                                 <connections>
                                     <action selector="cameraButtonTapped:" destination="5VK-Gk-vaX" eventType="touchUpInside" id="D9s-Xk-wLU"/>
                                 </connections>
@@ -610,7 +610,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="54" id="hPu-gK-UgX"/>
                                 </constraints>
-                                <state key="normal" image="Photos-50.png"/>
+                                <state key="normal" image="PhotoStack"/>
                                 <connections>
                                     <action selector="albumButtonTapped:" destination="5VK-Gk-vaX" eventType="touchUpInside" id="lvt-3R-AQm"/>
                                 </connections>
@@ -618,16 +618,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="K02-fo-CH8">
                                 <rect key="frame" x="0.0" y="64" width="596" height="431"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qdQ-AC-o0B">
-                                <rect key="frame" x="270" y="492" width="42" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Next">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="remove:" destination="5VK-Gk-vaX" eventType="touchUpInside" id="QdQ-nB-tBJ"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -638,8 +628,6 @@
                             <constraint firstItem="vRf-zO-ntj" firstAttribute="top" secondItem="K02-fo-CH8" secondAttribute="bottom" constant="31" id="KcS-Pw-7fV"/>
                             <constraint firstItem="vRf-zO-ntj" firstAttribute="leading" secondItem="dTg-yV-BFF" secondAttribute="trailing" constant="59" id="Kjr-5p-sCC"/>
                             <constraint firstItem="K02-fo-CH8" firstAttribute="top" secondItem="Puy-J6-Tr9" secondAttribute="bottom" id="OS8-aq-kH0"/>
-                            <constraint firstItem="k7W-ME-hDF" firstAttribute="top" secondItem="qdQ-AC-o0B" secondAttribute="bottom" constant="72" id="Q8b-fK-v8t"/>
-                            <constraint firstItem="qdQ-AC-o0B" firstAttribute="leading" secondItem="DqQ-kP-k6T" secondAttribute="leading" constant="270" id="QeF-GL-Wgh"/>
                             <constraint firstItem="dTg-yV-BFF" firstAttribute="width" secondItem="vRf-zO-ntj" secondAttribute="width" id="QhE-ih-058"/>
                             <constraint firstItem="k7W-ME-hDF" firstAttribute="top" secondItem="vRf-zO-ntj" secondAttribute="bottom" constant="20" id="RCP-mH-8lF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="K02-fo-CH8" secondAttribute="trailing" constant="-16" id="nCs-ad-yZ4"/>
@@ -653,7 +641,7 @@
                                 <segue destination="xfI-gg-D8e" kind="unwind" unwindAction="unwindToThisViewController:" id="x3e-lc-dHr"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="gear-7.png" id="WlS-NZ-8tm">
+                        <barButtonItem key="rightBarButtonItem" image="CheckBox" id="WlS-NZ-8tm">
                             <connections>
                                 <action selector="cogTapped:" destination="5VK-Gk-vaX" id="UKX-ql-CoD"/>
                             </connections>
@@ -661,6 +649,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cameraButton" destination="dTg-yV-BFF" id="PXF-qk-8rh"/>
+                        <outlet property="cogWheelBarButtonItem" destination="WlS-NZ-8tm" id="jLE-xc-qUZ"/>
                         <outlet property="imageView" destination="K02-fo-CH8" id="Rjm-rT-DaU"/>
                         <outlet property="photosButton" destination="vRf-zO-ntj" id="4um-xS-STe"/>
                         <segue destination="6ui-Yw-7hD" kind="show" identifier="FinalSegue" id="7W3-jw-y5Y"/>
@@ -881,11 +870,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Camera-50.png" width="50" height="50"/>
-        <image name="Photos-50.png" width="50" height="50"/>
+        <image name="CheckBox" width="32" height="32"/>
+        <image name="CompactCamera" width="32" height="32"/>
+        <image name="PhotoStack" width="32" height="32"/>
         <image name="background.jpg" width="2448" height="3264"/>
         <image name="fbbutton.png" width="320" height="69"/>
-        <image name="gear-7.png" width="30" height="30"/>
         <image name="person-placeholder-300x300.jpg" width="300" height="300"/>
     </resources>
     <inferredMetricsTieBreakers>

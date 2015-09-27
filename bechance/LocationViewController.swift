@@ -126,9 +126,8 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
         searchTask = bechanceClient.sharedInstance().foursquareGetHelper(bechanceClient.Constants.VenueSearch, parameters: tmp)
             { (result, error) -> Void in
             if let error = error {
-                print("ERROR calling foursquare \(error)")
                 dispatch_async(dispatch_get_main_queue()){
-                    self.displayUIAlertController("Error", message: "Error getting locations from Foursquare: \(error)", action: "Ok")
+                    self.displayUIAlertController("Error", message: "Error getting locations from Foursquare: \(error.localizedDescription)", action: "Ok")
                 }
             } else {
 

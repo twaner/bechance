@@ -167,11 +167,22 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     func photoButtonTapped(sender: UIButton!) {
         let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
         rotateAnimation.fromValue = 0.0
+        rotateAnimation.duration = 0.5
         rotateAnimation.toValue = CGFloat(M_PI * 2.0)
+        rotateAnimation.setValue("rotate", forKey: "photoButtonAnimation")
+        rotateAnimation.delegate = self
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             sender.layer.addAnimation(rotateAnimation, forKey: nil)
         })
-        self.performSegueWithIdentifier("PhotoSegue", sender: self)
+    }
+    
+    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+        if let animationID: AnyObject = anim.valueForKey("photoButtonAnimation") {
+            if animationID as! NSString == "rotate" {
+                self.performSegueWithIdentifier("PhotoSegue", sender: self)
+            }
+            
+        }
     }
     
     // MARK: - Navigation

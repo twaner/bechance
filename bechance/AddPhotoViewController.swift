@@ -15,6 +15,7 @@ class AddPhotoViewController: UIViewController, UIImagePickerControllerDelegate,
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var photosButton: UIButton!
+    @IBOutlet weak var cogWheelBarButtonItem: UIBarButtonItem!
     
     // MARK: - Lifecycle
     
@@ -24,7 +25,13 @@ class AddPhotoViewController: UIViewController, UIImagePickerControllerDelegate,
         
         self.cameraButton.layer.cornerRadius = 10
         self.photosButton.layer.cornerRadius = 10
+        self.imageView.addObserver(self, forKeyPath: "image", options: .New, context: nil)
+        self.cogWheelBarButtonItem.enabled = false
         
+    }
+    
+    deinit {
+        self.imageView.removeObserver(self, forKeyPath: "image")
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,20 +40,26 @@ class AddPhotoViewController: UIViewController, UIImagePickerControllerDelegate,
     
     // MARK: - IBActions
     
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        if keyPath == "image" {
+            self.buttonUpdate()
+            
+        }
+    }
+    
+    func buttonUpdate() {
+        self.cogWheelBarButtonItem.enabled = true
+        self.cogWheelBarButtonItem.image = UIImage(named: "CheckBoxFilled")
+    }
+    
     
     @IBAction func cogTapped(sender: AnyObject) {
-        if self.imageView != nil {
+        if self.imageView.image != nil {
             self.performSegueWithIdentifier("FinalSegue", sender: self)
         }
     }
     
     @IBAction func unwindToMain(sender: AnyObject) {
-    }
-    
-    @IBAction func remove(sender: AnyObject) {
-        if self.imageView != nil {
-            self.performSegueWithIdentifier("FinalSegue", sender: self)
-        }
     }
     
     @IBAction func cameraButtonTapped(sender: AnyObject) {
@@ -75,8 +88,7 @@ class AddPhotoViewController: UIViewController, UIImagePickerControllerDelegate,
         } else if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
             self.imageView.image = image
         }
-        self.dismissViewControllerAnimated(true, completion: { () -> Void in
-        })
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     // MARK: - Navigation

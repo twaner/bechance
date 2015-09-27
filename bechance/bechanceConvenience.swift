@@ -124,7 +124,6 @@ extension bechanceClient {
             } else {
                 if let venueDictionary = result!.valueForKey(JSONResponseKeys.Response) as? NSDictionary {
                     if let venueArray = venueDictionary.valueForKey(JSONResponseKeys.Venues) as? [[String: AnyObject]] {
-//                        println("Venue Array:  \(venueArray)")
                         completionHander(success: true, result: venueArray, error: nil)
                     }
                 }

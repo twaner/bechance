@@ -30,15 +30,11 @@ class bechanceClient {
         var mutableParameters = parameters
         _ = resource
         
-        // Add in the API Key
-        mutableParameters["api_key"] = ""//Constants.ApiKey
+        mutableParameters["api_key"] = ""
         
         let urlString = ""
         let url = NSURL(string: urlString)!
         let request = NSURLRequest(URL: url)
-        
-        print(url)
-        
         let task = session.dataTaskWithRequest(request) {data, response, downloadError in
             
             if let error = downloadError {

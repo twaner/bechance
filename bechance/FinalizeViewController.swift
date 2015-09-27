@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import Parse
+import QuartzCore
 
 class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, NSFetchedResultsControllerDelegate {
     
@@ -36,6 +37,8 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
         self.titleTextField.delegate = self
         self.descriptionTextView.delegate = self
         self.fetchedResultController.delegate = self
+        self.locationLabel.layer.masksToBounds = true
+        self.locationLabel.layer.cornerRadius = 5
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -44,6 +47,7 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
             self.photoImageView.image = photo
         }
         if tmpLocation != nil {
+            self.locationLabel.hidden = false
             self.locationLabel.text = tmpLocation!["name"] as? String
             self.parseLocationQuery((tmpLocation!["name"] as? String)!)
         }
@@ -119,15 +123,6 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
     - parameter savePhoto Bool that determines if a photo will be saved in the completion block.
     */
     func saveParseLocation(location: [String:AnyObject], savePhoto: Bool) {
-        
-//        let locationParse = PFObject(className: "Location")
-//        locationParse["latitude"] = location["lat"] as! NSNumber
-//        locationParse["longitude"] = location["lng"] as! NSNumber
-//        locationParse["name"] = location["name"] as! String
-//        locationParse["city"] = location["city"] as! String
-//        locationParse["state"] = location["state"] as! String
-//        locationParse["geopoints"] = PFGeoPoint(latitude:Double(location["lat"] as! NSNumber), longitude:Double(location["lng"] as! NSNumber))
-//        locationParse.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
         self.parseLocation = PFObject(className: "Location")
         self.parseLocation!["latitude"] = location["lat"] as! NSNumber
         self.parseLocation!["longitude"] = location["lng"] as! NSNumber
@@ -151,7 +146,6 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
     Saves a Photo PFObject
     
     - parameter location Location PFObject
-    
     */
     func saveParsePhoto(location: PFObject) {
         let data: NSData = UIImageJPEGRepresentation(self.photoImageView.image!, 0.8)!

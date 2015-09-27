@@ -14,12 +14,17 @@ class AddPhotoViewController: UIViewController, UIImagePickerControllerDelegate,
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var cameraButton: UIButton!
+    @IBOutlet weak var photosButton: UIButton!
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
+        
+        self.cameraButton.layer.cornerRadius = 10
+        self.photosButton.layer.cornerRadius = 10
+        
     }
 
     override func didReceiveMemoryWarning() {

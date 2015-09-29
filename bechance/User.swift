@@ -24,6 +24,7 @@ class User: NSManagedObject {
     @NSManaged var email: String
     @NSManaged var date: NSDate
     @NSManaged var photos: [Photo] //NSOrderedSet
+//    @NSManaged var userImagePath: String
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)

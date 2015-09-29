@@ -83,6 +83,11 @@ extension UIViewController {
         }))
         self.presentViewController(alert, animated: true, completion: nil)
     }
-    
-    
 }
+
+extension String {
+    var length : Int {
+        return self.characters.count
+    }
+}
+

@@ -50,6 +50,7 @@
 		7E1B53331B8FF6CF00E1868B /* dot-more-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B53321B8FF6CF00E1868B /* dot-more-7.png */; };
 		7E21F9EA1B8D5007008C21EB /* AddPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E21F9E91B8D5007008C21EB /* AddPhotoViewController.swift */; };
 		7E21F9EC1B8D5021008C21EB /* FinalizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E21F9EB1B8D5021008C21EB /* FinalizeViewController.swift */; };
+		7E74B9A11BB8BF4F00D151AC /* NonFBSIgnupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E74B9A01BB8BF4F00D151AC /* NonFBSIgnupViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		7E74FC911BB4615B00CD037A /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E74FC8F1BB4615B00CD037A /* Bolts.framework */; settings = {ASSET_TAGS = (); }; };
 		7E74FC921BB4615B00CD037A /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E74FC901BB4615B00CD037A /* Parse.framework */; settings = {ASSET_TAGS = (); }; };
 		7E74FC941BB4618800CD037A /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E74FC931BB4618800CD037A /* Accounts.framework */; };
@@ -127,6 +128,7 @@
 		7E1B53321B8FF6CF00E1868B /* dot-more-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dot-more-7.png"; sourceTree = "<group>"; };
 		7E21F9E91B8D5007008C21EB /* AddPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPhotoViewController.swift; sourceTree = "<group>"; };
 		7E21F9EB1B8D5021008C21EB /* FinalizeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinalizeViewController.swift; sourceTree = "<group>"; };
+		7E74B9A01BB8BF4F00D151AC /* NonFBSIgnupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NonFBSIgnupViewController.swift; sourceTree = "<group>"; };
 		7E74FC8F1BB4615B00CD037A /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		7E74FC901BB4615B00CD037A /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		7E74FC931BB4618800CD037A /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -259,6 +261,7 @@
 				7E21F9E91B8D5007008C21EB /* AddPhotoViewController.swift */,
 				7E21F9EB1B8D5021008C21EB /* FinalizeViewController.swift */,
 				7E7A14DF1B935E160009D59D /* LocationViewController.swift */,
+				7E74B9A01BB8BF4F00D151AC /* NonFBSIgnupViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -472,6 +475,7 @@
 				19E301331B6B086B00CA31E1 /* Photo.swift in Sources */,
 				1957AE091B589B1E00434802 /* SignupViewController.swift in Sources */,
 				198CD3CC1B6E703C008891A9 /* CoreDataStackManager.swift in Sources */,
+				7E74B9A11BB8BF4F00D151AC /* NonFBSIgnupViewController.swift in Sources */,
 				198CD3DB1B6EA957008891A9 /* MainTableViewCell.swift in Sources */,
 				19E301321B6B086B00CA31E1 /* Location.swift in Sources */,
 				198CD3D21B6E71B4008891A9 /* bechanceConvenience.swift in Sources */,

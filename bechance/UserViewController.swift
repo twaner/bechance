@@ -23,7 +23,6 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     @IBOutlet weak var photosLabel: UILabel!
     @IBOutlet weak var userImageView: UIImageView!
     
-    
     // MARK: - Props
     
     var user: PFUser?
@@ -72,9 +71,8 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         self.photosLabel.text = "\(self.photos!.count)"
         dateFormat.dateStyle = .ShortStyle
         self.userDateLabel.text = dateFormat.stringFromDate(bechanceClient.sharedInstance().sharedUser!.date)
-        let imagePath = bechanceClient.sharedInstance().sharedUser?.userImage as String?
         
-        bechanceClient.sharedInstance().taskForCreatingImage(imagePath!, completionHandler: { (imageData, error) -> Void in
+        bechanceClient.sharedInstance().taskForGettingImageFromDocuments((bechanceClient.sharedInstance().sharedUser?.userImage)!) { (imageData, error) -> Void in
             if let error = error {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.displayUIAlertController("Error getting photo", message: "Photo download error: \(error.localizedDescription)", action: "Ok")
@@ -87,7 +85,7 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
                     })
                 }
             }
-        })
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -130,7 +128,6 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     */
     func configureCell(cell: PhotoCollectionViewCell, photo: Photo) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            cell.activityIndicator.hidesWhenStopped = true
             cell.activityIndicator.startAnimating()
         })
 

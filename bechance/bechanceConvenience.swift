@@ -12,6 +12,17 @@ import UIKit
 extension bechanceClient {
     
     /**
+    Saves an image to the document directory using a name as the file path.
+    
+    - parameter image: UIImage to save
+    - parameter imagePath: Path for the image.
+    */
+    func saveImage(image: UIImage, imagePath: String) {
+        let imageData = UIImagePNGRepresentation(image)
+        imageData?.writeToFile(bechanceClient.DocumentAccessor.imageAccessor.pathForIdentifier(imagePath), atomically: true)
+    }
+    
+    /**
     Gets an image from the documents directory using an NSURLSessionTask
     
     - parameter filePath: file path for image
@@ -24,7 +35,7 @@ extension bechanceClient {
         let task = session.dataTaskWithRequest(request) {
             (data, response, downloadError) in
             if let error = downloadError {
-                _ = bechanceClient.errorForData(data, response: response, error: error)
+                bechanceClient.errorForData(data, response: response, error: error)
             } else {
                 completionHandler(imageData: data!, error: nil)
             }

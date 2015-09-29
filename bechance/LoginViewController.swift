@@ -66,10 +66,47 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    /**
+    Signs a user up for the app using Parse
+    */
     func signupUser(){
+        let user = PFUser()
+        user.username = self.usernameTextField.text
+        
+        guard let username = self.usernameTextField.text where self.usernameTextField.text?.isEmpty == false else {
+            self.displayUIAlertController("Issue with password", message: "Please reenter passwords", action: "Ok")
+            return
+        }
+        user.username = username
+        
+        guard let password = self.password1TextField.text where self.password1TextField.text == self.passwordTextField.text && (self.passwordTextField.text?.isEmpty == false && self.password1TextField.text?.isEmpty == false) else {
+            self.displayUIAlertController("Issue with password", message: "Please reenter passwords", action: "Ok")
+            return
+        }
+        user.password = password
+        
+        user.signUpInBackgroundWithBlock {
+            (succeeded: Bool, error: NSError?) -> Void in
+            if let error = error {
+                let errorString = error.userInfo["error"] as? NSString
+                self.displayUIAlertController("Error Signing Up", message: "An error happened while singing up. Please try again. Error \(errorString)", action: "Ok")
+            } else {
+                self.performSegueWithIdentifier("NonFBSegue", sender: self)
+            }
+        }
     }
     
+    /**
+    Logs a user into the app using Parse
+    */
     func loginUser() {
+        if self.usernameTextField.text?.isEmpty == false && self.passwordTextField.text?.isEmpty == false {
+            PFUser.logInWithUsernameInBackground(self.usernameTextField.text!, password: self.passwordTextField.text!) { (user: PFUser?, error: NSError?) -> Void in
+                if user != nil {
+                    self.performSegueWithIdentifier("MainSegue", sender: self)
+                }
+            }
+        }
     }
     
     // MARK: - IBActions

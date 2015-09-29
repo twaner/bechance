@@ -43,7 +43,7 @@ class Photo: NSManagedObject {
     
     func saveImage(image: UIImage, imagePath: String) {
         let imageData = UIImagePNGRepresentation(image)
-        _ = imageData?.writeToFile(bechanceClient.DocumentAccessor.imageAccessor.pathForIdentifier(imagePath), atomically: true)
+        imageData?.writeToFile(bechanceClient.DocumentAccessor.imageAccessor.pathForIdentifier(imagePath), atomically: true)
     }
     
     var photoImage: UIImage? {

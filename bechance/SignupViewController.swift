@@ -105,6 +105,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                         self.core_user?.userImage = photoUrl
                         self.saveContext()
                         bechanceClient.sharedInstance().sharedUser = self.core_user
+                        bechanceClient.sharedInstance().saveImage(image!, imagePath: photoUrl)
                     }
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)

@@ -88,11 +88,12 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.venue.count > 0 {
-            return self.venue.count
-        } else {
-            return 0
-        }
+//        if self.venue.count > 0 {
+//            return self.venue.count
+//        } else {
+//            return 0
+//        }
+        return self.venue.count ?? 0
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

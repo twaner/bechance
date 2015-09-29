@@ -21,6 +21,7 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var postButton: UIButton!
+    @IBOutlet weak var locationButton: UIButton!
     
     // MARK: - Var
     
@@ -39,16 +40,19 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
         self.fetchedResultController.delegate = self
         self.locationLabel.layer.masksToBounds = true
         self.locationLabel.layer.cornerRadius = 5
+        self.locationButton.layer.cornerRadius = 7
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
         if self.photo != nil {
             self.photoImageView.image = photo
         }
         if tmpLocation != nil {
             self.locationLabel.hidden = false
             self.locationLabel.text = tmpLocation!["name"] as? String
+            self.locationButton.titleLabel!.text = "Update Location"
             self.parseLocationQuery((tmpLocation!["name"] as? String)!)
         }
         

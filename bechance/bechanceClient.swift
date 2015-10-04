@@ -15,6 +15,7 @@ class bechanceClient {
     var session: NSURLSession
     var photoArray: [PFObject] = []
     var sharedUser: User?
+    var sharedParseUser: PFUser?
     let dateFormatter = NSDateFormatter()
     
     typealias CompletionHander = (result: AnyObject!, error: NSError?) -> Void

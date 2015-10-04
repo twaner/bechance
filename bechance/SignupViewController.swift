@@ -11,6 +11,9 @@ import Parse
 import FBSDKCoreKit
 import CoreData
 
+/**
+Class for signing up a Parse user using Facebook.
+*/
 class SignupViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - IBOutlets
@@ -42,14 +45,16 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         
         userImage.clipsToBounds = true
         
-        let parameters = ["fields": "id, name, first_name, last_name, email, location, gender"] // last_name, picture.type(large), email,picture{url}"]
+        let parameters = ["fields": "id, name, first_name, last_name, email, location, gender"]
         
         let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: parameters)
 
         graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
             
-            if let _ = error {
-                print("ERROR in request \(error)")
+            if let error = error {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.displayUIAlertController("Ok", message: "Error conntecting to FB \(error.localizedDescription)", action: "Ok")
+                })
             } else {
                 var tmp_user: [String: String] = [:]
                 if let email = result.valueForKey("email") as? String {
@@ -74,43 +79,45 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                 }
                 
                 self.user["id"] = result.valueForKey("id") as! String
-                self.username.text = self.user["user_name"] as? String
+                self.user["user_name"] = self.username.text!
+                self.user.username = self.username.text!
 
                 let location: [String] = ((result.valueForKey("location") as! [String: AnyObject])["name"] as! String).componentsSeparatedByString(", ") as [String]
                 self.user["city"] = location[0]
                 self.user["state"] = location[1]
-                
-                // Save in parse - no parse below!
-                self.user.saveInBackground()
-                let userId = PFUser.currentUser()!.objectId
-                
-                self.core_user = User(username: tmp_user["user_name"]!, user_id: userId!, firstname: tmp_user["first_name"]!, lastname: tmp_user["last_name"]!, city: location[0], state: location[1], gender: tmp_user["gender"]!, email: tmp_user["email"]!, context: self.sharedContext)
-                self.saveContext()
-                
+
                 let id = result.valueForKey("id") as! String
                 let photoUrl = "https://graph.facebook.com/\(id)/picture?type=large&return_ssl_resources=1"
                 let urlRequest = NSURLRequest(URL: NSURL(string: photoUrl)!)
                 
-                NSURLConnection.sendAsynchronousRequest(urlRequest, queue: NSOperationQueue.mainQueue(), completionHandler: { (response, data, error) -> Void in
-                    if let _ = error {
-                        print("Error getting profile picture \(error)")
+                let dataTask = bechanceClient.sharedInstance().session.dataTaskWithRequest(urlRequest) { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+                    if let error = error {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.displayUIAlertController("Error", message: "An error occured while getting information from FB. Please try again \(error.localizedDescription)", action: "Ok")
+                        })
                     } else {
                         let image = UIImage(data: data!)
-                        
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        dispatch_async(dispatch_get_main_queue()) {
                             self.userImage.image = image
-                        })
+                        }
                         self.user["image"] = data
                         self.user.saveInBackground()
                         self.core_user?.userImage = photoUrl
+                        let userId = PFUser.currentUser()!.objectId
+                        
+                        self.core_user = User(username: tmp_user["user_name"]!, user_id: userId!, firstname: tmp_user["first_name"]!, lastname: tmp_user["last_name"]!, city: location[0], state: location[1], gender: tmp_user["gender"]!, email: tmp_user["email"]!, context: self.sharedContext)
                         self.saveContext()
-                        bechanceClient.sharedInstance().sharedUser = self.core_user
+                        
                         bechanceClient.sharedInstance().saveImage(image!, imagePath: photoUrl)
+                        bechanceClient.sharedInstance().sharedParseUser = self.user
+                        bechanceClient.sharedInstance().sharedUser = self.core_user
+                        
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
+                        }
                     }
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
-                    })
-                })
+                }
+                dataTask.resume()
             }
         })
     }
@@ -118,15 +125,20 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.username.delegate = self
-//        self.subscribeToKeyboardNotification()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    override func viewWillDisappear(animated: Bool) {
-//        self.unsubscribeToKeyboardNotifications()
+
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        return true;
+    }
+    func textFieldShouldClear(textField: UITextField) -> Bool {
+        return true;
+    }
+    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+        return true;
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
@@ -138,9 +150,11 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         if !textField.text!.isEmpty {
-            self.user["user_name"] = textField.text
+            
+            bechanceClient.sharedInstance().sharedParseUser?.username = textField.text!
+            bechanceClient.sharedInstance().sharedParseUser?["user_name"] = textField.text!
             self.user.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
-                self.core_user?.username = textField.text!
+                bechanceClient.sharedInstance().sharedUser!.username = textField.text!
                 self.saveContext()
             })
         }

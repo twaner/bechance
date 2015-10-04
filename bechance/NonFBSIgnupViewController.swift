@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class NonFBSIgnupViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class NonFBSIgnupViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     // MARK: - Outlets
     
@@ -24,16 +24,48 @@ class NonFBSIgnupViewController: UIViewController,UIImagePickerControllerDelegat
     
     
     // MARK: - Vars
-    var user: PFUser = PFUser.currentUser()!
     var core_user: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.emailAddressTextField.delegate = self
+        self.firstNameTextField.delegate = self
+        self.lastNameTextField.delegate = self
+        self.cityTextField.delegate = self
+        self.stateTextField.delegate = self
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: "hideKeyboard")
+        tapRecognizer.numberOfTapsRequired = 1
+        self.view.addGestureRecognizer(tapRecognizer)
+        print("INFO \(bechanceClient.sharedInstance().sharedParseUser!.username)")
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.subscribeToKeyboardNotification()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.unsubscribeToKeyboardNotifications()
+    }
+    
+    // MARK: - Helper methods
+    
+    /**
+    Hides the keyboard if a TapGesture is recognized and the UITextField is the FirstResponder
+    */
+    
+    func hideKeyboard() {
+        for i in self.view.subviews {
+            if i.isKindOfClass(UITextField) && i.isFirstResponder() {
+                i.resignFirstResponder()
+            }
+        }
     }
     
     // MARK: - UIImagePickerControllerDelegate Methods
@@ -59,7 +91,12 @@ class NonFBSIgnupViewController: UIViewController,UIImagePickerControllerDelegat
     }
     
     // MARK: - IBActions
-        
+    
+    /**
+    Prompts a user to select a photo from camera, if available, or library.
+    
+    - parameter sender UIButton as AnyObject
+    */
     @IBAction func addPhotoTapped(sender: AnyObject) {
         
         let alertController = UIAlertController(title: "Add User Photo", message: "Please choose from camera or photo library", preferredStyle: .Alert)
@@ -104,48 +141,104 @@ class NonFBSIgnupViewController: UIViewController,UIImagePickerControllerDelegat
     }
     
     @IBAction func submitButtonTapped(sender: AnyObject) {
+        self.view.userInteractionEnabled = false
+        
+        self.displayActivityViewIndicator(true, activityIndicator: self.activityIndicator)
+        
         if self.signUpImageView.image != nil && self.emailAddressTextField.text?.isEmpty == false {
             
-            // Save to Parse & CoreData
             guard let email = self.emailAddressTextField?.text where self.isValidEmail(self.emailAddressTextField.text!) else {
                 self.displayUIAlertController("Invalid Email", message: "Please enter a valid email", action: "Ok")
+                self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
+                self.view.userInteractionEnabled = true
                 return
             }
-            user.email = email
-            user["first_name"] = self.firstNameTextField.text!
-            user["last_name"] = self.lastNameTextField.text!
-            user["gender"] = self.genderController.selectedSegmentIndex == 0 ? "Male" : "Female"
+            bechanceClient.sharedInstance().sharedParseUser!.email = email
+            bechanceClient.sharedInstance().sharedParseUser!["first_name"] = self.firstNameTextField.text!
+            bechanceClient.sharedInstance().sharedParseUser!["last_name"] = self.lastNameTextField.text!
+            bechanceClient.sharedInstance().sharedParseUser!["gender"] = self.genderController.selectedSegmentIndex == 0 ? "Male" : "Female"
             
             guard let city = self.cityTextField.text where self.cityTextField.text?.isEmpty == false else  {
+                self.displayUIAlertController("Error", message: "Please a city", action: "Ok")
+                self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
+                self.view.userInteractionEnabled = true
                 return
             }
             
             guard let state = self.stateTextField.text where self.stateTextField.text?.isEmpty == false && self.stateTextField.text?.length == 2 else  {
+                self.displayUIAlertController("Error", message: "Please a 2 character state code", action: "Ok")
+                self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
+                self.view.userInteractionEnabled = true
                 return
             }
-            user["state"] = state
-            user["city"] = city
+            bechanceClient.sharedInstance().sharedParseUser!["state"] = state
+            bechanceClient.sharedInstance().sharedParseUser!["city"] = city
             
+            guard let image = self.signUpImageView.image else
+            {
+                self.displayUIAlertController("Photo Error", message: "No photo was available", action: "Ok")
+                self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
+                self.view.userInteractionEnabled = true
+                return
+            }
             
+            let imageData:NSData = (data:UIImageJPEGRepresentation(image, 0.1)!)
             
-            //TODO: Save to Coredata
-            bechanceClient.sharedInstance().sharedUser = User(username: user["username"] as! String, user_id: user.objectId!, firstname: user["first_name"] as! String, lastname: user["last_name"] as! String, city: city, state: state, gender: user["gender"] as! String, email: email, context: self.sharedContext)
-            self.saveContext()
+            bechanceClient.sharedInstance().sharedParseUser!["image"] = imageData
             
+            // Signup Parse user
+            bechanceClient.sharedInstance().sharedParseUser!.signUpInBackgroundWithBlock {
+                (succeeded: Bool, error: NSError?) -> Void in
+                if let error = error {
+                    let errorString = error.userInfo["error"] as? NSString
+                    self.displayUIAlertController("Error Signing Up", message: "An error happened while singing up. Please try again. Error \(errorString!)", action: "Ok")
+                    self.view.userInteractionEnabled = true
+                } else {
+                    bechanceClient.sharedInstance().sharedParseUser!["id"] = bechanceClient.sharedInstance().sharedParseUser!.objectId!
+                    // CoreData user
+                    bechanceClient.sharedInstance().sharedUser = User(username: bechanceClient.sharedInstance().sharedParseUser!.username!, user_id: bechanceClient.sharedInstance().sharedParseUser!.objectId!, firstname: bechanceClient.sharedInstance().sharedParseUser!["first_name"] as! String, lastname: bechanceClient.sharedInstance().sharedParseUser!["last_name"] as! String, city: city, state: state, gender: bechanceClient.sharedInstance().sharedParseUser!["gender"] as! String, email: email, context: self.sharedContext)
+                    
+                    bechanceClient.sharedInstance().sharedUser?.userImage = "user_" + bechanceClient.sharedInstance().sharedParseUser!.objectId! + ".jpg"
+                    
+                    bechanceClient.sharedInstance().saveImage(self.signUpImageView.image!, imagePath: (bechanceClient.sharedInstance().sharedUser?.userImage)!)
+                    self.saveContext()
+                    
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
+                        self.view.userInteractionEnabled = true
+                        self.performSegueWithIdentifier("NonFBSegue", sender: self)
+                    })
+                }
+            }
         } else {
-            self.displayUIAlertController("Missing Items", message: "Please be sure that you have entered your email and added a photo", action: "Ok")
+            dispatch_async(dispatch_get_main_queue()){
+                self.displayUIAlertController("Missing Items", message: "Please be sure that you have entered your email and added a photo", action: "Ok")
+                self.view.userInteractionEnabled = true
+                self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
+            }
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // MARK: - TextField
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        textField.resignFirstResponder()
     }
-    */
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        return true;
+    }
+    func textFieldShouldClear(textField: UITextField) -> Bool {
+        return true;
+    }
+    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+        return true;
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     // MARK: - CoreData Helpers
     
     lazy var sharedContext: NSManagedObjectContext =  {

@@ -36,8 +36,23 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        if let _ = PFUser.currentUser()?.username {
+        if PFUser.currentUser() != nil {
+            bechanceClient.sharedInstance().sharedParseUser = PFUser.currentUser()
             performSegueWithIdentifier("MainSegue", sender: self)
+        }
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: "hideKeyboard")
+        tapRecognizer.numberOfTapsRequired = 1
+        self.view.addGestureRecognizer(tapRecognizer)
+    }
+    
+    /**
+    Hides the keyboard if a TapGesture is recognized and the UITextField is the FirstResponder
+    */
+    func hideKeyboard() {
+        for i in self.view.subviews {
+            if i.isKindOfClass(UITextField) && i.isFirstResponder() {
+                i.resignFirstResponder()
+            }
         }
     }
     
@@ -67,33 +82,76 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     /**
+    Checks to see if a Parse user exists. If a user exists, the user will be saved to the shared instance user.
+    
+    - parameter username username to verify.
+    - throws error
+    */
+    func doesUserExist(username: String) throws -> Bool {
+        let query = PFQuery(className: "User")
+        query.whereKey("username", equalTo: self.usernameTextField.text!)
+        do {
+            let user = try query.findObjects().first
+            if user != nil {
+                bechanceClient.sharedInstance().sharedParseUser = user as? PFUser
+                return true
+            }
+        } catch {
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.displayUIAlertController("Username error", message: "Please try again", action: "Ok")
+            })
+            return false
+        }
+        return false
+    }
+    
+    /**
     Signs a user up for the app using Parse
     */
     func signupUser(){
-        let user = PFUser()
-        user.username = self.usernameTextField.text
+        
+        do {
+            if try self.doesUserExist(usernameTextField.text!) {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.displayUIAlertController("Username Exits", message: "Please Select a new name", action: "Ok")
+                })
+                return
+            }
+        } catch {
+            return
+        }
+        
+        bechanceClient.sharedInstance().sharedParseUser = PFUser()
+        bechanceClient.sharedInstance().sharedParseUser!.username = self.usernameTextField.text
         
         guard let username = self.usernameTextField.text where self.usernameTextField.text?.isEmpty == false else {
-            self.displayUIAlertController("Issue with password", message: "Please reenter passwords", action: "Ok")
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.displayUIAlertController("Issue with password", message: "Please re-enter username", action: "Ok")
+            })
             return
         }
-        user.username = username
+        bechanceClient.sharedInstance().sharedParseUser = PFUser()
+        bechanceClient.sharedInstance().sharedParseUser!.username = username
         
-        guard let password = self.password1TextField.text where self.password1TextField.text == self.passwordTextField.text && (self.passwordTextField.text?.isEmpty == false && self.password1TextField.text?.isEmpty == false) else {
-            self.displayUIAlertController("Issue with password", message: "Please reenter passwords", action: "Ok")
+        guard let password = self.password1TextField.text where (self.password1TextField.text == self.passwordTextField.text) && (self.passwordTextField.text?.isEmpty == false && self.password1TextField.text?.isEmpty == false) else {
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.displayUIAlertController("Issue with password", message: "Please reenter passwords", action: "Ok")
+            })
             return
         }
-        user.password = password
+        bechanceClient.sharedInstance().sharedParseUser!.password = password
+        bechanceClient.sharedInstance().sharedParseUser!["user_name"] = username
         
-        user.signUpInBackgroundWithBlock {
-            (succeeded: Bool, error: NSError?) -> Void in
-            if let error = error {
-                let errorString = error.userInfo["error"] as? NSString
-                self.displayUIAlertController("Error Signing Up", message: "An error happened while singing up. Please try again. Error \(errorString)", action: "Ok")
-            } else {
-                self.performSegueWithIdentifier("NonFBSegue", sender: self)
-            }
-        }
+//        bechanceClient.sharedInstance().sharedParseUser!.signUpInBackgroundWithBlock {
+//            (succeeded: Bool, error: NSError?) -> Void in
+//            if let error = error {
+//                let errorString = error.userInfo["error"] as? NSString
+//                self.displayUIAlertController("Error Signing Up", message: "An error happened while singing up. Please try again. Error \(errorString)", action: "Ok")
+//            } else {
+//                self.performSegueWithIdentifier("NonFBSegue", sender: self)
+//            }
+//        }
+        self.performSegueWithIdentifier("NonFBSegue", sender: self)
     }
     
     /**
@@ -103,6 +161,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         if self.usernameTextField.text?.isEmpty == false && self.passwordTextField.text?.isEmpty == false {
             PFUser.logInWithUsernameInBackground(self.usernameTextField.text!, password: self.passwordTextField.text!) { (user: PFUser?, error: NSError?) -> Void in
                 if user != nil {
+                    bechanceClient.sharedInstance().sharedParseUser = user
                     self.performSegueWithIdentifier("MainSegue", sender: self)
                 }
             }
@@ -132,19 +191,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.displayActivityViewIndicator(true, activityIndicator: self.activityIndicator)
         })
-        
         PFFacebookUtils.logInInBackgroundWithReadPermissions(permissions, block: { (user: PFUser?, error: NSError?) -> Void in
-            
             if let error = error {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.displayUIAlertController("Error", message: "Error logging in with Facebook. Please Try again. \(error)", action: "Ok")
+                    self.displayUIAlertController("Error", message: "Error logging in with Facebook. Please Try again. \(error.localizedDescription)", action: "Ok")
                 })
             } else {
-                if let _ = user {
+                if (user != nil) {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
+                        self.performSegueWithIdentifier("LoginSegue", sender: self)
                     })
-                    self.performSegueWithIdentifier("LoginSegue", sender: self)
                 }
             }
         })
@@ -162,6 +219,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: - TextField
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        print("TextField did begin editing method called")
+        textField.resignFirstResponder()
+    }
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        print("TextField should begin editing method called")
+        return true;
+    }
+    func textFieldShouldClear(textField: UITextField) -> Bool {
+        print("TextField should clear method called")
+        return true;
+    }
+    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+        print("TextField should snd editing method called")
+//        textField.resignFirstResponder()
+        return true;
+    }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()

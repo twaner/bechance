@@ -10,6 +10,17 @@ import UIKit
 
 extension UIViewController {
     
+    var keyboardShowing: Bool {
+        get {
+            return self.keyboardShowing
+        }
+        set {
+            if newValue {
+                self.keyboardShowing = newValue
+            }
+        }
+    }
+    
     // MARK: - UIKeyboard methods
     
     /**
@@ -36,8 +47,12 @@ extension UIViewController {
     */
     
     /**
+    Shows the keyboard if the view's bottom is at 0.0 else returns
     */
     func keyboardWillShow(notification: NSNotification) {
+        if self.view.frame.origin.y < 0.0 {
+            return
+        }
         self.view.frame.origin.y -= getKeyboardHeight(notification)
     }
     /**
@@ -85,6 +100,11 @@ extension UIViewController {
     }
 }
 
+/**
+Provides a length property to a String
+
+- returns number of characters in a string
+*/
 extension String {
     var length : Int {
         return self.characters.count

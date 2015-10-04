@@ -222,12 +222,6 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
         return true
     }
     
-    func textViewDidBeginEditing(textView: UITextView) {
-    }
-    
-    func textViewDidChange(textView: UITextView) {
-    }
-    
     // MARK: - CoreData Helpers
     
     lazy var fetchedResultController: NSFetchedResultsController = {

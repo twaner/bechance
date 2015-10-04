@@ -18,27 +18,45 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     
     // MARK: - Props
     var photoButton: UIButton? = nil
-    var parse_user: PFUser? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
     
         if bechanceClient.sharedInstance().sharedUser == nil {
             let fetchRequest = NSFetchRequest(entityName: "User")
+           
+            fetchRequest.predicate = NSPredicate(format: "username = %@", (bechanceClient.sharedInstance().sharedParseUser?["user_name"] as? String)!)
             fetchRequest.sortDescriptors = []
+            
             do {
-                let tmp: User = try self.sharedContext.executeFetchRequest(fetchRequest).first as! User
+                
+                guard let tmp: User = try self.sharedContext.executeFetchRequest(fetchRequest).first as? User else {
+                    do {
+                        bechanceClient.sharedInstance().sharedUser = try self.createCoreUserFromParse(bechanceClient.sharedInstance().sharedParseUser!)
+                    } catch _ as NSError {
+                        bechanceClient.sharedInstance().sharedParseUser = nil
+                        bechanceClient.sharedInstance().sharedUser = nil
+                        dispatch_async(dispatch_get_main_queue()){
+                            self.displayUIAlertController("No user found.", message: "Please close app and try again.", action: "Ok")
+                        }
+                    }
+                    return
+                }
                 bechanceClient.sharedInstance().sharedUser = tmp
-            } catch {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            } catch let error as NSError {
+                bechanceClient.sharedInstance().sharedParseUser = nil
+                bechanceClient.sharedInstance().sharedUser = nil
+                dispatch_async(dispatch_get_main_queue()){
                     self.displayUIAlertController("No user found.", message: "Please close app and try again.", action: "Ok")
-                })
+                }
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.displayUIAlertController("Error getting a user.", message: "Please close app and try again. \(error.localizedDescription)", action: "Ok")
+                }
             }
         }
         self.fetchedResultController.delegate = self
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -62,7 +80,28 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         super.didReceiveMemoryWarning()
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        self.photoButton?.removeFromSuperview()
+    }
+    
     // MARK: - Parse helper functions
+    
+    /**
+    This method will be called if a ParseUser exists but a User is missing from CoreData. A new User will be created.
+    */
+    func createCoreUserFromParse(parseUser: PFUser) throws -> User {
+        
+        let parseUser = bechanceClient.sharedInstance().sharedParseUser!
+        
+        let user = User(username: parseUser.username!, user_id: parseUser.objectId!, firstname: parseUser["first_name"] as! String, lastname: parseUser["last_name"] as! String, city: parseUser["city"] as! String, state: parseUser["state"] as! String, gender: parseUser["gender"] as! String, email: parseUser["email"] as! String, context: self.sharedContext)
+        let imagePath = user.username + user.email + ".jpg"
+        let userImage = UIImage(data: parseUser["image"] as! NSData)
+        bechanceClient.sharedInstance().saveImage(userImage!, imagePath: imagePath)
+        user.userImage = imagePath
+        self.saveContext()
+        return user
+    }
+    
     
     func populate() {
         bechanceClient.sharedInstance().photoArray = []
@@ -81,7 +120,6 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.displayUIAlertController("Error", message: "Could not retrieve photos due to \(error)", action: "Ok")
                 })
-                print("Error with photo query: \(error)")
             }
         }
     }
@@ -175,7 +213,6 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
             if animationID as! NSString == "rotate" {
                 self.performSegueWithIdentifier("PhotoSegue", sender: self)
             }
-            
         }
     }
     
@@ -203,6 +240,7 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     
     lazy var fetchedResultController: NSFetchedResultsController = {
         let fetchRequest = NSFetchRequest(entityName: "User")
+        fetchRequest.predicate = NSPredicate(format: "username = %@", (bechanceClient.sharedInstance().sharedParseUser?.username)!)
         fetchRequest.sortDescriptors = []
         let fetchedResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
         return fetchedResultController

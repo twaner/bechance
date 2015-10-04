@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1957ADAB1B587AAC00434802 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957ADAA1B587AAC00434802 /* AppDelegate.swift */; };
 		1957ADAE1B587AAC00434802 /* bechance.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1957ADAC1B587AAC00434802 /* bechance.xcdatamodeld */; };
-		1957ADB01B587AAC00434802 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957ADAF1B587AAC00434802 /* ViewController.swift */; };
 		1957ADB31B587AAC00434802 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1957ADB11B587AAC00434802 /* Main.storyboard */; };
 		1957ADB51B587AAC00434802 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1957ADB41B587AAC00434802 /* Images.xcassets */; };
 		1957ADB81B587AAC00434802 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1957ADB61B587AAC00434802 /* LaunchScreen.xib */; };
@@ -84,7 +83,6 @@
 		1957ADA91B587AAC00434802 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1957ADAA1B587AAC00434802 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1957ADAD1B587AAC00434802 /* bechance.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = bechance.xcdatamodel; sourceTree = "<group>"; };
-		1957ADAF1B587AAC00434802 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1957ADB21B587AAC00434802 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1957ADB41B587AAC00434802 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1957ADB71B587AAC00434802 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -253,7 +251,6 @@
 		1957ADCD1B587ACC00434802 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				1957ADAF1B587AAC00434802 /* ViewController.swift */,
 				1957AE061B588DAD00434802 /* LoginViewController.swift */,
 				1957AE081B589B1E00434802 /* SignupViewController.swift */,
 				198CD3D51B6E8458008891A9 /* MainViewController.swift */,
@@ -490,7 +487,6 @@
 				198CD3DD1B6EECEA008891A9 /* TaskCancellingTableViewCell.swift in Sources */,
 				19DBB4CA1B856859000C8472 /* bechanceNetworkClient.swift in Sources */,
 				198CD3D01B6E71A9008891A9 /* bechanceConstants.swift in Sources */,
-				1957ADB01B587AAC00434802 /* ViewController.swift in Sources */,
 				7E21F9EC1B8D5021008C21EB /* FinalizeViewController.swift in Sources */,
 				1957ADD21B587B2B00434802 /* Keys.swift in Sources */,
 				1957ADAE1B587AAC00434802 /* bechance.xcdatamodeld in Sources */,
@@ -632,7 +628,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/bechance",
-					/Users/DayNine/Documents/FacebookSDK,
+					"$(HOME)/Documents/FacebookSDK",
+					"$(PROJECT_DIR)/bechance/Resources/Frameworks",
 				);
 				INFOPLIST_FILE = bechance/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -654,7 +651,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/bechance",
-					/Users/DayNine/Documents/FacebookSDK,
+					"$(HOME)/Documents/FacebookSDK",
+					"$(PROJECT_DIR)/bechance/Resources/Frameworks",
 				);
 				INFOPLIST_FILE = bechance/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

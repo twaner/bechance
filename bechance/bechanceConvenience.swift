@@ -71,7 +71,6 @@ extension bechanceClient {
     func foursquareGetVenueCreator(lat: String?, long: String?, location: String?, providerID: String?, query: String?) -> [String: AnyObject] {
         var ll = ""
         var loc = ""
-        var provID = ""
         
         if !lat!.isEmpty && !long!.isEmpty {
             ll = "\(lat!),\(long!)"
@@ -79,9 +78,7 @@ extension bechanceClient {
         if !location!.isEmpty {
             loc = location!
         }
-        if !providerID!.isEmpty {
-            provID = providerID!
-        }
+
         let dateFormater = NSDateFormatter()
         dateFormater.dateFormat = "yyyyMMdd"
         let dateString = dateFormater.stringFromDate(NSDate())
@@ -90,7 +87,6 @@ extension bechanceClient {
             ParameterKeys.LL: ll,
             ParameterKeys.Intent: "browse",
             ParameterKeys.Location: loc,
-//            ParameterKeys.ProviderId: provID,
             ParameterKeys.Query: query!,
             ParameterKeys.ClientSecret: FourSquare.ClientSecret,
             ParameterKeys.ClientID: FourSquare.ClientID,

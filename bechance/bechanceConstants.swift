@@ -22,7 +22,7 @@ extension bechanceClient {
         static let Facebook = "facebook"
         static let FacebookUsername = "facebookUsername"
         static let FacebookName = "facebookName"
-        static let Focation = "location"
+        static let Location = "location"
         static let Lat = "lat"
         static let Lng = "lng"
         static let City = "facebookUsername"
@@ -39,6 +39,8 @@ extension bechanceClient {
         static let BaseFoursquareURL = "https://api.foursquare.com/v2/"
         static let VenueSearch = "venues/search?"
         static let Browse = "browse"
+        static let FacebookPhotoURL = "https://graph.facebook.com/id/picture?type=large&return_ssl_resources=1"
+        static let FacebookParameters = ["fields": "id, name, first_name, last_name, email, location, gender"]
         
     }
     
@@ -54,6 +56,22 @@ extension bechanceClient {
         static let ClientSecret = "client_secret"
         static let Version = "v"
         static let Query = "query"
+    }
+    
+    struct UserKeys {
+        static let FirstName = "first_name"
+        static let LastName = "last_name"
+        static let State = "state"
+        static let City = "city"
+        static let Email = "email"
+        static let Gender = "gender"
+        static let Image = "image"
+        static let UserName = "user_name"
+        static let Location = "location"
+        static let ID = "id"
+        static let Name = "name"
+        static let UserNameUnder = "user_name"
+        
     }
     
     // MARK: - Errors

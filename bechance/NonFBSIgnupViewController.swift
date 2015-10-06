@@ -111,7 +111,9 @@ class NonFBSIgnupViewController: UIViewController,UIImagePickerControllerDelegat
         alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
             alertController.dismissViewControllerAnimated(true, completion: nil)
         }))
-        presentViewController(alertController, animated: true, completion: nil)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
     
     func isValidEmail(email: String) -> Bool {

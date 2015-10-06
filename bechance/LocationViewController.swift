@@ -39,12 +39,31 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
         // Location - Foreground
         self.locationManager.requestWhenInUseAuthorization()
         
-        if CLLocationManager.locationServicesEnabled() {
+        let status = CLLocationManager.authorizationStatus()
+        if CLLocationManager.locationServicesEnabled() && status == CLAuthorizationStatus.AuthorizedAlways || status == CLAuthorizationStatus.AuthorizedWhenInUse {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.requestAlwaysAuthorization()
             locationManager.startUpdatingLocation()
+        } else {
+            self.displayUIAlertController("Location Services Disabled", message: "Location Services have been disabled. The app will not be able to determine your location or add a location to a photo", action: "Ok")
         }
+        let alertController = UIAlertController(title: "Location Services Disabled", message: "Location Services have been disabled. bechance will be unbale to determine your location for your photo.", preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel){ (actions: UIAlertAction) in
+            alertController.dismissViewControllerAnimated(true) {
+                dispatch_async(dispatch_get_main_queue()) {
+                self.dismissViewControllerAnimated(true, completion: nil)
+                }
+            }
+        })
+        alertController.addAction(UIAlertAction(title: "Enable Location Services", style: UIAlertActionStyle.Default){ (action: UIAlertAction) in
+            alertController.dismissViewControllerAnimated(true, completion: { () -> Void in
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                    self.locationManager.requestWhenInUseAuthorization()
+                }
+            })
+        })
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -153,6 +172,14 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     // MARK: - CLLocationManagerDelegate
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        print("STATUS UPDATED")
+        if status == .AuthorizedAlways || status == .AuthorizedWhenInUse {
+            manager.startUpdatingLocation()
+                    print("Updating location")
+        }
+    }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locationValue: CLLocationCoordinate2D = manager.location!.coordinate

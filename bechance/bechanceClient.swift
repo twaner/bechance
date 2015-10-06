@@ -26,6 +26,9 @@ class bechanceClient {
     
     // MARK: - All purpose task method for data
     
+    /**
+    NSURLSessionDataTask helper for calling a resouce with parameters.
+    */
     func taskForResource(resource: String, parameters: [String : AnyObject], completionHandler: CompletionHander) -> NSURLSessionDataTask {
         
         var mutableParameters = parameters
@@ -63,8 +66,7 @@ class bechanceClient {
         let task = session.dataTaskWithRequest(request) {
             (data, response, error) in
             if let error = error {
-                let newError = bechanceClient.errorForData(data, response: response, error: error)
-                print("foursquare error -> \(newError)")
+                bechanceClient.errorForData(data, response: response, error: error)
             } else {
                 bechanceClient.parseJSONWithCompletionHandler(data!, completionHandler: CompletionHander)
             }

@@ -83,6 +83,7 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbauth2</string>
+		<string>fbauth</string>
 	</array>
 </dict>
 </plist>

@@ -20,7 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         let sharedApplication = UIApplication.sharedApplication();
-        _ = sharedApplication.canOpenURL(NSURL(fileURLWithPath: "fbauth://authorize"))
+        sharedApplication.canOpenURL(NSURL(fileURLWithPath: "fbauth://authorize"))
+        sharedApplication.canOpenURL(NSURL(fileURLWithPath: "fbauth2://authorize"))
 
         Parse.setApplicationId(bechanceClient.Parse.ParseAppID, clientKey: bechanceClient.Parse.ParseClientID)
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)

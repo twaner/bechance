@@ -141,16 +141,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         bechanceClient.sharedInstance().sharedParseUser!.password = password
         bechanceClient.sharedInstance().sharedParseUser!["user_name"] = username
-        
-//        bechanceClient.sharedInstance().sharedParseUser!.signUpInBackgroundWithBlock {
-//            (succeeded: Bool, error: NSError?) -> Void in
-//            if let error = error {
-//                let errorString = error.userInfo["error"] as? NSString
-//                self.displayUIAlertController("Error Signing Up", message: "An error happened while singing up. Please try again. Error \(errorString)", action: "Ok")
-//            } else {
-//                self.performSegueWithIdentifier("NonFBSegue", sender: self)
-//            }
-//        }
         self.performSegueWithIdentifier("NonFBSegue", sender: self)
     }
     
@@ -256,14 +246,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.usernameTextField.text = ""
     }
     
-    /*
     // MARK: - Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
+    @IBAction func logoutToMain(segue: UIStoryboardSegue) {
+        
     }
-    */
-    
 }

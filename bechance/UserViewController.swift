@@ -156,6 +156,16 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         cell.cellImage.image = photoImage
     }
     
+    
+    /**
+    Logs a user out and unwinds to the signin screen.
+    - parameter segue to perform
+    */
+    @IBAction func logoutToMain(segue: UIStoryboardSegue) {
+        PFUser.logOut()
+        bechanceClient.sharedInstance().sharedParseUser = PFUser.currentUser()
+    }
+    
     // MARK: - CoreData Helpers
     
     lazy var fetchedResultController: NSFetchedResultsController = {

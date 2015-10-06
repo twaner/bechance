@@ -112,9 +112,6 @@ extension bechanceClient {
         let dateFormater = NSDateFormatter()
         dateFormater.dateFormat = "yyyyMMdd"
         let dateString = dateFormater.stringFromDate(NSDate())
-        
-//        var versionDate = 
-        
         let parameters: [String: AnyObject] = [
             ParameterKeys.LL: ll,
             ParameterKeys.Intent: "browse",
@@ -137,4 +134,35 @@ extension bechanceClient {
             }
         }
     }
+
+    /**
+    Helper for using a dataTaskWithRequest to get a photo from FB
+    */
+//    func facebookImageTaskHelper(userDict: [String: String], location: [String] , imageView: UIImageView, urlRequest: NSURLRequest, parseUser: PFUser, var coreUser: User) {
+//        let task = session.dataTaskWithRequest(urlRequest) { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+//            if let error = error {
+//                dispatch_async(dispatch_get_main_queue()){
+////                    self.displayUIAlertController("Error", message: "An error occured while getting information from FB. Please try again \(error.localizedDescription)", action: "Ok")
+//                }
+//            } else {
+//                let image = UIImage(data: data!)
+//                dispatch_async(dispatch_get_main_queue()) {
+//                    imageView.image = image
+//                }
+//                parseUser["image"] = data
+//                parseUser.saveInBackground()
+//                coreUser.userImage = bechanceClient.subtituteKeyInMethod(bechanceClient.Constants.FacebookPhotoURL, key: "id", value: parseUser.objectId!)!
+//                let userId = PFUser.currentUser()!.objectId
+//                
+//                coreUser = User(username: userDict["user_name"]!, user_id: userId!, firstname: userDict["first_name"]!, lastname: userDict["last_name"]!, city: location[0], state: location[1], gender: userDict["gender"]!, email: userDict["email"]!, context: self.sharedContext)
+//                self.saveContext()
+//                bechanceClient.sharedInstance().saveImage(image!, imagePath: photoUrl)
+//                bechanceClient.sharedInstance().sharedParseUser = parseUser
+//                bechanceClient.sharedInstance().sharedUser = coreUser
+//
+//            }
+//        }
+//    task.resume()
+//    }
+
 }

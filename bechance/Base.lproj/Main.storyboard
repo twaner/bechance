@@ -520,6 +520,13 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OR5-5U-xlE">
+                                <rect key="frame" x="541" y="20" width="51" height="30"/>
+                                <state key="normal" title="LogOut"/>
+                                <connections>
+                                    <segue destination="6C0-Cw-I6R" kind="unwind" unwindAction="logoutToMain:" id="GDM-c6-mSf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -531,6 +538,8 @@
                             <constraint firstItem="GPg-Uo-9u2" firstAttribute="bottom" secondItem="utD-8r-0Nl" secondAttribute="top" id="9yr-01-TdC"/>
                             <constraint firstItem="iaV-aA-pDq" firstAttribute="top" secondItem="ox3-Qn-eRb" secondAttribute="bottom" constant="8" symbolic="YES" id="AKH-3N-NEQ"/>
                             <constraint firstItem="8m8-K9-DiZ" firstAttribute="top" secondItem="zrO-Ha-1rg" secondAttribute="bottom" constant="8" symbolic="YES" id="Ciu-3A-Gjy"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="OR5-5U-xlE" secondAttribute="trailing" constant="-12" id="DpD-e0-wb4"/>
+                            <constraint firstItem="OR5-5U-xlE" firstAttribute="top" secondItem="mxR-w6-hHE" secondAttribute="bottom" id="Ero-RI-To1"/>
                             <constraint firstItem="8m8-K9-DiZ" firstAttribute="trailing" secondItem="2Lk-oU-Foc" secondAttribute="trailing" id="FaO-Py-TRT"/>
                             <constraint firstItem="GPg-Uo-9u2" firstAttribute="leading" secondItem="HMF-OP-75H" secondAttribute="leading" id="GhW-ua-IWN"/>
                             <constraint firstItem="ox3-Qn-eRb" firstAttribute="leading" secondItem="iaV-aA-pDq" secondAttribute="leading" id="IhS-Ni-4tQ"/>
@@ -567,6 +576,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xdV-Uz-1LK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="6C0-Cw-I6R" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2374" y="1042"/>
         </scene>
@@ -886,7 +896,7 @@
                         <outlet property="photoImageView" destination="1CY-6f-rRP" id="BlS-Wf-uIc"/>
                         <outlet property="postButton" destination="4Wt-up-C00" id="tOI-rn-mpC"/>
                         <outlet property="titleTextField" destination="Htk-LE-jl8" id="cVN-n4-BY0"/>
-                        <segue destination="Urs-o5-ynF" kind="show" identifier="SearchSegue" id="oqm-EK-eGx"/>
+                        <segue destination="Urs-o5-ynF" kind="presentation" identifier="SearchSegue" id="oqm-EK-eGx"/>
                         <segue destination="FKu-V2-aQ3" kind="unwind" identifier="unwindToMainViewSegue" unwindAction="unwindToMainView:" id="0zU-aA-3Rn"/>
                     </connections>
                 </viewController>
@@ -907,12 +917,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="23" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="6jn-Zs-t6t">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="23" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="6jn-Zs-t6t">
                                 <rect key="frame" x="0.0" y="108" width="600" height="492"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="12" id="Fut-MW-8c2">
-                                        <rect key="frame" x="0.0" y="86" width="600" height="12"/>
+                                        <rect key="frame" x="0.0" y="22" width="600" height="12"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fut-MW-8c2" id="91w-IY-Zsv">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="12"/>
@@ -924,14 +934,14 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="XAs-6F-PfA">
+                            <searchBar contentMode="redraw" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XAs-6F-PfA">
                                 <rect key="frame" x="0.0" y="64" width="600" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="Urs-o5-ynF" id="Mpe-6B-Y3W"/>
                                 </connections>
                             </searchBar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Foursquare" translatesAutoresizingMaskIntoConstraints="NO" id="beL-LZ-pIK">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Foursquare" translatesAutoresizingMaskIntoConstraints="NO" id="beL-LZ-pIK">
                                 <rect key="frame" x="462" y="44" width="138" height="50"/>
                             </imageView>
                         </subviews>

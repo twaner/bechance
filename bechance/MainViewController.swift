@@ -142,14 +142,14 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
             }
         }
         // Location
-        let locationObj = photo["location"] as! PFObject
+        let locationObj = photo[bechanceClient.JSONResponseKeys.Location] as! PFObject
         do {
             try locationObj.fetchIfNeeded()
         } catch {
             print("Error fetching location Object \(error)")
         }
         
-        cell.locationLabel?.text = (locationObj["name"] as! String)
+        cell.locationLabel?.text = (locationObj[bechanceClient.UserKeys.Name] as! String)
         cell.userImage?.layer.cornerRadius = cell.userImage.frame.size.width / 2
         cell.userImage?.layer.masksToBounds = true
         let userObj = photo["user"] as! PFUser
@@ -158,8 +158,8 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
                 print("error getting user for cell \(error)")
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    cell.userLabel?.text = userObj["user_name"] as? String
-                    if let image = userObj["image"] as? NSData {
+                    cell.userLabel?.text = userObj[bechanceClient.UserKeys.UserNameUnder] as? String
+                    if let image = userObj[bechanceClient.UserKeys.Image] as? NSData {
                         cell.userImage?.image = UIImage(data: image)    
                     }
                 })

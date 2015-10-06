@@ -32,20 +32,13 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        userImage.layer.cornerRadius = self.userImage.frame.size.width / 10.0//3.0
-        self.userImage.layer.borderWidth = 3.0;
-        self.userImage.layer.borderColor = UIColor.whiteColor().CGColor
-        
-        self.activityIndicator.layer.cornerRadius = self.activityIndicator.frame.size.width / 10.0
-        self.activityIndicator.clipsToBounds = true
+        self.setupUI()
         
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.displayActivityViewIndicator(true, activityIndicator: self.activityIndicator)
         })
         
-        userImage.clipsToBounds = true
-        
-        let parameters = ["fields": "id, name, first_name, last_name, email, location, gender"]
+        let parameters = bechanceClient.Constants.FacebookParameters //["fields": "id, name, first_name, last_name, email, location, gender"]
         
         let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: parameters)
 
@@ -57,39 +50,38 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                 })
             } else {
                 var tmp_user: [String: String] = [:]
-                if let email = result.valueForKey("email") as? String {
-                    self.user["email"] = email
-                    tmp_user["email"] = email
+                if let email = result.valueForKey(bechanceClient.UserKeys.Email) as? String {
+                    self.user[bechanceClient.UserKeys.Email] = email
+                    tmp_user[bechanceClient.UserKeys.Email] = email
                 }
-                if let first_name = result.valueForKey("first_name") as? String {
-                    self.user["first_name"] = first_name
-                    tmp_user["first_name"] = first_name
+                if let first_name = result.valueForKey(bechanceClient.UserKeys.FirstName) as? String {
+                    self.user[bechanceClient.UserKeys.FirstName] = first_name
+                    tmp_user[bechanceClient.UserKeys.FirstName] = first_name
                 }
-                if let last_name = result.valueForKey("last_name") as? String {
-                    self.user["last_name"] = last_name
-                    tmp_user["last_name"] = last_name
+                if let last_name = result.valueForKey(bechanceClient.UserKeys.LastName) as? String {
+                    self.user[bechanceClient.UserKeys.LastName] = last_name
+                    tmp_user[bechanceClient.UserKeys.LastName] = last_name
                 }
-                if let user_name = result.valueForKey("name") as? String{
-                    self.user["user_name"] = user_name
-                    tmp_user["user_name"] = user_name
+                if let user_name = result.valueForKey(bechanceClient.UserKeys.Name) as? String{
+                    self.user[bechanceClient.UserKeys.UserNameUnder] = user_name
+                    tmp_user[bechanceClient.UserKeys.UserNameUnder] = user_name
                 }
-                if let gender = result.valueForKey("gender") as? String {
-                    self.user["gender"] = gender
-                    tmp_user["gender"] = gender
+                if let gender = result.valueForKey(bechanceClient.UserKeys.Gender) as? String {
+                    self.user[bechanceClient.UserKeys.Gender] = gender
+                    tmp_user[bechanceClient.UserKeys.Gender] = gender
                 }
                 
-                self.user["id"] = result.valueForKey("id") as! String
-                self.user["user_name"] = self.username.text!
+                self.user[bechanceClient.UserKeys.ID] = result.valueForKey(bechanceClient.UserKeys.ID) as! String
+                self.user[bechanceClient.UserKeys.UserName] = self.username.text!
                 self.user.username = self.username.text!
+                
+                let location: [String] = ((result.valueForKey(bechanceClient.JSONResponseKeys.Location) as! [String: AnyObject])[bechanceClient.JSONResponseKeys.Name] as! String).componentsSeparatedByString(",")
 
-                let location: [String] = ((result.valueForKey("location") as! [String: AnyObject])["name"] as! String).componentsSeparatedByString(", ") as [String]
-                self.user["city"] = location[0]
-                self.user["state"] = location[1]
-
-                let id = result.valueForKey("id") as! String
+                let id = result.valueForKey(bechanceClient.UserKeys.ID) as! String
                 let photoUrl = "https://graph.facebook.com/\(id)/picture?type=large&return_ssl_resources=1"
                 let urlRequest = NSURLRequest(URL: NSURL(string: photoUrl)!)
                 
+                // Get Data
                 let dataTask = bechanceClient.sharedInstance().session.dataTaskWithRequest(urlRequest) { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
                     if let error = error {
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -100,12 +92,12 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                         dispatch_async(dispatch_get_main_queue()) {
                             self.userImage.image = image
                         }
-                        self.user["image"] = data
+                        self.user[bechanceClient.UserKeys.Image] = data
                         self.user.saveInBackground()
                         self.core_user?.userImage = photoUrl
                         let userId = PFUser.currentUser()!.objectId
                         
-                        self.core_user = User(username: tmp_user["user_name"]!, user_id: userId!, firstname: tmp_user["first_name"]!, lastname: tmp_user["last_name"]!, city: location[0], state: location[1], gender: tmp_user["gender"]!, email: tmp_user["email"]!, context: self.sharedContext)
+                        self.core_user = User(username: tmp_user[bechanceClient.UserKeys.UserNameUnder]!, user_id: userId!, firstname: tmp_user[bechanceClient.UserKeys.FirstName]!, lastname: tmp_user[bechanceClient.UserKeys.LastName]!, city: location[0], state: location[1], gender: tmp_user[bechanceClient.UserKeys.Gender]!, email: tmp_user[bechanceClient.UserKeys.Email]!, context: self.sharedContext)
                         self.saveContext()
                         
                         bechanceClient.sharedInstance().saveImage(image!, imagePath: photoUrl)
@@ -152,7 +144,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         if !textField.text!.isEmpty {
             
             bechanceClient.sharedInstance().sharedParseUser?.username = textField.text!
-            bechanceClient.sharedInstance().sharedParseUser?["user_name"] = textField.text!
+            bechanceClient.sharedInstance().sharedParseUser?[bechanceClient.UserKeys.UserNameUnder] = textField.text!
             self.user.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
                 bechanceClient.sharedInstance().sharedUser!.username = textField.text!
                 self.saveContext()
@@ -178,15 +170,20 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         }
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
+    // MARK: - UI Helpers
+    /**
+    Configures the UI appearance
     */
+    func setupUI() {
+        self.userImage.layer.cornerRadius = self.userImage.frame.size.width / 10.0//3.0
+        self.userImage.layer.borderWidth = 3.0;
+        self.userImage.layer.borderColor = UIColor.whiteColor().CGColor
+        self.userImage.clipsToBounds = true
+        self.activityIndicator.layer.cornerRadius = self.activityIndicator.frame.size.width / 10.0
+        self.activityIndicator.clipsToBounds = true
+    }
+
+    
     
     // MARK: - CoreData Helpers
     

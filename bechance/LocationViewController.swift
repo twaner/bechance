@@ -46,24 +46,24 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
             locationManager.requestAlwaysAuthorization()
             locationManager.startUpdatingLocation()
         } else {
-            self.displayUIAlertController("Location Services Disabled", message: "Location Services have been disabled. The app will not be able to determine your location or add a location to a photo", action: "Ok")
-        }
-        let alertController = UIAlertController(title: "Location Services Disabled", message: "Location Services have been disabled. bechance will be unbale to determine your location for your photo.", preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel){ (actions: UIAlertAction) in
-            alertController.dismissViewControllerAnimated(true) {
-                dispatch_async(dispatch_get_main_queue()) {
-                self.dismissViewControllerAnimated(true, completion: nil)
-                }
-            }
-        })
-        alertController.addAction(UIAlertAction(title: "Enable Location Services", style: UIAlertActionStyle.Default){ (action: UIAlertAction) in
-            alertController.dismissViewControllerAnimated(true, completion: { () -> Void in
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.presentViewController(alertController, animated: true, completion: nil)
-                    self.locationManager.requestWhenInUseAuthorization()
+            let alertController = UIAlertController(title: "Location Services Disabled", message: "Location Services have been disabled. bechance will be unbale to determine your location for your photo.", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel){ (actions: UIAlertAction) in
+                alertController.dismissViewControllerAnimated(true) {
+                    dispatch_async(dispatch_get_main_queue()) {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    }
                 }
             })
-        })
+            // renenable services
+            alertController.addAction(UIAlertAction(title: "Enable Location Services", style: UIAlertActionStyle.Default){ (action: UIAlertAction) in
+                alertController.dismissViewControllerAnimated(true, completion: { () -> Void in
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.presentViewController(alertController, animated: true, completion: nil)
+                        self.locationManager.startUpdatingLocation()
+                    }
+                })
+            })
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -80,7 +80,6 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell")!
-        
         let item = self.venue[indexPath.row]
         cell.textLabel!.text = item["name"] as? String
         return cell
@@ -107,11 +106,6 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if self.venue.count > 0 {
-//            return self.venue.count
-//        } else {
-//            return 0
-//        }
         return self.venue.count ?? 0
     }
     
@@ -137,11 +131,15 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
             self.searchTableView.reloadData()
             return
         }
+        // Check to see if location can be determined. If not message and send back.
+        guard let latString = self.location, longString = self.location where location != nil else {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.displayUIAlertController("Error", message: "Cannot determine location. Please check that Location Services are enabled.", action: "Ok")
+            }
+            return
+        }
         
-        let latString = self.location!.latitude.description
-        let longString = self.location!.longitude.description
-        
-        let tmp: [String: AnyObject] = bechanceClient.sharedInstance().foursquareGetVenueCreator(latString, long: longString, location:"", providerID: "", query: searchText)
+        let tmp: [String: AnyObject] = bechanceClient.sharedInstance().foursquareGetVenueCreator(latString.latitude.description, long: longString.longitude.description, location:"", providerID: "", query: searchText)
         
         searchTask = bechanceClient.sharedInstance().foursquareGetHelper(bechanceClient.Constants.VenueSearch, parameters: tmp)
             { (result, error) -> Void in
@@ -150,7 +148,6 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
                     self.displayUIAlertController("Error", message: "Error getting locations from Foursquare: \(error.localizedDescription)", action: "Ok")
                 }
             } else {
-
                 if let venueDictionary = result as? NSDictionary {
                     if let venueResponse = venueDictionary.valueForKey(bechanceClient.JSONResponseKeys.Response) as? NSDictionary {
                         if let venueArray = venueResponse.valueForKey(bechanceClient.JSONResponseKeys.Venues) as? [[String: AnyObject]] {

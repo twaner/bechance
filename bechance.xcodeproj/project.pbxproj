@@ -47,6 +47,7 @@
 		7E1A14231BC48809002EA5C3 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E1A141F1BC48809002EA5C3 /* ParseUI.framework */; settings = {ASSET_TAGS = (); }; };
 		7E1A14241BC48809002EA5C3 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E1A14201BC48809002EA5C3 /* Bolts.framework */; settings = {ASSET_TAGS = (); }; };
 		7E1A14251BC48809002EA5C3 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E1A14211BC48809002EA5C3 /* Parse.framework */; settings = {ASSET_TAGS = (); }; };
+		7E1A14301BC83AD2002EA5C3 /* RBResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1A142F1BC83AD2002EA5C3 /* RBResizer.swift */; settings = {ASSET_TAGS = (); }; };
 		7E1B532E1B8FED2D00E1868B /* Photos-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B532C1B8FED2D00E1868B /* Photos-50.png */; };
 		7E1B532F1B8FED2D00E1868B /* Photos-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B532D1B8FED2D00E1868B /* Photos-32.png */; };
 		7E1B53311B8FF6BD00E1868B /* gear-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B53301B8FF6BD00E1868B /* gear-7.png */; };
@@ -124,6 +125,7 @@
 		7E1A141F1BC48809002EA5C3 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 		7E1A14201BC48809002EA5C3 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		7E1A14211BC48809002EA5C3 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		7E1A142F1BC83AD2002EA5C3 /* RBResizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RBResizer.swift; sourceTree = "<group>"; };
 		7E1B532C1B8FED2D00E1868B /* Photos-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Photos-50.png"; sourceTree = "<group>"; };
 		7E1B532D1B8FED2D00E1868B /* Photos-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Photos-32.png"; sourceTree = "<group>"; };
 		7E1B53301B8FF6BD00E1868B /* gear-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gear-7.png"; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 			children = (
 				1957ADD51B587B7500434802 /* TextExtension.swift */,
 				19DBB4C91B856859000C8472 /* bechanceNetworkClient.swift */,
+				7E1A142F1BC83AD2002EA5C3 /* RBResizer.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -494,6 +497,7 @@
 				1957AE031B58853C00434802 /* bechance-bridging-header.m in Sources */,
 				198CD3D61B6E8458008891A9 /* MainViewController.swift in Sources */,
 				1957ADD61B587B7500434802 /* TextExtension.swift in Sources */,
+				7E1A14301BC83AD2002EA5C3 /* RBResizer.swift in Sources */,
 				1957ADAB1B587AAC00434802 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,6 +9,8 @@
 import UIKit
 import CoreData
 
+let kSIZEFORDATA: Float = 128
+
 class NonFBSIgnupViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     // MARK: - Outlets
@@ -144,8 +146,9 @@ class NonFBSIgnupViewController: UIViewController,UIImagePickerControllerDelegat
     
     @IBAction func submitButtonTapped(sender: AnyObject) {
         self.view.userInteractionEnabled = false
-        
-        self.displayActivityViewIndicator(true, activityIndicator: self.activityIndicator)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.displayActivityViewIndicator(true, activityIndicator: self.activityIndicator)
+        }
         
         if self.signUpImageView.image != nil && self.emailAddressTextField.text?.isEmpty == false {
             
@@ -161,32 +164,62 @@ class NonFBSIgnupViewController: UIViewController,UIImagePickerControllerDelegat
             bechanceClient.sharedInstance().sharedParseUser!["gender"] = self.genderController.selectedSegmentIndex == 0 ? "Male" : "Female"
             
             guard let city = self.cityTextField.text where self.cityTextField.text?.isEmpty == false else  {
-                self.displayUIAlertController("Error", message: "Please a city", action: "Ok")
-                self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
-                self.view.userInteractionEnabled = true
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.displayUIAlertController("Error", message: "Please a city", action: "Ok")
+                    self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
+                    self.view.userInteractionEnabled = true
+                }
                 return
             }
             
             guard let state = self.stateTextField.text where self.stateTextField.text?.isEmpty == false && self.stateTextField.text?.length == 2 else  {
-                self.displayUIAlertController("Error", message: "Please a 2 character state code", action: "Ok")
-                self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
-                self.view.userInteractionEnabled = true
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.displayUIAlertController("Error", message: "Please a 2 character state code", action: "Ok")
+                    self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
+                    self.view.userInteractionEnabled = true
+                }
                 return
             }
+            
             bechanceClient.sharedInstance().sharedParseUser!["state"] = state
             bechanceClient.sharedInstance().sharedParseUser!["city"] = city
             
             guard let image = self.signUpImageView.image else
             {
-                self.displayUIAlertController("Photo Error", message: "No photo was available", action: "Ok")
-                self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
-                self.view.userInteractionEnabled = true
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.displayUIAlertController("Photo Error", message: "No photo was available", action: "Ok")
+                    self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
+                    self.view.userInteractionEnabled = true
+                }
                 return
             }
             
-            let imageData:NSData = (data:UIImageJPEGRepresentation(image, 0.1)!)
+//            var imageData:NSData = (data:UIImageJPEGRepresentation(image, 1.0)!)
+//            var num = (Float(data:UIImageJPEGRepresentation(image, 1.0)!.) / kSIZEFORDATA) * 10
+//            imageData
             
-            bechanceClient.sharedInstance().sharedParseUser!["image"] = imageData
+            let num = ((Float(UIImageJPEGRepresentation(image, 1.0)!.length) / kSIZEFORDATA) /  (Float(UIImageJPEGRepresentation(image, 1.0)!.length))) * 10
+            let imageData:NSData = (data:UIImageJPEGRepresentation(image, CGFloat(num))!)
+            
+//            let imageResized = UIImage
+            
+            let imageData1: NSData = (data:UIImageJPEGRepresentation(image, 0.8)!)
+            var factor: Double = 1.0
+            var adjustment: Double = 1.0 / sqrt(2.0)
+            var size: CGSize = image.size
+            var currentSize:CGSize = size
+            var currentImage: UIImage = image
+//            repeat {
+//                factor *= adjustment
+////                currentSize = CGSizeMake(roundf(size.width * factor), roundf(size.height * factor))
+////                currentImage = image.res
+//            }
+//            while imageData1.length > 128
+            
+            let resizedImage = RBResizeImage(image, targetSize: CGSizeMake(300.0, 300.0))
+            
+            
+            bechanceClient.sharedInstance().sharedParseUser!["image"] = (UIImageJPEGRepresentation(resizedImage, 0.3)) //imageData
             
             // Signup Parse user
             bechanceClient.sharedInstance().sharedParseUser!.signUpInBackgroundWithBlock {
@@ -208,7 +241,7 @@ class NonFBSIgnupViewController: UIViewController,UIImagePickerControllerDelegat
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
                         self.view.userInteractionEnabled = true
-                        self.performSegueWithIdentifier("NonFBSegue", sender: self)
+                        self.performSegueWithIdentifier("NonFBSegueMain", sender: self)
                     })
                 }
             }

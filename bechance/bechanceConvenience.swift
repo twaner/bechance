@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Taiowa Waner. All rights reserved.
 //
 
-import Foundation
 import UIKit
+import CoreData
 
 extension bechanceClient {
     
@@ -135,34 +135,80 @@ extension bechanceClient {
         }
     }
 
+    
+    // MARK: - FB Helpers
+    
+    /**
+    Creates a Parse and a dictionary of keys from a user from a FB Graph Request
+    - parameter result The result of the Graph Request
+    - parameter user PFUser to update and save.
+    - parameter username username for User
+    
+    -returns a tuple containing a PFUser and a dictionary of values for creating a CoreData user.s
+    */
+    func createUserFromGraphRequest(user: PFUser, result: AnyObject, username: String) -> (user: PFUser, userDict: [String: String]){
+        
+        var tmpUser: [String: String] = [:]
+        if let email = result.valueForKey(bechanceClient.UserKeys.Email) as? String {
+            user[bechanceClient.UserKeys.Email] = email
+            tmpUser[bechanceClient.UserKeys.Email] = email
+        }
+        if let first_name = result.valueForKey(bechanceClient.UserKeys.FirstName) as? String {
+            user[bechanceClient.UserKeys.FirstName] = first_name
+            tmpUser[bechanceClient.UserKeys.FirstName] = first_name
+        }
+        if let last_name = result.valueForKey(bechanceClient.UserKeys.LastName) as? String {
+            user[bechanceClient.UserKeys.LastName] = last_name
+            tmpUser[bechanceClient.UserKeys.LastName] = last_name
+        }
+        if let user_name = result.valueForKey(bechanceClient.UserKeys.Name) as? String{
+            user[bechanceClient.UserKeys.UserNameUnder] = user_name
+            tmpUser[bechanceClient.UserKeys.UserNameUnder] = user_name
+        }
+        if let gender = result.valueForKey(bechanceClient.UserKeys.Gender) as? String {
+            user[bechanceClient.UserKeys.Gender] = gender
+            tmpUser[bechanceClient.UserKeys.Gender] = gender
+        }
+        
+        user[bechanceClient.UserKeys.ID] = result.valueForKey(bechanceClient.UserKeys.ID) as! String
+        user[bechanceClient.UserKeys.UserName] = username
+        user.username = username
+        let location: [String] = ((result.valueForKey(bechanceClient.JSONResponseKeys.Location) as! [String: AnyObject])[bechanceClient.JSONResponseKeys.Name] as! String).componentsSeparatedByString(",")
+        tmpUser[bechanceClient.JSONResponseKeys.City] = location[0]
+        tmpUser[bechanceClient.JSONResponseKeys.State] = location[1]
+        let id = result.valueForKey(bechanceClient.UserKeys.ID) as! String
+        tmpUser["photoUrl"] = "https://graph.facebook.com/\(id)/picture?type=large&return_ssl_resources=1"
+        return (user, tmpUser)
+    }
+    
     /**
     Helper for using a dataTaskWithRequest to get a photo from FB
     */
-//    func facebookImageTaskHelper(userDict: [String: String], location: [String] , imageView: UIImageView, urlRequest: NSURLRequest, parseUser: PFUser, var coreUser: User) {
-//        let task = session.dataTaskWithRequest(urlRequest) { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
-//            if let error = error {
-//                dispatch_async(dispatch_get_main_queue()){
-////                    self.displayUIAlertController("Error", message: "An error occured while getting information from FB. Please try again \(error.localizedDescription)", action: "Ok")
-//                }
-//            } else {
-//                let image = UIImage(data: data!)
-//                dispatch_async(dispatch_get_main_queue()) {
-//                    imageView.image = image
-//                }
-//                parseUser["image"] = data
-//                parseUser.saveInBackground()
-//                coreUser.userImage = bechanceClient.subtituteKeyInMethod(bechanceClient.Constants.FacebookPhotoURL, key: "id", value: parseUser.objectId!)!
-//                let userId = PFUser.currentUser()!.objectId
-//                
-//                coreUser = User(username: userDict["user_name"]!, user_id: userId!, firstname: userDict["first_name"]!, lastname: userDict["last_name"]!, city: location[0], state: location[1], gender: userDict["gender"]!, email: userDict["email"]!, context: self.sharedContext)
-//                self.saveContext()
-//                bechanceClient.sharedInstance().saveImage(image!, imagePath: photoUrl)
-//                bechanceClient.sharedInstance().sharedParseUser = parseUser
-//                bechanceClient.sharedInstance().sharedUser = coreUser
-//
-//            }
-//        }
-//    task.resume()
-//    }
+    func facebookImageTaskHelper(userDict: [String: String], location: [String], photoUrl: String, imageView: UIImageView, urlRequest: NSURLRequest, parseUser: PFUser, var coreUser: User, context: NSManagedObjectContext) {
+        let task = session.dataTaskWithRequest(urlRequest) { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+            if let error = error {
+                dispatch_async(dispatch_get_main_queue()){
+//                    self.displayUIAlertController("Error", message: "An error occured while getting information from FB. Please try again \(error.localizedDescription)", action: "Ok")
+                }
+            } else {
+                let image = UIImage(data: data!)
+                dispatch_async(dispatch_get_main_queue()) {
+                    imageView.image = image
+                }
+                parseUser["image"] = data
+                parseUser.saveInBackground()
+                coreUser.userImage = bechanceClient.subtituteKeyInMethod(bechanceClient.Constants.FacebookPhotoURL, key: "id", value: parseUser.objectId!)!
+                let userId = PFUser.currentUser()!.objectId
+                
+                coreUser = User(username: userDict["user_name"]!, user_id: userId!, firstname: userDict["first_name"]!, lastname: userDict["last_name"]!, city: location[0], state: location[1], gender: userDict["gender"]!, email: userDict["email"]!, context: context)
+                
+                bechanceClient.sharedInstance().saveImage(image!, imagePath: photoUrl)
+                bechanceClient.sharedInstance().sharedParseUser = parseUser
+                bechanceClient.sharedInstance().sharedUser = coreUser
+
+            }
+        }
+    task.resume()
+    }
 
 }

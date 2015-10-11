@@ -25,8 +25,8 @@ extension bechanceClient {
         static let Location = "location"
         static let Lat = "lat"
         static let Lng = "lng"
-        static let City = "facebookUsername"
-        static let State = "facebookUsername"
+        static let City = "city"
+        static let State = "state"
         static let Meta = "meta"
         static let ErrorDetail = "errorDetail"
         static let ErrorType = "errorType"
@@ -41,6 +41,7 @@ extension bechanceClient {
         static let Browse = "browse"
         static let FacebookPhotoURL = "https://graph.facebook.com/id/picture?type=large&return_ssl_resources=1"
         static let FacebookParameters = ["fields": "id, name, first_name, last_name, email, location, gender"]
+        static let GraphPath = "me"
         
     }
     

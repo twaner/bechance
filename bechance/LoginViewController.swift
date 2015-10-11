@@ -153,6 +153,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 if user != nil {
                     bechanceClient.sharedInstance().sharedParseUser = user
                     self.performSegueWithIdentifier("MainSegue", sender: self)
+                } else {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.displayUIAlertController("Error Logging In", message: "An error has happened while logging in \(error?.localizedDescription)", action: "Ok")
+                    }
                 }
             }
         }
@@ -160,6 +164,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - IBActions
     
+    /**
+    Determines the UI's action when the UISegmentedControl is tapped.
+    - parameter sender segement that is selected
+    */
     @IBAction func loginSegmentTapped(sender: UISegmentedControl) {
         switch loginSegment.selectedSegmentIndex {
         case 0:
@@ -173,21 +181,29 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    ///
-    /// Performs a signup/login using FB. This is shown if the user is not logged in already.
-    ///
+    /**
+    Performs a signup/login using FB. This is shown if the user is not logged in already.
+    - parameter sender button that was tapped
+    */
     @IBAction func fbLoginTapped(sender: UIButton) {
         
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        dispatch_async(dispatch_get_main_queue()) {
             self.displayActivityViewIndicator(true, activityIndicator: self.activityIndicator)
-        })
+        }
         PFFacebookUtils.logInInBackgroundWithReadPermissions(permissions, block: { (user: PFUser?, error: NSError?) -> Void in
             if let error = error {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
                     self.displayUIAlertController("Error", message: "Error logging in with Facebook. Please Try again. \(error.localizedDescription)", action: "Ok")
-                })
+                }
             } else {
-                if (user != nil) {
+                if (user != nil && PFUser.currentUser() != nil) {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        bechanceClient.sharedInstance().sharedParseUser = PFUser.currentUser()
+                        self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
+                        self.performSegueWithIdentifier("LoginSegue", sender: self)
+                    })
+                } else {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
                         self.performSegueWithIdentifier("LoginSegue", sender: self)
@@ -201,8 +217,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         switch loginSegment.selectedSegmentIndex {
         case 0:
             self.signupUser()
+            print("SIGNUP")
         case 1:
             self.loginUser()
+            print("LOGIN")
         default:
             break
         }
@@ -211,20 +229,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     // MARK: - TextField
     
     func textFieldDidEndEditing(textField: UITextField) {
-        print("TextField did begin editing method called")
         textField.resignFirstResponder()
     }
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        print("TextField should begin editing method called")
         return true;
     }
     func textFieldShouldClear(textField: UITextField) -> Bool {
-        print("TextField should clear method called")
         return true;
     }
     func textFieldShouldEndEditing(textField: UITextField) -> Bool {
-        print("TextField should snd editing method called")
-//        textField.resignFirstResponder()
         return true;
     }
     
@@ -248,6 +261,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Navigation
     
+    /**
+    Unwind segue for logout from UserVC.
+    */
     @IBAction func logoutToMain(segue: UIStoryboardSegue) {
         
     }

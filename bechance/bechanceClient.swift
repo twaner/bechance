@@ -54,8 +54,40 @@ class bechanceClient {
         
         return task
     }
+    
+    // MARK: - FB Helpers
+    
+    func facebookGraphRequestHelper(graphPath: String, parameters: [String: String], CompletionHander:(result: AnyObject?, error: NSError?)) {
+        let graphRequest = FBSDKGraphRequest(graphPath: graphPath, parameters: parameters)
+        
+        graphRequest.startWithCompletionHandler { (connection: FBSDKGraphRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
+            if let error = error {
+//                return error
+                print("GraphRequestHelper error \(error.localizedDescription)")
+            } else {
+                
+            }
+        }
+    }
+    
+    func facebookGetImageDataHelper(url: String, completionHander: (result: AnyObject?, error: NSError?) -> Void) -> NSURLSessionDataTask {
+        
+        let urlRequest: NSURLRequest = NSURLRequest(URL: NSURL(string: url)!)
+        let dataTask = bechanceClient.sharedInstance().session.dataTaskWithRequest(urlRequest) { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+            if let error = error {
+                print("error getting photo from facebook \(error.localizedDescription)")
+                bechanceClient.errorForData(data, response: response, error: error)
+            } else {
+                if let data = data {
+                    completionHander(result: data, error: nil)
+                }
+            }
+        }
+        dataTask.resume()
+        return dataTask
+    }
 
-    // MARK: - Foursquare Helpers
+    // MARK: - Foursquare Helpers - called in tableView
     
     func foursquareGetHelper(method: String, parameters: [String: AnyObject], CompletionHander: (result: AnyObject?, error: NSError?) -> Void) -> NSURLSessionDataTask {
         

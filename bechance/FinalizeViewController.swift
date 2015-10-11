@@ -72,15 +72,17 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
     }
     
     @IBAction func postTapped(sender: UIButton) {
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+        dispatch_async(dispatch_get_main_queue()) {
             self.postButton.hidden = true
             self.displayActivityViewIndicator(true, activityIndicator: self.activityIndicator)
             self.view.userInteractionEnabled = false
         }
         if let location = self.parseLocation {
             self.saveParsePhoto(location)
-        } else {
+        } else if tmpLocation != nil {
             self.saveParseLocation(tmpLocation!, savePhoto: true)
+        } else {
+            self.saveParsePhoto(nil)
         }
     }
     
@@ -92,7 +94,7 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
         return coreLocation
     }
     
-    func saveCorePhoto(location: Location, photo: PFObject) -> Photo {
+    func saveCorePhoto(location: Location?, photo: PFObject) -> Photo {
         let corePhoto = Photo(id: (photo.objectId)!, title: self.titleTextField.text!, date: photo["date"] as! NSDate, photo_description: self.descriptionTextView.text, user: bechanceClient.sharedInstance().sharedUser!, location: location, context: self.sharedContext)
         corePhoto.saveImage(self.photoImageView.image!, imagePath: corePhoto.imagePath)
         self.saveContext()
@@ -149,9 +151,10 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
     
     - parameter location Location PFObject
     */
-    func saveParsePhoto(location: PFObject) {
-        let data: NSData = UIImageJPEGRepresentation(self.photoImageView.image!, 0.8)!
+    func saveParsePhoto(location: PFObject?) {
+        let data: NSData = UIImageJPEGRepresentation(self.photoImageView.image!, 0.5)!
         let photoFile = PFFile(data: data)
+        
         do {
             photoFile.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
                 if success {
@@ -160,25 +163,31 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
                     photo["description"] = self.descriptionTextView.text
                     photo["user"] = PFUser.currentUser()
                     photo["date"] = NSDate()
-                    photo["location"] = location
+                    if location != nil {
+                        photo["location"] = location
+                    }
                     photo["image"] = photoFile
                     
                     photo.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
                         if success {
-                            let location = self.saveCoreLocation()
-                            let _ = self.saveCorePhoto(location, photo: photo)
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            if location != nil {
+                                let location = self.saveCoreLocation()
+                                self.saveCorePhoto(location, photo: photo)
+                            } else {
+                                self.saveCorePhoto(nil, photo: photo)
+                            }
+                            dispatch_async(dispatch_get_main_queue()) {
                                 self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
                                 self.postButton.hidden = false
                                 self.view.userInteractionEnabled = true
                                 self.performSegueWithIdentifier("unwindToMainViewSegue", sender: nil)
-                            })
+                            }
                         } else {
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            dispatch_async(dispatch_get_main_queue()) {
                                 self.displayUIAlertController("Error saving photo", message: "There was an error saving your photo \(error)", action: "Ok")
                                 self.postButton.hidden = false
                                 self.view.userInteractionEnabled = true
-                            })
+                            }
                         }
                     }
                 } else {

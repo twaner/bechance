@@ -157,13 +157,18 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     }
     
     
+    
+    @IBAction func logoutTapped(sender: UIButton) {
+        PFUser.logOut()
+        bechanceClient.sharedInstance().sharedParseUser = PFUser.currentUser()
+    }
+    
     /**
     Logs a user out and unwinds to the signin screen.
     - parameter segue to perform
     */
     @IBAction func logoutToMain(segue: UIStoryboardSegue) {
-        PFUser.logOut()
-        bechanceClient.sharedInstance().sharedParseUser = PFUser.currentUser()
+        
     }
     
     // MARK: - CoreData Helpers

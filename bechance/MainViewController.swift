@@ -142,14 +142,14 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
             }
         }
         // Location
-        let locationObj = photo[bechanceClient.JSONResponseKeys.Location] as! PFObject
-        do {
-            try locationObj.fetchIfNeeded()
-        } catch {
-            print("Error fetching location Object \(error)")
+        if let locationObj: PFObject = photo[bechanceClient.JSONResponseKeys.Location] as? PFObject {
+            do {
+                try locationObj.fetchIfNeeded()
+                cell.locationLabel?.text = (locationObj[bechanceClient.UserKeys.Name] as! String) ?? "No Location"
+            } catch {
+                
+            }
         }
-        
-        cell.locationLabel?.text = (locationObj[bechanceClient.UserKeys.Name] as! String)
         cell.userImage?.layer.cornerRadius = cell.userImage.frame.size.width / 2
         cell.userImage?.layer.masksToBounds = true
         let userObj = photo["user"] as! PFUser
@@ -229,7 +229,7 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "PhotoSegue") {
-            _ = segue.destinationViewController as! UINavigationController
+            
         }
     }
     

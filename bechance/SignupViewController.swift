@@ -40,7 +40,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         
         let parameters = bechanceClient.Constants.FacebookParameters //["fields": "id, name, first_name, last_name, email, location, gender"]
         
-        let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: parameters)
+        let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: bechanceClient.Constants.GraphPath, parameters: parameters)
 
         graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
             
@@ -49,67 +49,43 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                     self.displayUIAlertController("Ok", message: "Error conntecting to FB \(error.localizedDescription)", action: "Ok")
                 })
             } else {
-                var tmp_user: [String: String] = [:]
-                if let email = result.valueForKey(bechanceClient.UserKeys.Email) as? String {
-                    self.user[bechanceClient.UserKeys.Email] = email
-                    tmp_user[bechanceClient.UserKeys.Email] = email
-                }
-                if let first_name = result.valueForKey(bechanceClient.UserKeys.FirstName) as? String {
-                    self.user[bechanceClient.UserKeys.FirstName] = first_name
-                    tmp_user[bechanceClient.UserKeys.FirstName] = first_name
-                }
-                if let last_name = result.valueForKey(bechanceClient.UserKeys.LastName) as? String {
-                    self.user[bechanceClient.UserKeys.LastName] = last_name
-                    tmp_user[bechanceClient.UserKeys.LastName] = last_name
-                }
-                if let user_name = result.valueForKey(bechanceClient.UserKeys.Name) as? String{
-                    self.user[bechanceClient.UserKeys.UserNameUnder] = user_name
-                    tmp_user[bechanceClient.UserKeys.UserNameUnder] = user_name
-                }
-                if let gender = result.valueForKey(bechanceClient.UserKeys.Gender) as? String {
-                    self.user[bechanceClient.UserKeys.Gender] = gender
-                    tmp_user[bechanceClient.UserKeys.Gender] = gender
-                }
-                
-                self.user[bechanceClient.UserKeys.ID] = result.valueForKey(bechanceClient.UserKeys.ID) as! String
-                self.user[bechanceClient.UserKeys.UserName] = self.username.text!
-                self.user.username = self.username.text!
-                
-                let location: [String] = ((result.valueForKey(bechanceClient.JSONResponseKeys.Location) as! [String: AnyObject])[bechanceClient.JSONResponseKeys.Name] as! String).componentsSeparatedByString(",")
-
-                let id = result.valueForKey(bechanceClient.UserKeys.ID) as! String
-                let photoUrl = "https://graph.facebook.com/\(id)/picture?type=large&return_ssl_resources=1"
-                let urlRequest = NSURLRequest(URL: NSURL(string: photoUrl)!)
-                
+                let graphUser: (PFUser, [String: String]) = bechanceClient.sharedInstance().createUserFromGraphRequest(self.user, result: result, username: self.username.text!)
+                let photoUrl = graphUser.1["photoUrl"]!
+                // Update PFuser for this class.
+                self.user = graphUser.0
                 // Get Data
-                let dataTask = bechanceClient.sharedInstance().session.dataTaskWithRequest(urlRequest) { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+                
+                bechanceClient.sharedInstance().facebookGetImageDataHelper(photoUrl, completionHander: { (result, error) -> Void in
                     if let error = error {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.displayUIAlertController("Error", message: "An error occured while getting information from FB. Please try again \(error.localizedDescription)", action: "Ok")
-                        })
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.displayUIAlertController("Ok", message: "Error conntecting to FB \(error.localizedDescription)", action: "Ok")
+                        }
                     } else {
-                        let image = UIImage(data: data!)
+                        let image = UIImage(data: result as! NSData)
                         dispatch_async(dispatch_get_main_queue()) {
                             self.userImage.image = image
                         }
-                        self.user[bechanceClient.UserKeys.Image] = data
+                        self.user[bechanceClient.UserKeys.Image] = result
                         self.user.saveInBackground()
-                        self.core_user?.userImage = photoUrl
-                        let userId = PFUser.currentUser()!.objectId
                         
-                        self.core_user = User(username: tmp_user[bechanceClient.UserKeys.UserNameUnder]!, user_id: userId!, firstname: tmp_user[bechanceClient.UserKeys.FirstName]!, lastname: tmp_user[bechanceClient.UserKeys.LastName]!, city: location[0], state: location[1], gender: tmp_user[bechanceClient.UserKeys.Gender]!, email: tmp_user[bechanceClient.UserKeys.Email]!, context: self.sharedContext)
-                        self.saveContext()
+                        self.user.saveInBackgroundWithBlock({ (result: Bool, error: NSError?) -> Void in
+                            self.core_user?.userImage = photoUrl
+                            let userId = PFUser.currentUser()!.objectId
+                            
+                            self.core_user = User(username: graphUser.1[bechanceClient.UserKeys.UserNameUnder]!, user_id: userId!, firstname: graphUser.1[bechanceClient.UserKeys.FirstName]!, lastname: graphUser.1[bechanceClient.UserKeys.LastName]!, city: graphUser.1[bechanceClient.UserKeys.City]!, state: graphUser.1[bechanceClient.UserKeys.State]!, gender: graphUser.1[bechanceClient.UserKeys.Gender]!, email: graphUser.1[bechanceClient.UserKeys.Email]!, context: self.sharedContext)
+                            self.saveContext()
+                            
+                            bechanceClient.sharedInstance().saveImage(image!, imagePath: photoUrl)
+                            bechanceClient.sharedInstance().sharedParseUser = self.user
+                            bechanceClient.sharedInstance().sharedUser = self.core_user
+                            
+                            dispatch_async(dispatch_get_main_queue()) {
+                                self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
+                            }
+                        })
                         
-                        bechanceClient.sharedInstance().saveImage(image!, imagePath: photoUrl)
-                        bechanceClient.sharedInstance().sharedParseUser = self.user
-                        bechanceClient.sharedInstance().sharedUser = self.core_user
-                        
-                        dispatch_async(dispatch_get_main_queue()) {
-                            self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
-                        }
                     }
-                }
-                dataTask.resume()
+                })
             }
         })
     }

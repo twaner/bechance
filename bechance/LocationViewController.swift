@@ -40,13 +40,14 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
         self.locationManager.requestWhenInUseAuthorization()
         
         let status = CLLocationManager.authorizationStatus()
-        if CLLocationManager.locationServicesEnabled() && status == CLAuthorizationStatus.AuthorizedAlways || status == CLAuthorizationStatus.AuthorizedWhenInUse {
+        if CLLocationManager.locationServicesEnabled() && (status == CLAuthorizationStatus.AuthorizedAlways || status == CLAuthorizationStatus.AuthorizedWhenInUse) && status != .NotDetermined {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.requestAlwaysAuthorization()
             locationManager.startUpdatingLocation()
         } else {
             let alertController = UIAlertController(title: "Location Services Disabled", message: "Location Services have been disabled. bechance will be unbale to determine your location for your photo.", preferredStyle: UIAlertControllerStyle.Alert)
+            
             alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel){ (actions: UIAlertAction) in
                 alertController.dismissViewControllerAnimated(true) {
                     dispatch_async(dispatch_get_main_queue()) {
@@ -54,15 +55,14 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
                     }
                 }
             })
-            // renenable services
-            alertController.addAction(UIAlertAction(title: "Enable Location Services", style: UIAlertActionStyle.Default){ (action: UIAlertAction) in
-                alertController.dismissViewControllerAnimated(true, completion: { () -> Void in
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.presentViewController(alertController, animated: true, completion: nil)
-                        self.locationManager.startUpdatingLocation()
-                    }
-                })
+            alertController.addAction(UIAlertAction(title: "Open Settings", style: UIAlertActionStyle.Default){ (action: UIAlertAction) in
+                if let url = NSURL(string: UIApplicationOpenSettingsURLString) {
+                    UIApplication.sharedApplication().openURL(url)
+                }
             })
+            dispatch_async(dispatch_get_main_queue()) {
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
         }
     }
     

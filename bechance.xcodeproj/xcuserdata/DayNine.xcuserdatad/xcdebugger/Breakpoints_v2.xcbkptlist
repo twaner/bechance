@@ -353,6 +353,38 @@
             endingLineNumber = "144"
             landmarkName = "submitTapped(_:)"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "bechance.SignupViewController.(submitTapped (bechance.SignupViewController) -&gt; (ObjectiveC.UIButton) -&gt; ()).(closure #2)"
+                  moduleName = "bechance"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/DayNine/Desktop/programming/bechance-good/bechance%202-2/bechance/SignupViewController.swift"
+                  timestampString = "466283805.311872"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "144"
+                  endingLineNumber = "144"
+                  offsetFromSymbolStart = "8213">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "bechance.SignupViewController.(submitTapped (bechance.SignupViewController) -&gt; (ObjectiveC.UIButton) -&gt; ()).(closure #2).(closure #2)"
+                  moduleName = "bechance"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/DayNine/Desktop/programming/bechance-good/bechance%202-2/bechance/SignupViewController.swift"
+                  timestampString = "466283805.312278"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "144"
+                  endingLineNumber = "144"
+                  offsetFromSymbolStart = "202">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -416,6 +448,22 @@
             startingLineNumber = "112"
             endingLineNumber = "112"
             landmarkName = "populate()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "bechance/LocationViewController.swift"
+            timestampString = "466283330.648429"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "viewDidLoad()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

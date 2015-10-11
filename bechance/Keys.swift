@@ -22,5 +22,4 @@ extension bechanceClient {
         static let ClientID = "TODO"
         static let ClientSecret = "TODO"
     }
-
 }

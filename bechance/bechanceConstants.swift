@@ -60,6 +60,7 @@ extension bechanceClient {
     }
     
     struct UserKeys {
+        static let User = "user"
         static let FirstName = "first_name"
         static let LastName = "last_name"
         static let State = "state"

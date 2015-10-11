@@ -25,11 +25,10 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         if bechanceClient.sharedInstance().sharedUser == nil {
             let fetchRequest = NSFetchRequest(entityName: "User")
            
-            fetchRequest.predicate = NSPredicate(format: "username = %@", (bechanceClient.sharedInstance().sharedParseUser?["user_name"] as? String)!)
+            fetchRequest.predicate = NSPredicate(format: "username = %@", (bechanceClient.sharedInstance().sharedParseUser?.username)!)
             fetchRequest.sortDescriptors = []
             
             do {
-                
                 guard let tmp: User = try self.sharedContext.executeFetchRequest(fetchRequest).first as? User else {
                     do {
                         bechanceClient.sharedInstance().sharedUser = try self.createCoreUserFromParse(bechanceClient.sharedInstance().sharedParseUser!)
@@ -152,7 +151,7 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         }
         cell.userImage?.layer.cornerRadius = cell.userImage.frame.size.width / 2
         cell.userImage?.layer.masksToBounds = true
-        let userObj = photo["user"] as! PFUser
+        let userObj = photo[bechanceClient.UserKeys.User] as! PFUser
         userObj.fetchIfNeededInBackgroundWithBlock { (object, error) -> Void in
             if let error = error {
                 print("error getting user for cell \(error)")
@@ -182,20 +181,17 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print("CELLFORROW")
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! MainTableViewCell
         configureCell(cell, photo: bechanceClient.sharedInstance().photoArray[indexPath.row])
         return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("numberOfRowsInSection \(bechanceClient.sharedInstance().photoArray.count)")
         return bechanceClient.sharedInstance().photoArray.count ?? 0
     }
     
     /**
     Performs segue to add a photo and rotates the button.
-    
     - parameter sender UIButton
     */
     func photoButtonTapped(sender: UIButton!) {
@@ -221,7 +217,6 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     // MARK: - Navigation
     /**
     Unwind segue from the FinalizeVC
-    
     - parameter segue UIStoryboardSegue
     */
     @IBAction func unwindToMainView(segue: UIStoryboardSegue) {

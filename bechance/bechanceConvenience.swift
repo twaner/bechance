@@ -136,7 +136,15 @@ extension bechanceClient {
     }
 
     
-    // MARK: - FB Helpers
+    // MARK: - User Helpers
+    
+    /**
+    Creates a User from a PFUser object. This does not save the context
+    */
+    func createCoreDataUser(parseUser: PFUser, context: NSManagedObjectContext) -> User {
+        let user = User(username: parseUser.username!, user_id: parseUser.objectId!, firstname: parseUser[bechanceClient.UserKeys.FirstName] as! String, lastname: parseUser[bechanceClient.UserKeys.LastName] as! String, city: parseUser[bechanceClient.UserKeys.City] as! String, state: parseUser[bechanceClient.UserKeys.State] as! String, gender: parseUser[bechanceClient.UserKeys.Gender] as! String, email: parseUser.email!, context: context)
+        return user
+    }
     
     /**
     Creates a Parse and a dictionary of keys from a user from a FB Graph Request
@@ -177,7 +185,7 @@ extension bechanceClient {
         tmpUser[bechanceClient.JSONResponseKeys.City] = location[0]
         tmpUser[bechanceClient.JSONResponseKeys.State] = location[1]
         let id = result.valueForKey(bechanceClient.UserKeys.ID) as! String
-        tmpUser["photoUrl"] = "https://graph.facebook.com/\(id)/picture?type=large&return_ssl_resources=1"
+        tmpUser[bechanceClient.UserKeys.PhotoURL] = "https://graph.facebook.com/\(id)/picture?type=large&return_ssl_resources=1"
         return (user, tmpUser)
     }
     
@@ -186,10 +194,7 @@ extension bechanceClient {
     */
     func facebookImageTaskHelper(userDict: [String: String], location: [String], photoUrl: String, imageView: UIImageView, urlRequest: NSURLRequest, parseUser: PFUser, var coreUser: User, context: NSManagedObjectContext) {
         let task = session.dataTaskWithRequest(urlRequest) { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
-            if let error = error {
-                dispatch_async(dispatch_get_main_queue()){
-//                    self.displayUIAlertController("Error", message: "An error occured while getting information from FB. Please try again \(error.localizedDescription)", action: "Ok")
-                }
+            if let _ = error {
             } else {
                 let image = UIImage(data: data!)
                 dispatch_async(dispatch_get_main_queue()) {

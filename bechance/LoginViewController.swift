@@ -217,10 +217,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         switch loginSegment.selectedSegmentIndex {
         case 0:
             self.signupUser()
-            print("SIGNUP")
         case 1:
             self.loginUser()
-            print("LOGIN")
         default:
             break
         }

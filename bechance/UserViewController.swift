@@ -25,8 +25,7 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     
     // MARK: - Props
     
-    var user: PFUser?
-    var coreUser: User?
+//    var coreUser: User?
     var photos: [Photo]?
     
     override func viewDidLoad() {
@@ -47,11 +46,7 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
             })
             abort()
         }
-        
-        user = PFUser.currentUser()
-        let fetchRequest = NSFetchRequest(entityName: "Photo")
-        fetchRequest.sortDescriptors = []
-        self.photos = (try? self.sharedContext.executeFetchRequest(fetchRequest)) as? [Photo]
+        self.photos = self.fetchedResultController.fetchedObjects as? [Photo]
         if self.photos?.count > 0 {
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.photoCollectionView.reloadData()
@@ -60,8 +55,16 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         
         // Delegates
         self.fetchedResultController.delegate = self
-        self.coreUser = bechanceClient.sharedInstance().sharedUser
         
+        // Update appearance
+        self.updateUI()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    func updateUI() {
         // Update appearance
         self.usernameLabel.text = bechanceClient.sharedInstance().sharedUser?.username
         self.firstnameLabel.text = bechanceClient.sharedInstance().sharedUser?.firstname
@@ -71,27 +74,21 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         self.photosLabel.text = "\(self.photos!.count)"
         dateFormat.dateStyle = .ShortStyle
         self.userDateLabel.text = dateFormat.stringFromDate(bechanceClient.sharedInstance().sharedUser!.date)
-        
         bechanceClient.sharedInstance().taskForGettingImageFromDocuments((bechanceClient.sharedInstance().sharedUser?.userImage)!) { (imageData, error) -> Void in
             if let error = error {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue()) {
                     self.displayUIAlertController("Error getting photo", message: "Photo download error: \(error.localizedDescription)", action: "Ok")
-                })
+                }
             } else {
                 if let data = imageData {
                     let image = UIImage(data: data)
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    dispatch_async(dispatch_get_main_queue()) {
                         self.userImageView.image = image
-                    })
+                    }
                 }
             }
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
 
     // MARK: - Navigation
 
@@ -175,7 +172,8 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     
     lazy var fetchedResultController: NSFetchedResultsController = {
         let fetchRequest = NSFetchRequest(entityName: "Photo")
-        fetchRequest.sortDescriptors = []
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+        fetchRequest.predicate = NSPredicate(format: "user == %@", bechanceClient.sharedInstance().sharedUser!)
         let fetchedResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
         return fetchedResultController
         }()

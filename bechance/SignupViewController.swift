@@ -25,7 +25,8 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Properties
     
     var user: PFUser = PFUser.currentUser()!
-    var core_user: User?
+    var coreUser: User?
+    var graphUser: (PFUser, [String: String])?
     
     // MARK: - Lifecycle
     
@@ -49,11 +50,9 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                     self.displayUIAlertController("Ok", message: "Error conntecting to FB \(error.localizedDescription)", action: "Ok")
                 })
             } else {
-                let graphUser: (PFUser, [String: String]) = bechanceClient.sharedInstance().createUserFromGraphRequest(self.user, result: result, username: self.username.text!)
-                let photoUrl = graphUser.1["photoUrl"]!
-                // Update PFuser for this class.
-                self.user = graphUser.0
-                // Get Data
+                self.graphUser = bechanceClient.sharedInstance().createUserFromGraphRequest(self.user, result: result, username: self.username.text!)
+                let photoUrl = self.graphUser!.1[bechanceClient.UserKeys.PhotoURL]!
+                self.user = self.graphUser!.0
                 
                 bechanceClient.sharedInstance().facebookGetImageDataHelper(photoUrl, completionHander: { (result, error) -> Void in
                     if let error = error {
@@ -62,28 +61,13 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                         }
                     } else {
                         let image = UIImage(data: result as! NSData)
+                        // Update UIImageView
+                        self.user[bechanceClient.UserKeys.Image] = result
+                        bechanceClient.sharedInstance().saveImage(image!, imagePath: self.graphUser!.1[bechanceClient.UserKeys.PhotoURL]!)
                         dispatch_async(dispatch_get_main_queue()) {
                             self.userImage.image = image
+                            self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
                         }
-                        self.user[bechanceClient.UserKeys.Image] = result
-                        self.user.saveInBackground()
-                        
-                        self.user.saveInBackgroundWithBlock({ (result: Bool, error: NSError?) -> Void in
-                            self.core_user?.userImage = photoUrl
-                            let userId = PFUser.currentUser()!.objectId
-                            
-                            self.core_user = User(username: graphUser.1[bechanceClient.UserKeys.UserNameUnder]!, user_id: userId!, firstname: graphUser.1[bechanceClient.UserKeys.FirstName]!, lastname: graphUser.1[bechanceClient.UserKeys.LastName]!, city: graphUser.1[bechanceClient.UserKeys.City]!, state: graphUser.1[bechanceClient.UserKeys.State]!, gender: graphUser.1[bechanceClient.UserKeys.Gender]!, email: graphUser.1[bechanceClient.UserKeys.Email]!, context: self.sharedContext)
-                            self.saveContext()
-                            
-                            bechanceClient.sharedInstance().saveImage(image!, imagePath: photoUrl)
-                            bechanceClient.sharedInstance().sharedParseUser = self.user
-                            bechanceClient.sharedInstance().sharedUser = self.core_user
-                            
-                            dispatch_async(dispatch_get_main_queue()) {
-                                self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
-                            }
-                        })
-                        
                     }
                 })
             }
@@ -130,13 +114,35 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func submitTapped(sender: UIButton) {
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        dispatch_async(dispatch_get_main_queue()) {
             self.displayActivityViewIndicator(true, activityIndicator: self.activityIndicator)
-        })
+        }
         if !self.username.text!.isEmpty {
-            self.performSegueWithIdentifier("MainSegue", sender: self)
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
+            self.user.username = self.username.text!
+            self.user[bechanceClient.UserKeys.UserNameUnder] = self.username.text!
+            // Save PFUser
+            self.user.saveInBackgroundWithBlock({ (result: Bool, error: NSError?) -> Void in
+                if let error = error {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.displayUIAlertController("Error", message: "An error happened while saving. Please try again \(error.localizedDescription)", action: "Ok")
+                    }
+                } else {
+                
+                    self.coreUser?.userImage = self.graphUser!.1[bechanceClient.UserKeys.PhotoURL]!
+                    let userId = PFUser.currentUser()!.objectId
+                    
+                    self.coreUser = User(username: self.username.text!, user_id: userId!, firstname: self.graphUser!.1[bechanceClient.UserKeys.FirstName]!, lastname: self.graphUser!.1[bechanceClient.UserKeys.LastName]!, city: self.graphUser!.1[bechanceClient.UserKeys.City]!, state: self.graphUser!.1[bechanceClient.UserKeys.State]!, gender: self.graphUser!.1[bechanceClient.UserKeys.Gender]!, email: self.graphUser!.1[bechanceClient.UserKeys.Email]!, context: self.sharedContext)
+                    self.saveContext()
+                    
+                    // Assign sharedInstance user's values.
+                    bechanceClient.sharedInstance().sharedParseUser = self.user
+                    bechanceClient.sharedInstance().sharedUser = self.coreUser
+                    
+                    self.performSegueWithIdentifier("MainSegue", sender: self)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.displayActivityViewIndicator(false, activityIndicator: self.activityIndicator)
+                    }
+                }
             })
         } else {
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -158,8 +164,6 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         self.activityIndicator.layer.cornerRadius = self.activityIndicator.frame.size.width / 10.0
         self.activityIndicator.clipsToBounds = true
     }
-
-    
     
     // MARK: - CoreData Helpers
     

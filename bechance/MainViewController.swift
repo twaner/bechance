@@ -182,12 +182,14 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        print("CELLFORROW")
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! MainTableViewCell
         configureCell(cell, photo: bechanceClient.sharedInstance().photoArray[indexPath.row])
         return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("numberOfRowsInSection \(bechanceClient.sharedInstance().photoArray.count)")
         return bechanceClient.sharedInstance().photoArray.count ?? 0
     }
     

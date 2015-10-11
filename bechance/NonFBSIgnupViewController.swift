@@ -9,8 +9,6 @@
 import UIKit
 import CoreData
 
-let kSIZEFORDATA: Float = 128
-
 class NonFBSIgnupViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     // MARK: - Outlets
@@ -159,9 +157,9 @@ class NonFBSIgnupViewController: UIViewController,UIImagePickerControllerDelegat
                 return
             }
             bechanceClient.sharedInstance().sharedParseUser!.email = email
-            bechanceClient.sharedInstance().sharedParseUser!["first_name"] = self.firstNameTextField.text!
-            bechanceClient.sharedInstance().sharedParseUser!["last_name"] = self.lastNameTextField.text!
-            bechanceClient.sharedInstance().sharedParseUser!["gender"] = self.genderController.selectedSegmentIndex == 0 ? "Male" : "Female"
+            bechanceClient.sharedInstance().sharedParseUser![bechanceClient.UserKeys.FirstName] = self.firstNameTextField.text!
+            bechanceClient.sharedInstance().sharedParseUser![bechanceClient.UserKeys.LastName] = self.lastNameTextField.text!
+            bechanceClient.sharedInstance().sharedParseUser![bechanceClient.UserKeys.Gender] = self.genderController.selectedSegmentIndex == 0 ? "Male" : "Female"
             
             guard let city = self.cityTextField.text where self.cityTextField.text?.isEmpty == false else  {
                 dispatch_async(dispatch_get_main_queue()) {
@@ -181,8 +179,8 @@ class NonFBSIgnupViewController: UIViewController,UIImagePickerControllerDelegat
                 return
             }
             
-            bechanceClient.sharedInstance().sharedParseUser!["state"] = state
-            bechanceClient.sharedInstance().sharedParseUser!["city"] = city
+            bechanceClient.sharedInstance().sharedParseUser![bechanceClient.UserKeys.State] = state
+            bechanceClient.sharedInstance().sharedParseUser![bechanceClient.UserKeys.City] = city
             
             guard let image = self.signUpImageView.image else
             {
@@ -194,33 +192,10 @@ class NonFBSIgnupViewController: UIViewController,UIImagePickerControllerDelegat
                 return
             }
             
-//            var imageData:NSData = (data:UIImageJPEGRepresentation(image, 1.0)!)
-//            var num = (Float(data:UIImageJPEGRepresentation(image, 1.0)!.) / kSIZEFORDATA) * 10
-//            imageData
-            
-            let num = ((Float(UIImageJPEGRepresentation(image, 1.0)!.length) / kSIZEFORDATA) /  (Float(UIImageJPEGRepresentation(image, 1.0)!.length))) * 10
-            let imageData:NSData = (data:UIImageJPEGRepresentation(image, CGFloat(num))!)
-            
-//            let imageResized = UIImage
-            
-            let imageData1: NSData = (data:UIImageJPEGRepresentation(image, 0.8)!)
-            var factor: Double = 1.0
-            var adjustment: Double = 1.0 / sqrt(2.0)
-            var size: CGSize = image.size
-            var currentSize:CGSize = size
-            var currentImage: UIImage = image
-//            repeat {
-//                factor *= adjustment
-////                currentSize = CGSizeMake(roundf(size.width * factor), roundf(size.height * factor))
-////                currentImage = image.res
-//            }
-//            while imageData1.length > 128
-            
             let resizedImage = RBResizeImage(image, targetSize: CGSizeMake(300.0, 300.0))
-            
-            
-            bechanceClient.sharedInstance().sharedParseUser!["image"] = (UIImageJPEGRepresentation(resizedImage, 0.3)) //imageData
-            
+
+            bechanceClient.sharedInstance().sharedParseUser![bechanceClient.UserKeys.Image] = (UIImageJPEGRepresentation(resizedImage, 0.3))
+            bechanceClient.sharedInstance().sharedParseUser![bechanceClient.UserKeys.UserNameUnder] = bechanceClient.sharedInstance().sharedParseUser?.username!
             // Signup Parse user
             bechanceClient.sharedInstance().sharedParseUser!.signUpInBackgroundWithBlock {
                 (succeeded: Bool, error: NSError?) -> Void in
@@ -230,8 +205,8 @@ class NonFBSIgnupViewController: UIViewController,UIImagePickerControllerDelegat
                     self.view.userInteractionEnabled = true
                 } else {
                     bechanceClient.sharedInstance().sharedParseUser!["id"] = bechanceClient.sharedInstance().sharedParseUser!.objectId!
-                    // CoreData user
-                    bechanceClient.sharedInstance().sharedUser = User(username: bechanceClient.sharedInstance().sharedParseUser!.username!, user_id: bechanceClient.sharedInstance().sharedParseUser!.objectId!, firstname: bechanceClient.sharedInstance().sharedParseUser!["first_name"] as! String, lastname: bechanceClient.sharedInstance().sharedParseUser!["last_name"] as! String, city: city, state: state, gender: bechanceClient.sharedInstance().sharedParseUser!["gender"] as! String, email: email, context: self.sharedContext)
+
+                    bechanceClient.sharedInstance().sharedUser = bechanceClient.sharedInstance().createCoreDataUser(bechanceClient.sharedInstance().sharedParseUser!, context: self.sharedContext)
                     
                     bechanceClient.sharedInstance().sharedUser?.userImage = "user_" + bechanceClient.sharedInstance().sharedParseUser!.objectId! + ".jpg"
                     

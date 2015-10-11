@@ -72,6 +72,7 @@ extension bechanceClient {
         static let ID = "id"
         static let Name = "name"
         static let UserNameUnder = "user_name"
+        static let PhotoURL = "photoUrl"
         
     }
     

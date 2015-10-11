@@ -35,7 +35,6 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
         
         // Location - Background
         self.locationManager.requestAlwaysAuthorization()
-        
         // Location - Foreground
         self.locationManager.requestWhenInUseAuthorization()
         

@@ -71,7 +71,7 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         self.lastnameLabel.text = bechanceClient.sharedInstance().sharedUser?.lastname
         self.locationLabel.text = "\(bechanceClient.sharedInstance().sharedUser!.city), \(bechanceClient.sharedInstance().sharedUser!.state)"
         let dateFormat = NSDateFormatter()
-        self.photosLabel.text = "\(self.photos!.count)"
+        self.photosLabel.text = self.photos!.count > 0 ? "\(self.photos!.count)" : "0"
         dateFormat.dateStyle = .ShortStyle
         self.userDateLabel.text = dateFormat.stringFromDate(bechanceClient.sharedInstance().sharedUser!.date)
         bechanceClient.sharedInstance().taskForGettingImageFromDocuments((bechanceClient.sharedInstance().sharedUser?.userImage)!) { (imageData, error) -> Void in

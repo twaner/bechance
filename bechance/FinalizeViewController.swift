@@ -156,7 +156,7 @@ class FinalizeViewController: UIViewController, UITextFieldDelegate, UITextViewD
         let photoFile = PFFile(data: data)
         
         do {
-            photoFile.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+            photoFile!.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
                 if success {
                     let photo = PFObject(className: "Photo")
                     photo["title"] = self.titleTextField.text

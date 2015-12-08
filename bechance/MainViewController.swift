@@ -18,6 +18,10 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     
     // MARK: - Props
     var photoButton: UIButton? = nil
+    var tmpImage: UIImage? = nil
+    var tmpLocation: String? = nil
+    var tmpUser: String? = nil
+    var tmpTitle: String? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,6 +140,7 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
                 self.displayUIAlertController("Error", message: "There as an issue getting the photo data: \(error)", action: "Ok")
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.tmpImage = UIImage(data: data!)
                     cell.cellImage?.image = UIImage(data: data!)
                 })
             }
@@ -144,7 +149,8 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         if let locationObj: PFObject = photo[bechanceClient.JSONResponseKeys.Location] as? PFObject {
             do {
                 try locationObj.fetchIfNeeded()
-                cell.locationLabel?.text = (locationObj[bechanceClient.UserKeys.Name] as! String) ?? "No Location"
+                self.tmpLocation = (locationObj[bechanceClient.UserKeys.Name] as! String) ?? "No Location"
+                cell.locationLabel?.text = self.tmpLocation
             } catch {
                 
             }
@@ -157,7 +163,8 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
                 print("error getting user for cell \(error)")
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    cell.userLabel?.text = userObj[bechanceClient.UserKeys.UserNameUnder] as? String
+                    self.tmpUser = userObj[bechanceClient.UserKeys.UserNameUnder] as? String
+                    cell.userLabel?.text = self.tmpUser
                     if let image = userObj[bechanceClient.UserKeys.Image] as? NSData {
                         cell.userImage?.image = UIImage(data: image)    
                     }
@@ -171,7 +178,10 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         let desc = photo["description"] as! String
         cell.dateLabel?.text = dateString
         cell.descriptionLabel?.text = desc
-        cell.titleLabel?.text = photo["title"] as? String
+        self.tmpTitle = photo["title"] as? String
+        cell.titleLabel?.text = self.tmpTitle
+        // 12.6 Updates
+        cell.likeButton.setImage(UIImage(named: "FullHeart"), forState: .Normal)
     }
     
     // MARK: - TableView Delegate Methods
@@ -183,11 +193,45 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! MainTableViewCell
         configureCell(cell, photo: bechanceClient.sharedInstance().photoArray[indexPath.row])
+        
+        // 12.6 Updates
+        let tag = indexPath.row
+        cell.likeButton.tag = tag
+        cell.likeButton.addTarget(self, action: "like", forControlEvents: UIControlEvents.TouchUpInside)
+        cell.shareButton.tag = tag
+        cell.shareButton.addTarget(self, action: "share:", forControlEvents: .TouchUpInside)
+        
         return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return bechanceClient.sharedInstance().photoArray.count ?? 0
+    }
+    
+    /**
+    Likes a photo
+    */
+    func like() {
+        print("FROM THE CODE")
+    }
+    
+    func share(sender: UIButton) {
+        
+        let card = ShareCard()
+        card.user = tmpUser!
+        card.location = tmpLocation!
+        card.title = tmpTitle!
+        guard let image = tmpImage where tmpImage != nil && tmpLocation != nil && tmpUser != nil && tmpTitle != nil else {
+            self.displayUIAlertController("Error", message: "An error occurred ", action: "Ok")
+            return
+        }
+
+        let activityVC = UIActivityViewController(activityItems: [card, image], applicationActivities: nil)
+        
+        
+//        let activityVC = UIActivityViewController(activityItems: [self.tmpUser!, self.tmpLocation!, self.tmpTitle!, image], applicationActivities: nil)
+//        
+        self.presentViewController(activityVC, animated: true, completion: nil)
     }
     
     /**

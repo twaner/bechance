@@ -53,6 +53,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                 self.graphUser = bechanceClient.sharedInstance().createUserFromGraphRequest(self.user, result: result, username: self.username.text!)
                 let photoUrl = self.graphUser!.1[bechanceClient.UserKeys.PhotoURL]!
                 self.user = self.graphUser!.0
+                self.username.text = self.user.username
                 
                 bechanceClient.sharedInstance().facebookGetImageDataHelper(photoUrl, completionHander: { (result, error) -> Void in
                     if let error = error {

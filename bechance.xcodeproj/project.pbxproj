@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		133E4105331F07EE8E17F904 /* Pods_bechance.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 648030B2DCA44A5FC85747C6 /* Pods_bechance.framework */; };
+		190F83521C1E27630045932A /* PhotoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190F83511C1E27630045932A /* PhotoDetailViewController.swift */; };
 		1957ADAB1B587AAC00434802 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957ADAA1B587AAC00434802 /* AppDelegate.swift */; };
 		1957ADAE1B587AAC00434802 /* bechance.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1957ADAC1B587AAC00434802 /* bechance.xcdatamodeld */; };
 		1957ADB31B587AAC00434802 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1957ADB11B587AAC00434802 /* Main.storyboard */; };
@@ -47,6 +49,7 @@
 		19DBB4CA1B856859000C8472 /* bechanceNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DBB4C91B856859000C8472 /* bechanceNetworkClient.swift */; };
 		19E301321B6B086B00CA31E1 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E3012F1B6B086B00CA31E1 /* Location.swift */; };
 		19E301331B6B086B00CA31E1 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E301301B6B086B00CA31E1 /* Photo.swift */; };
+		19F90F811C2774BD00BCF39B /* UberRides.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F90F801C2774BD00BCF39B /* UberRides.framework */; };
 		7E04E2781B77F0DC00433BFC /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E04E2771B77F0DC00433BFC /* UserViewController.swift */; };
 		7E1A14301BC83AD2002EA5C3 /* RBResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1A142F1BC83AD2002EA5C3 /* RBResizer.swift */; };
 		7E1B532E1B8FED2D00E1868B /* Photos-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B532C1B8FED2D00E1868B /* Photos-50.png */; };
@@ -81,6 +84,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		190F83511C1E27630045932A /* PhotoDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewController.swift; sourceTree = "<group>"; };
 		1957ADA51B587AAC00434802 /* bechance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bechance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1957ADA91B587AAC00434802 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1957ADAA1B587AAC00434802 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -126,6 +130,9 @@
 		19DBB4C91B856859000C8472 /* bechanceNetworkClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = bechanceNetworkClient.swift; sourceTree = "<group>"; };
 		19E3012F1B6B086B00CA31E1 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		19E301301B6B086B00CA31E1 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		19F90F801C2774BD00BCF39B /* UberRides.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UberRides.framework; path = "Pods/../build/Debug-iphoneos/UberRides.framework"; sourceTree = "<group>"; };
+		2CE37B89611115D7829265BE /* Pods-bechance.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bechance.release.xcconfig"; path = "Pods/Target Support Files/Pods-bechance/Pods-bechance.release.xcconfig"; sourceTree = "<group>"; };
+		648030B2DCA44A5FC85747C6 /* Pods_bechance.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_bechance.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E04E2771B77F0DC00433BFC /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		7E1A142F1BC83AD2002EA5C3 /* RBResizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RBResizer.swift; sourceTree = "<group>"; };
 		7E1B532C1B8FED2D00E1868B /* Photos-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Photos-50.png"; sourceTree = "<group>"; };
@@ -147,6 +154,7 @@
 		7EE27CC71B8EA683000DFEC7 /* Camera-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Camera-32.png"; sourceTree = "<group>"; };
 		7EEC2E7C1BB48890008816DC /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		7EEC2E7D1BB48890008816DC /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		B7EB730601AEF5960723ABDE /* Pods-bechance.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bechance.debug.xcconfig"; path = "Pods/Target Support Files/Pods-bechance/Pods-bechance.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +162,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19F90F811C2774BD00BCF39B /* UberRides.framework in Frameworks */,
 				7E74FC9A1BB461F600CD037A /* libz.tbd in Frameworks */,
 				7E74FC981BB461E800CD037A /* libsqlite3.tbd in Frameworks */,
 				7EEC2E7F1BB48890008816DC /* FBSDKLoginKit.framework in Frameworks */,
@@ -173,6 +182,7 @@
 				196CD40E1C14F75F00FF7B7F /* Bolts.framework in Frameworks */,
 				1957ADDB1B587CD200434802 /* CFNetwork.framework in Frameworks */,
 				1957ADD91B587CCB00434802 /* AudioToolbox.framework in Frameworks */,
+				133E4105331F07EE8E17F904 /* Pods_bechance.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,6 +202,8 @@
 				1957ADA71B587AAC00434802 /* bechance */,
 				1957ADC01B587AAC00434802 /* bechanceTests */,
 				1957ADA61B587AAC00434802 /* Products */,
+				FA7A8D080FD17D793813975A /* Pods */,
+				922784B605B45E91174DD229 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -263,6 +275,7 @@
 				7E21F9EB1B8D5021008C21EB /* FinalizeViewController.swift */,
 				7E7A14DF1B935E160009D59D /* LocationViewController.swift */,
 				7E74B9A01BB8BF4F00D151AC /* NonFBSIgnupViewController.swift */,
+				190F83511C1E27630045932A /* PhotoDetailViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -362,6 +375,24 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		922784B605B45E91174DD229 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				19F90F801C2774BD00BCF39B /* UberRides.framework */,
+				648030B2DCA44A5FC85747C6 /* Pods_bechance.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FA7A8D080FD17D793813975A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B7EB730601AEF5960723ABDE /* Pods-bechance.debug.xcconfig */,
+				2CE37B89611115D7829265BE /* Pods-bechance.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -369,9 +400,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1957ADC71B587AAC00434802 /* Build configuration list for PBXNativeTarget "bechance" */;
 			buildPhases = (
+				8D8F01C71532E4CB820C6206 /* Check Pods Manifest.lock */,
 				1957ADA11B587AAC00434802 /* Sources */,
 				1957ADA21B587AAC00434802 /* Frameworks */,
 				1957ADA31B587AAC00434802 /* Resources */,
+				0E024F80F611FEBB29593BBF /* Embed Pods Frameworks */,
+				41211A9DE6CB085C5ADFD298 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -470,6 +504,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0E024F80F611FEBB29593BBF /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-bechance/Pods-bechance-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		41211A9DE6CB085C5ADFD298 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-bechance/Pods-bechance-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8D8F01C71532E4CB820C6206 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1957ADA11B587AAC00434802 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -501,6 +583,7 @@
 				1957AE031B58853C00434802 /* bechance-bridging-header.m in Sources */,
 				198CD3D61B6E8458008891A9 /* MainViewController.swift in Sources */,
 				1957ADD61B587B7500434802 /* TextExtension.swift in Sources */,
+				190F83521C1E27630045932A /* PhotoDetailViewController.swift in Sources */,
 				7E1A14301BC83AD2002EA5C3 /* RBResizer.swift in Sources */,
 				1957ADAB1B587AAC00434802 /* AppDelegate.swift in Sources */,
 			);
@@ -581,7 +664,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -619,7 +702,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -628,6 +711,7 @@
 		};
 		1957ADC81B587AAC00434802 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B7EB730601AEF5960723ABDE /* Pods-bechance.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -638,6 +722,7 @@
 					"$(PROJECT_DIR)/bechance",
 					"$(HOME)/Documents/FacebookSDK",
 					"$(PROJECT_DIR)/bechance/Resources/Frameworks",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = bechance/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -651,6 +736,7 @@
 		};
 		1957ADC91B587AAC00434802 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2CE37B89611115D7829265BE /* Pods-bechance.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -661,6 +747,7 @@
 					"$(PROJECT_DIR)/bechance",
 					"$(HOME)/Documents/FacebookSDK",
 					"$(PROJECT_DIR)/bechance/Resources/Frameworks",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = bechance/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -23,4 +23,9 @@ extension bechanceClient {
         static let ClientSecret = "MJJZ15TN1QRCJBBTK343XBJVNVAN5JZNEF3ZSXE10H2ZRTOV"
         
     }
+    
+    struct Uber {
+        static let ClientID = "Bt603rAEiyq-KnKsgAs6DcG2oAZuCo6e"
+        static let ClientSecret = "LJe6NUWsJ125dX9MUPBY4HAbq6uVGcHF7KIqYQCC"
+    }
 }

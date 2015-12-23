@@ -44,6 +44,22 @@ extension bechanceClient {
         return task
     }
     
+    
+    /**
+     Gets a location object from parse
+     
+     - parameter image: UIImage to save
+     */
+//    func getLocation(location: PFObject) -> PFObject {
+//        do {
+//            try location.fetchIfNeededInBackground()
+//        } catch {
+//            
+//        }
+//        return parseLocation
+//    }
+
+    
     /**
     Gets an image from a hyperlink using an NSURLSessionTask
     
@@ -79,7 +95,7 @@ extension bechanceClient {
             loc = location!
         }
 
-        let dateFormater = NSDateFormatter()
+        let dateFormater = bechanceClient.sharedInstance().dateFormatter
         dateFormater.dateFormat = "yyyyMMdd"
         let dateString = dateFormater.stringFromDate(NSDate())
         
@@ -109,7 +125,7 @@ extension bechanceClient {
         if !providerID!.isEmpty {
             provID = providerID!
         }
-        let dateFormater = NSDateFormatter()
+        let dateFormater = bechanceClient.sharedInstance().dateFormatter
         dateFormater.dateFormat = "yyyyMMdd"
         let dateString = dateFormater.stringFromDate(NSDate())
         let parameters: [String: AnyObject] = [

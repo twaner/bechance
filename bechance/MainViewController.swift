@@ -22,6 +22,7 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     var tmpLocation: String? = nil
     var tmpUser: String? = nil
     var tmpTitle: String? = nil
+    var tmpTag: Int? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -172,7 +173,7 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
             }
         }
         
-        let dateFormat = NSDateFormatter()
+        let dateFormat = bechanceClient.sharedInstance().dateFormatter
         dateFormat.dateStyle = .ShortStyle
         let dateString = dateFormat.stringFromDate((photo["date"] as? NSDate)!)
         let desc = photo["description"] as! String
@@ -195,12 +196,12 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         configureCell(cell, photo: bechanceClient.sharedInstance().photoArray[indexPath.row])
         
         // 12.6 Updates
-        let tag = indexPath.row
-        cell.likeButton.tag = tag
-        cell.likeButton.addTarget(self, action: "like", forControlEvents: UIControlEvents.TouchUpInside)
-        cell.shareButton.tag = tag
+        self.tmpTag = indexPath.row
+        cell.likeButton.tag = self.tmpTag!
+        cell.likeButton.addTarget(self, action: "like:", forControlEvents: UIControlEvents.TouchUpInside)
+        cell.shareButton.tag = self.tmpTag!
         cell.shareButton.addTarget(self, action: "share:", forControlEvents: .TouchUpInside)
-        
+        cell.nextButton.addTarget(self, action: "segue", forControlEvents: .TouchUpInside)
         return cell
     }
     
@@ -208,15 +209,39 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         return bechanceClient.sharedInstance().photoArray.count ?? 0
     }
     
+    override func performSegueWithIdentifier(identifier: String, sender: AnyObject?) {
+        if identifier == "photoDetailSegue" {
+//            let destinationVC = 
+        }
+    }
+    
+    func getCellIndexPath(sender: AnyObject) -> NSIndexPath {
+        let point: CGPoint = sender.convertPoint(sender.bounds.origin, toView: self.tableView)
+        let cellIndexPath = self.tableView.indexPathForRowAtPoint(point)
+        return cellIndexPath!
+    }
+    
     /**
     Likes a photo
     */
-    func like() {
+    func like(liked: Bool) {
         print("FROM THE CODE")
+        // update UI
+        let image = liked ? "EmptyHeat" : "FullHeart"
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            let cell = self.tableView.cellForRowAtIndexPath(self.getCellIndexPath(self.tableView)) as! MainTableViewCell
+
+            cell.likeButton.setImage(UIImage(named: image), forState: .Normal)
+        }
+        // Update Datastore
+    }
+    
+    func segue() {
+        let index = self.tableView.indexPathForSelectedRow
+//        self.performSegueWithIdentifier("photoDetailSegue", sender: self)
     }
     
     func share(sender: UIButton) {
-        
         let card = ShareCard()
         card.user = tmpUser!
         card.location = tmpLocation!
@@ -269,8 +294,15 @@ class MainViewController: UIViewController, NSFetchedResultsControllerDelegate, 
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "PhotoSegue") {
-            
+        if (segue.identifier == "photoDetailSegue") {
+            let index = self.getCellIndexPath(self.tableView)
+            let cell = self.tableView.cellForRowAtIndexPath(index) as! MainTableViewCell
+            let photo: PFObject = bechanceClient.sharedInstance().photoArray[index.row]
+            let location = bechanceClient.sharedInstance().photoArray[index.row][bechanceClient.JSONResponseKeys.Location] as! PFObject
+            let destinationVC = segue.destinationViewController as! PhotoDetailViewController
+            destinationVC.image = cell.cellImage?.image
+            destinationVC.photo = photo
+            destinationVC.location = location
         }
     }
     

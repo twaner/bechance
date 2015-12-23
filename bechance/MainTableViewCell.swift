@@ -32,4 +32,5 @@ class MainTableViewCell: UITableViewCell {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
+    
 }

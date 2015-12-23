@@ -11,6 +11,7 @@ import UIKit
 import CoreData
 import FBSDKCoreKit
 import ParseFacebookUtilsV4
+import UberRides
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         Parse.setApplicationId(bechanceClient.Parse.ParseAppID, clientKey: bechanceClient.Parse.ParseClientID)
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
+        RidesClient.sharedInstance.configureClientID(bechanceClient.Uber.ClientID)
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }

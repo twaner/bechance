@@ -74,7 +74,14 @@ extension bechanceClient {
         static let Name = "name"
         static let UserNameUnder = "user_name"
         static let PhotoURL = "photoUrl"
-        
+    }
+    
+    struct LocationKeys {
+        static let Latitude = "latitude"
+        static let Longitude = "longitude"
+        static let State = "state"
+        static let City = "city"
+        static let Name = "name"
     }
     
     // MARK: - Errors

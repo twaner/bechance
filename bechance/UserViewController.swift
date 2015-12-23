@@ -70,7 +70,7 @@ class UserViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         self.firstnameLabel.text = bechanceClient.sharedInstance().sharedUser?.firstname
         self.lastnameLabel.text = bechanceClient.sharedInstance().sharedUser?.lastname
         self.locationLabel.text = "\(bechanceClient.sharedInstance().sharedUser!.city), \(bechanceClient.sharedInstance().sharedUser!.state)"
-        let dateFormat = NSDateFormatter()
+        let dateFormat = bechanceClient.sharedInstance().dateFormatter
         self.photosLabel.text = self.photos!.count > 0 ? "\(self.photos!.count)" : "0"
         dateFormat.dateStyle = .ShortStyle
         self.userDateLabel.text = dateFormat.stringFromDate(bechanceClient.sharedInstance().sharedUser!.date)
